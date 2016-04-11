@@ -14,6 +14,19 @@ class GameViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
+        if let MainView = self.view as? SKView{
+            if MainView.scene == nil{
+                //创建选项页面
+                let MainViewAspectRatio = MainView.bounds.size.height / MainView.bounds.size.width
+                let GameMenuView = GameMenu(size: CGSize(width: 320, height: 320 * MainViewAspectRatio))
+                MainView.showsFPS = true
+                MainView.showsNodeCount = true
+                MainView.showsPhysics = true
+                MainView.ignoresSiblingOrder = true
+                GameMenuView.scaleMode = .AspectFill
+                MainView.presentScene(GameMenuView)
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
