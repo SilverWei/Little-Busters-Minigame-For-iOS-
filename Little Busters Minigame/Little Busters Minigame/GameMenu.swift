@@ -8,15 +8,17 @@
 
 import SpriteKit
 
-enum Layers: CGFloat{
-    case Background
-    case Button
-}
+
 
 class GameMenu: SKScene {
     
     let MenuView = SKNode()
     var KittyBaseballGame_Button:SKNode! = nil
+    
+    enum Layers: CGFloat{
+        case Background
+        case Button
+    }
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -25,13 +27,11 @@ class GameMenu: SKScene {
         ShowButton()
         
     }
-    
+
     func ShowBackground(){
         let BackgroundImage = SKSpriteNode(imageNamed: "MenuBackground")
-        BackgroundImage.anchorPoint = CGPoint(x: 0.5, y: 1.0)
-        BackgroundImage.position = CGPoint(x: size.width / 2, y: size.height)
-        BackgroundImage.size = self.size
-        
+        BackgroundImage.size = CGSizeMake(size.height * (BackgroundImage.size.width / BackgroundImage.size.height), size.height)
+        BackgroundImage.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
         BackgroundImage.zPosition = Layers.Background.rawValue
         MenuView.addChild(BackgroundImage)
     }
@@ -60,6 +60,8 @@ class GameMenu: SKScene {
             // Check if the location of the touch is within the button's bounds
             if KittyBaseballGame_Button.containsPoint(location) {
                 print("进入棒球小游戏!")
+                let nextScene = KittyBaseballGame(size: self.size)
+                self.view?.presentScene(nextScene)
             }
         }
     }
