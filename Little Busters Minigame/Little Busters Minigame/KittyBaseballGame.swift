@@ -11,6 +11,7 @@ import SpriteKit
 class KittyBaseballGame: SKScene {
     
     let GameView = SKNode()
+    let Baseballfield = GameBackground().Baseballfield
     
     enum Layers: CGFloat{
         case Baseballfield //棒球场背景
@@ -25,19 +26,21 @@ class KittyBaseballGame: SKScene {
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         addChild(GameView)
-        ShowBaseballfield()
+        ShowBaseballfield()//显示棒球场背景
+        ShowCharacterfront()//显示在前面的人物
     }
     
     func ShowBaseballfield(){
-        let Baseballfield = SKSpriteNode(imageNamed: "Baseballfield-day")
-        let BaseballfieldMagnification:CGFloat = 2
-        Baseballfield.size = CGSizeMake(Baseballfield.size.width * BaseballfieldMagnification, Baseballfield.size.height * BaseballfieldMagnification)
-        Baseballfield.anchorPoint = CGPoint(x: 0.5, y: 0.25)
         Baseballfield.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        
-        
         Baseballfield.zPosition = Layers.Baseballfield.rawValue
         GameView.addChild(Baseballfield)
+    }
+    
+    func ShowCharacterfront(){
+        let Naoe_Riki = SKSpriteNode(texture: SKTexture(image: GameCharacter().Naoe_Riki_Array()[20]))
+        Naoe_Riki.position = GameCharacter().Naoe_Riki.point
+        Naoe_Riki.zPosition = Layers.Characterfront.rawValue
+        Baseballfield.addChild(Naoe_Riki)
     }
     
     //MARK: 点击
