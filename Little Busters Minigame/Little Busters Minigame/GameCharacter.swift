@@ -21,13 +21,21 @@ class GameCharacter{
         var point: CGPoint
         var status: Int
         var imageNumber: Int
+        var Shadow_x: CGFloat
+        var Shadow_y: CGFloat
+        var Shadow_w: CGFloat
+        var Shadow_h: CGFloat
     }
     
     //直枝 理樹
     var Naoe_Riki_Attribute = Character(image: UIImage(named: "NaoeRiki")!,
-        point: CGPoint(x:  GameBackground().Baseballfield.anchorPoint.x, y: GameBackground().Baseballfield.anchorPoint.y - 100),
+        point: CGPoint(x:  GameObject().Baseballfield().anchorPoint.x, y: GameObject().Baseballfield().anchorPoint.y - 100),
         status: 0,
-        imageNumber: 0
+        imageNumber: 0,
+        Shadow_x: GameObject().Baseballfield().anchorPoint.x - 5,
+        Shadow_y: (GameObject().Baseballfield().anchorPoint.y - 100) - 35,
+        Shadow_w: 35,
+        Shadow_h: 15
     )
     func Naoe_Riki_Array() -> [UIImage]{
         var Naoe_Riki_Array:[UIImage] = []
