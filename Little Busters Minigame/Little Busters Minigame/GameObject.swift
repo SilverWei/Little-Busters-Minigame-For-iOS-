@@ -31,6 +31,79 @@ class GameObject{
         return ShadowForm
     }
     
+    //按钮
+    internal func MovingButton() -> SKSpriteNode{
+        let View_Width:CGFloat = 120
+        let View = SKSpriteNode(color: SKColor.blackColor(), size: CGSize(width: View_Width, height: View_Width * 0.75))
+        View.alpha = 0.5
+        View.anchorPoint = CGPoint(x: 0, y: 0)
+        View.position = CGPoint(x: 10, y: 10)
+        return View
+    }
+    
+    internal func MovingButton_UP() -> SKShapeNode{
+        let TrianglePath = UIBezierPath()
+        let MovingButtonFrame = MovingButton().frame
+        TrianglePath.moveToPoint(CGPoint(x: 0, y: MovingButtonFrame.height))
+        TrianglePath.addLineToPoint(CGPoint(x: MovingButtonFrame.width / 2, y: MovingButtonFrame.height / 2))
+        TrianglePath.addLineToPoint(CGPoint(x: MovingButtonFrame.width, y: MovingButtonFrame.height))
+        TrianglePath.addLineToPoint(CGPoint(x: 0, y: MovingButtonFrame.height))
+        let Triangle = SKShapeNode(path: TrianglePath.CGPath)
+        Triangle.lineWidth = 1.0
+        Triangle.fillColor = SKColor.clearColor()
+        Triangle.strokeColor = SKColor.whiteColor()
+        Triangle.position = CGPoint(x: 0, y: 0)
+        
+        return Triangle
+    }
+    
+    internal func MovingButton_Down() -> SKShapeNode{
+        let TrianglePath = UIBezierPath()
+        let MovingButtonFrame = MovingButton().frame
+        TrianglePath.moveToPoint(CGPoint(x: 0, y: 0))
+        TrianglePath.addLineToPoint(CGPoint(x: MovingButtonFrame.width / 2, y: MovingButtonFrame.height / 2))
+        TrianglePath.addLineToPoint(CGPoint(x: MovingButtonFrame.width, y: 0))
+        TrianglePath.addLineToPoint(CGPoint(x: 0, y: 0))
+        let Triangle = SKShapeNode(path: TrianglePath.CGPath)
+        Triangle.lineWidth = 1.0
+        Triangle.fillColor = SKColor.clearColor()
+        Triangle.strokeColor = SKColor.whiteColor()
+        Triangle.position = CGPoint(x: 0, y: 0)
+        
+        return Triangle
+    }
+    
+    internal func MovingButton_Left() -> SKShapeNode{
+        let TrianglePath = UIBezierPath()
+        let MovingButtonFrame = MovingButton().frame
+        TrianglePath.moveToPoint(CGPoint(x: 0, y: MovingButtonFrame.height))
+        TrianglePath.addLineToPoint(CGPoint(x: MovingButtonFrame.width / 2, y: MovingButtonFrame.height / 2))
+        TrianglePath.addLineToPoint(CGPoint(x: 0, y: 0))
+        TrianglePath.addLineToPoint(CGPoint(x: 0, y: MovingButtonFrame.height))
+        let Triangle = SKShapeNode(path: TrianglePath.CGPath)
+        Triangle.lineWidth = 1.0
+        Triangle.fillColor = SKColor.clearColor()
+        Triangle.strokeColor = SKColor.whiteColor()
+        Triangle.position = CGPoint(x: 0, y: 0)
+        
+        return Triangle
+    }
+    
+    internal func MovingButton_Right() -> SKShapeNode{
+        let TrianglePath = UIBezierPath()
+        let MovingButtonFrame = MovingButton().frame
+        TrianglePath.moveToPoint(CGPoint(x: MovingButtonFrame.width, y: MovingButtonFrame.height))
+        TrianglePath.addLineToPoint(CGPoint(x: MovingButtonFrame.width / 2, y: MovingButtonFrame.height / 2))
+        TrianglePath.addLineToPoint(CGPoint(x: MovingButtonFrame.width, y: 0))
+        TrianglePath.addLineToPoint(CGPoint(x: MovingButtonFrame.width, y: MovingButtonFrame.height))
+        let Triangle = SKShapeNode(path: TrianglePath.CGPath)
+        Triangle.lineWidth = 1.0
+        Triangle.fillColor = SKColor.clearColor()
+        Triangle.strokeColor = SKColor.whiteColor()
+        Triangle.position = CGPoint(x: 0, y: 0)
+        
+        return Triangle
+    }
     
 
 }

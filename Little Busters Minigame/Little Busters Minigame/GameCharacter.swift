@@ -32,8 +32,8 @@ class GameCharacter{
         point: CGPoint(x:  GameObject().Baseballfield().anchorPoint.x, y: GameObject().Baseballfield().anchorPoint.y - 100),
         status: 0,
         imageNumber: 0,
-        Shadow_x: GameObject().Baseballfield().anchorPoint.x - 5,
-        Shadow_y: (GameObject().Baseballfield().anchorPoint.y - 100) - 35,
+        Shadow_x: -5,
+        Shadow_y: -35,
         Shadow_w: 35,
         Shadow_h: 15
     )
@@ -69,9 +69,24 @@ class GameCharacter{
         
         return Naoe_Riki_Array
     }
-    enum Naoe_Riki_status{
+    //动作状态
+    enum Naoe_Riki_Status{
         case NR_static //静止
         case NR_Swing //挥动
+    }
+    func Naoe_Riki_Range() -> SKShapeNode{
+        let RangePath = UIBezierPath()
+        RangePath.moveToPoint(CGPoint(x: 0, y: 0))
+        RangePath.addLineToPoint(CGPoint(x: 0, y: 100))
+        RangePath.addLineToPoint(CGPoint(x: 120, y: 100))
+        RangePath.addLineToPoint(CGPoint(x: 120, y: 0))
+        RangePath.addLineToPoint(CGPoint(x: 0, y: 0))
+        let Range = SKShapeNode(path: RangePath.CGPath)
+        Range.lineWidth = 1.0
+        Range.fillColor = SKColor.clearColor()
+        Range.strokeColor = SKColor.blueColor()
+        Range.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x - 60, y: GameObject().Baseballfield().anchorPoint.y - 150)
+        return Range
     }
 
     func ImageInterception(character: Character, x: CGFloat, y: CGFloat, w: CGFloat,h: CGFloat) -> UIImage {
