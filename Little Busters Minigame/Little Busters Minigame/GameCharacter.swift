@@ -12,11 +12,10 @@ import UIKit
 class GameCharacter{
     
     struct Unit {
-        var character: Character
+        var attribute: Attribute
         var image: [UIImage]
     }
-
-    struct Character{
+    struct Attribute{
         var image: UIImage
         var point: CGPoint
         var status: Int
@@ -28,7 +27,7 @@ class GameCharacter{
     }
     
     //直枝 理樹
-    var Naoe_Riki_Attribute = Character(image: UIImage(named: "NaoeRiki")!,
+    var Naoe_Riki_Attribute = Attribute(image: UIImage(named: "NaoeRiki")!,
         point: CGPoint(x:  GameObject().Baseballfield().anchorPoint.x, y: GameObject().Baseballfield().anchorPoint.y - 100),
         status: 0,
         imageNumber: 0,
@@ -88,8 +87,31 @@ class GameCharacter{
         Range.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x - 60, y: GameObject().Baseballfield().anchorPoint.y - 150)
         return Range
     }
+    
+    //棗 鈴
+    var Natsume_Rin_Attribute = Attribute(image: UIImage(named: "NatsumeRin")!,
+        point: CGPoint(x:  GameObject().Baseballfield().anchorPoint.x, y: GameObject().Baseballfield().anchorPoint.y + 200),
+        status: 0,
+        imageNumber: 0,
+        Shadow_x: -5,
+        Shadow_y: -35,
+        Shadow_w: 35,
+        Shadow_h: 15
+    )
+    func Natsume_Rin_Array() -> [UIImage]{
+        var Natsume_Rin_Array:[UIImage] = []
+        let Natsume_Rin_H = (Natsume_Rin_Attribute.image.size.height - 64) / 8
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 0, w: 68, h: Natsume_Rin_H))
+        
+        return Natsume_Rin_Array
+    }
+    //动作状态
+    enum Natsume_Rin_Status{
+        case NR_static //静止
+        case NR_Swing //挥动
+    }
 
-    func ImageInterception(character: Character, x: CGFloat, y: CGFloat, w: CGFloat,h: CGFloat) -> UIImage {
+    func ImageInterception(character: Attribute, x: CGFloat, y: CGFloat, w: CGFloat,h: CGFloat) -> UIImage {
         return UIImage(CGImage: CGImageCreateWithImageInRect(character.image.CGImage, CGRectMake(x, y, w, h))!)
     }
 }

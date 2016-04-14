@@ -14,12 +14,19 @@ class KittyBaseballGame: SKScene {
     let Baseballfield = GameObject().Baseballfield()
     
     //初始化角色
-    var Naoe_Riki = GameCharacter.Unit(character: GameCharacter().Naoe_Riki_Attribute,
+    //直枝 理樹
+    var Naoe_Riki = GameCharacter.Unit(attribute: GameCharacter().Naoe_Riki_Attribute,
         image: GameCharacter().Naoe_Riki_Array()
     )
     var Naoe_Riki_View = SKSpriteNode(texture: SKTexture(image: GameCharacter().Naoe_Riki_Array()[0]))
     var Naoe_Riki_Shadow = SKShapeNode()
     var Naoe_Riki_Range = GameCharacter().Naoe_Riki_Range()
+    
+    //棗 鈴
+    var Natsume_Rin = GameCharacter.Unit(attribute: GameCharacter().Natsume_Rin_Attribute,
+        image: GameCharacter().Natsume_Rin_Array()
+    )
+    var Natsume_Rin_View = SKSpriteNode(texture: SKTexture(image: GameCharacter().Natsume_Rin_Array()[0]))
     
     //初始化按钮
     var MovingButton_Status = MovingButton_Touch.Stop
@@ -55,6 +62,7 @@ class KittyBaseballGame: SKScene {
         addChild(GameView)
         Show_Baseballfield()//显示棒球场背景
         Show_Characterfront()//显示在前面的人物
+        show_CharacterBehind()//显示在后面的人物
         Show_Shadow()//显示阴影
         Show_Button()//显示按钮
     }
@@ -65,15 +73,21 @@ class KittyBaseballGame: SKScene {
     }
     
     func Show_Characterfront(){
-        Naoe_Riki_View.position = Naoe_Riki.character.point
+        Naoe_Riki_View.position = Naoe_Riki.attribute.point
         Naoe_Riki_View.zPosition = Layers.Characterfront.rawValue
         Baseballfield.addChild(Naoe_Riki_View)
         Naoe_Riki_Range.zPosition = Layers.Characterfront.rawValue
         Baseballfield.addChild(Naoe_Riki_Range)
     }
     
+    func show_CharacterBehind(){
+        Natsume_Rin_View.position = Natsume_Rin.attribute.point
+        Natsume_Rin_View.zPosition = Layers.CharacterBehind.rawValue
+        Baseballfield.addChild(Natsume_Rin_View)
+    }
+    
     func Show_Shadow(){
-        Naoe_Riki_Shadow = GameObject().Shadow( Naoe_Riki.character.point.x + Naoe_Riki.character.Shadow_x, y: Naoe_Riki.character.point.y + Naoe_Riki.character.Shadow_y, w: Naoe_Riki.character.Shadow_w, h: Naoe_Riki.character.Shadow_h)
+        Naoe_Riki_Shadow = GameObject().Shadow( Naoe_Riki.attribute.point.x + Naoe_Riki.attribute.Shadow_x, y: Naoe_Riki.attribute.point.y + Naoe_Riki.attribute.Shadow_y, w: Naoe_Riki.attribute.Shadow_w, h: Naoe_Riki.attribute.Shadow_h)
         Baseballfield.addChild(Naoe_Riki_Shadow)
     }
     
@@ -113,7 +127,7 @@ class KittyBaseballGame: SKScene {
                 print("UP")
             }
             else{
-                Naoe_Riki.character.status = GameCharacter.Naoe_Riki_Status.NR_Swing.hashValue
+                Naoe_Riki.attribute.status = GameCharacter.Naoe_Riki_Status.NR_Swing.hashValue
             }
         }
     }
@@ -136,11 +150,11 @@ class KittyBaseballGame: SKScene {
     
     func Status_Naoe_Riki(){
         //直枝 理樹
-        if(Naoe_Riki.character.status != GameCharacter.Naoe_Riki_Status.NR_static.hashValue){
-            if(Naoe_Riki.character.imageNumber.hashValue == 9){
-                Naoe_Riki.character.imageNumber = 0
-                Naoe_Riki_View.runAction(SKAction.setTexture(SKTexture(image: Naoe_Riki.image[Naoe_Riki.character.imageNumber])))
-                Naoe_Riki.character.status = GameCharacter.Naoe_Riki_Status.NR_static.hashValue
+        if(Naoe_Riki.attribute.status != GameCharacter.Naoe_Riki_Status.NR_static.hashValue){
+            if(Naoe_Riki.attribute.imageNumber.hashValue == 9){
+                Naoe_Riki.attribute.imageNumber = 0
+                Naoe_Riki_View.runAction(SKAction.setTexture(SKTexture(image: Naoe_Riki.image[Naoe_Riki.attribute.imageNumber])))
+                Naoe_Riki.attribute.status = GameCharacter.Naoe_Riki_Status.NR_static.hashValue
                 return
             }
             //如果动作未完成则继续完成原来的动作
@@ -180,11 +194,11 @@ class KittyBaseballGame: SKScene {
         if(Naoe_Riki_View.position.y > Naoe_Riki_Range.position.y + Naoe_Riki_Range.frame.height){
             Naoe_Riki_View.position.y = Naoe_Riki_Range.position.y + Naoe_Riki_Range.frame.height
         }
-        Naoe_Riki_Shadow.position = CGPoint(x: Naoe_Riki_View.position.x + Naoe_Riki.character.Shadow_x, y: Naoe_Riki_View.position.y + Naoe_Riki.character.Shadow_y)
+        Naoe_Riki_Shadow.position = CGPoint(x: Naoe_Riki_View.position.x + Naoe_Riki.attribute.Shadow_x, y: Naoe_Riki_View.position.y + Naoe_Riki.attribute.Shadow_y)
     }
     
     func Characterfront_Swing(){
-        Naoe_Riki_View.runAction(SKAction.setTexture(SKTexture(image: Naoe_Riki.image[Naoe_Riki.character.imageNumber++])))
+        Naoe_Riki_View.runAction(SKAction.setTexture(SKTexture(image: Naoe_Riki.image[Naoe_Riki.attribute.imageNumber++])))
     }
     
 }
