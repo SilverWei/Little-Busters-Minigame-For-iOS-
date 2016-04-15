@@ -100,8 +100,12 @@ class GameCharacter{
     )
     func Natsume_Rin_Array() -> [UIImage]{
         var Natsume_Rin_Array:[UIImage] = []
-        let Natsume_Rin_H = (Natsume_Rin_Attribute.image.size.height - 64) / 8
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 0, w: 68, h: Natsume_Rin_H))
+        let Natsume_Rin_H:CGFloat = 210 / 3
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 2, w: 68, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 2 + Natsume_Rin_H, w: 68, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 2 + Natsume_Rin_H * 2, w: 68, h: Natsume_Rin_H))
+        
+        
         
         return Natsume_Rin_Array
     }

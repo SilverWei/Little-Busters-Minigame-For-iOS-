@@ -12,6 +12,9 @@ class KittyBaseballGame: SKScene {
     
     let GameView = SKNode()
     let Baseballfield = GameObject().Baseballfield()
+    let TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.05)) //帧数刷新延时
+    var TouchAmount = 0
+
     
     //初始化角色
     //直枝 理樹
@@ -27,6 +30,8 @@ class KittyBaseballGame: SKScene {
         image: GameCharacter().Natsume_Rin_Array()
     )
     var Natsume_Rin_View = SKSpriteNode(texture: SKTexture(image: GameCharacter().Natsume_Rin_Array()[0]))
+    var Natsume_Rin_Shadow = SKShapeNode()
+    
     
     //初始化按钮
     var MovingButton_Status = MovingButton_Touch.Stop
@@ -84,11 +89,14 @@ class KittyBaseballGame: SKScene {
         Natsume_Rin_View.position = Natsume_Rin.attribute.point
         Natsume_Rin_View.zPosition = Layers.CharacterBehind.rawValue
         Baseballfield.addChild(Natsume_Rin_View)
+        
     }
     
     func Show_Shadow(){
         Naoe_Riki_Shadow = GameObject().Shadow( Naoe_Riki.attribute.point.x + Naoe_Riki.attribute.Shadow_x, y: Naoe_Riki.attribute.point.y + Naoe_Riki.attribute.Shadow_y, w: Naoe_Riki.attribute.Shadow_w, h: Naoe_Riki.attribute.Shadow_h)
         Baseballfield.addChild(Naoe_Riki_Shadow)
+        Natsume_Rin_Shadow = GameObject().Shadow( Natsume_Rin.attribute.point.x + Natsume_Rin.attribute.Shadow_x, y: Natsume_Rin.attribute.point.y + Natsume_Rin.attribute.Shadow_y, w: Natsume_Rin.attribute.Shadow_w, h: Natsume_Rin.attribute.Shadow_h)
+        Baseballfield.addChild(Natsume_Rin_Shadow)
     }
     
     func Show_Button(){
@@ -109,63 +117,85 @@ class KittyBaseballGame: SKScene {
             if MovingButton_UP.containsPoint(location) {
                 MovingButton_Status = .UP
                 MovingButton_UP.fillColor = SKColor.whiteColor()
-                print("UP")
             }
             else if MovingButton_Down.containsPoint(location) {
                 MovingButton_Status = .Down
                 MovingButton_Down.fillColor = SKColor.whiteColor()
-                print("UP")
             }
             else if MovingButton_Left.containsPoint(location) {
                 MovingButton_Status = .Left
                 MovingButton_Left.fillColor = SKColor.whiteColor()
-                print("UP")
             }
             else if MovingButton_Right.containsPoint(location) {
                 MovingButton_Status = .Right
                 MovingButton_Right.fillColor = SKColor.whiteColor()
-                print("UP")
             }
             else{
                 Naoe_Riki.attribute.status = GameCharacter.Naoe_Riki_Status.NR_Swing.hashValue
+                Natsume_Rin.attribute.status = GameCharacter.Natsume_Rin_Status.NR_Swing.hashValue
+            }
+        }
+        if(++TouchAmount > 2){
+            TouchAmount = 2
+        }
+    }
+    
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        for touch: AnyObject in touches {
+            // Get the location of the touch in this scene
+            let location = touch.locationInNode(self)
+            // Check if the location of the touch is within the button's bounds
+            AllButtonColorClear()
+            
+            if MovingButton_UP.containsPoint(location) {
+                MovingButton_Status = .UP
+                MovingButton_UP.fillColor = SKColor.whiteColor()
+            }
+            else if MovingButton_Down.containsPoint(location) {
+                MovingButton_Status = .Down
+                MovingButton_Down.fillColor = SKColor.whiteColor()
+            }
+            else if MovingButton_Left.containsPoint(location) {
+                MovingButton_Status = .Left
+                MovingButton_Left.fillColor = SKColor.whiteColor()
+            }
+            else if MovingButton_Right.containsPoint(location) {
+                MovingButton_Status = .Right
+                MovingButton_Right.fillColor = SKColor.whiteColor()
+            }
+            else{
+                MovingButton_Status = .Stop
+                
+                //移动整个Map
+                if(location.y > self.frame.height * 0.25){
+                    Baseballfield.position = CGPoint(x: Baseballfield.frame.width * -(location.x / self.frame.width) + Baseballfield.frame.width * 0.55, y: Baseballfield.frame.height * -(location.y / self.frame.height) + Baseballfield.frame.height / 2)
+                }
             }
         }
     }
-
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        MovingButton_Status = .Stop
+        if(--TouchAmount <= 0){
+            AllButtonColorClear()
+            MovingButton_Status = .Stop
+        }
+    }
+    func AllButtonColorClear(){
         MovingButton_UP.fillColor = SKColor.clearColor()
         MovingButton_Down.fillColor = SKColor.clearColor()
         MovingButton_Left.fillColor = SKColor.clearColor()
         MovingButton_Right.fillColor = SKColor.clearColor()
-        print("Stop")
     }
-    
     
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        Status_Naoe_Riki() //前面的人物状态
+        //更新人物状态
+        Status_Naoe_Riki() //理 树
         
     }
     
     func Status_Naoe_Riki(){
         //直枝 理樹
-        if(Naoe_Riki.attribute.status != GameCharacter.Naoe_Riki_Status.NR_static.hashValue){
-            if(Naoe_Riki.attribute.imageNumber.hashValue == 9){
-                Naoe_Riki.attribute.imageNumber = 0
-                Naoe_Riki_View.runAction(SKAction.setTexture(SKTexture(image: Naoe_Riki.image[Naoe_Riki.attribute.imageNumber])))
-                Naoe_Riki.attribute.status = GameCharacter.Naoe_Riki_Status.NR_static.hashValue
-                return
-            }
-            //如果动作未完成则继续完成原来的动作
-            if((actionForKey("Characterfront_SwingAction")) != nil){
-                return
-            }
-            let Characterfront_Start = SKAction.runBlock(Characterfront_Swing)
-            let TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.05))
-            let Characterfront_SwingAction = SKAction.sequence([Characterfront_Start,TimeInterval])
-            runAction(Characterfront_SwingAction, withKey: "Characterfront_SwingAction")
-        }
+        
         switch MovingButton_Status{
         case .UP:
             Naoe_Riki_View.position = CGPoint(x: Naoe_Riki_View.position.x, y: Naoe_Riki_View.position.y + 1)
@@ -195,9 +225,30 @@ class KittyBaseballGame: SKScene {
             Naoe_Riki_View.position.y = Naoe_Riki_Range.position.y + Naoe_Riki_Range.frame.height
         }
         Naoe_Riki_Shadow.position = CGPoint(x: Naoe_Riki_View.position.x + Naoe_Riki.attribute.Shadow_x, y: Naoe_Riki_View.position.y + Naoe_Riki.attribute.Shadow_y)
+        
+        if((actionForKey("Naoe_Riki_SwingAction")) != nil){
+            return
+        }
+        switch Naoe_Riki.attribute.status{
+        case GameCharacter.Naoe_Riki_Status.NR_Swing.hashValue:
+            if(Naoe_Riki.attribute.imageNumber.hashValue > 9){
+                Naoe_Riki.attribute.imageNumber = 0
+                Naoe_Riki_View.runAction(SKAction.setTexture(SKTexture(image: Naoe_Riki.image[Naoe_Riki.attribute.imageNumber])))
+                Naoe_Riki.attribute.status = GameCharacter.Naoe_Riki_Status.NR_static.hashValue
+                return
+            }
+            let Naoe_Riki_Start = SKAction.runBlock(Naoe_Riki_Swing)
+            let Naoe_Riki_SwingAction = SKAction.sequence([Naoe_Riki_Start,TimeInterval])
+            runAction(Naoe_Riki_SwingAction, withKey: "Naoe_Riki_SwingAction")
+            break
+        default:
+            break
+        }
+        
+
+        
     }
-    
-    func Characterfront_Swing(){
+    func Naoe_Riki_Swing(){
         Naoe_Riki_View.runAction(SKAction.setTexture(SKTexture(image: Naoe_Riki.image[Naoe_Riki.attribute.imageNumber++])))
     }
     
