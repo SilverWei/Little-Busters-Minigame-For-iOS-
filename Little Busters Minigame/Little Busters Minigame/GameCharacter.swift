@@ -70,7 +70,7 @@ class GameCharacter{
     }
     //动作状态
     enum Naoe_Riki_Status{
-        case NR_static //静止
+        case NR_Static //静止
         case NR_Swing //挥动
     }
     func Naoe_Riki_Range() -> SKShapeNode{
@@ -90,29 +90,80 @@ class GameCharacter{
     
     //棗 鈴
     var Natsume_Rin_Attribute = Attribute(image: UIImage(named: "NatsumeRin")!,
-        point: CGPoint(x:  GameObject().Baseballfield().anchorPoint.x, y: GameObject().Baseballfield().anchorPoint.y + 200),
+        point: CGPoint(x:  GameObject().Baseballfield().anchorPoint.x, y: GameObject().Baseballfield().anchorPoint.y + 235),
         status: 0,
         imageNumber: 0,
-        Shadow_x: -5,
-        Shadow_y: -35,
+        Shadow_x: -4,
+        Shadow_y: -33,
         Shadow_w: 35,
         Shadow_h: 15
     )
     func Natsume_Rin_Array() -> [UIImage]{
         var Natsume_Rin_Array:[UIImage] = []
-        let Natsume_Rin_H:CGFloat = 210 / 3
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 2, w: 68, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 2 + Natsume_Rin_H, w: 68, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 2 + Natsume_Rin_H * 2, w: 68, h: Natsume_Rin_H))
+        var Natsume_Rin_H:CGFloat = 73
+        var Natsume_Rin_W:CGFloat = 68
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: -1, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: -1 + Natsume_Rin_H, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: -1 + Natsume_Rin_H * 2, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        
+        Natsume_Rin_H = 65
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 224, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 305, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        
+        Natsume_Rin_H = 80
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 375, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 375 + Natsume_Rin_H, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 375 + Natsume_Rin_H * 2, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        
+        Natsume_Rin_H = 640 / 8
+        var Natsume_Rin_L:CGFloat = 68
+        var Natsume_Rin_T:CGFloat = -6
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 2, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 3, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 4, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 5, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 6, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 7, w: Natsume_Rin_W, h: Natsume_Rin_H))
         
         
+        Natsume_Rin_L = 135
+        Natsume_Rin_W = 56
+        Natsume_Rin_T = -1
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 2, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 3, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 4, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 5, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 6, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 7, w: Natsume_Rin_W, h: Natsume_Rin_H))
         
+        Natsume_Rin_L = 191
+        Natsume_Rin_W = 70
+        Natsume_Rin_T = -7
+        Natsume_Rin_H = 643 / 8
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 2, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 3, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 4, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 5, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 6, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 7, w: Natsume_Rin_W, h: Natsume_Rin_H))
         return Natsume_Rin_Array
     }
     //动作状态
     enum Natsume_Rin_Status{
-        case NR_static //静止
+        case NR_Static //静止
+        case NR_TopBall //接顶球
+        case NR_DownBall //接底球
+        case NR_Anger //愤怒
         case NR_Swing //挥动
+        case NR_Surprise //惊讶
+        case NR_ShelterLeft //左躲避
+        case NR_ShelterRight //右躲避
     }
 
     func ImageInterception(character: Attribute, x: CGFloat, y: CGFloat, w: CGFloat,h: CGFloat) -> UIImage {

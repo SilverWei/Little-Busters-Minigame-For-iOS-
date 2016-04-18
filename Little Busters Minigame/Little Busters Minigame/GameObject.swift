@@ -12,7 +12,6 @@ class GameObject{
     //棒球场背景
     internal func Baseballfield() -> SKSpriteNode{
         let image = SKSpriteNode(imageNamed: "Baseballfield-day")
-    
         let BaseballfieldMagnification:CGFloat = 2
         image.size = CGSizeMake(image.size.width * BaseballfieldMagnification, image.size.height * BaseballfieldMagnification)
         image.anchorPoint = CGPoint(x: 0.5, y: 0.25)
@@ -29,6 +28,16 @@ class GameObject{
         ShadowForm.position = CGPoint(x: x, y: y)
         ShadowForm.zPosition = KittyBaseballGame.Layers.shadow.rawValue
         return ShadowForm
+    }
+    
+    //棒球
+    internal func Baseball() -> SKSpriteNode{
+        let image = SKSpriteNode(imageNamed: "Baseball")
+        image.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x, y: GameObject().Baseballfield().anchorPoint.y + 180)
+        image.size = CGSizeMake(13, 13)
+        image.anchorPoint = CGPoint(x: 0.5, y: 0)
+        image.zPosition = KittyBaseballGame.Layers.Baseball.rawValue
+        return image
     }
     
     //按钮

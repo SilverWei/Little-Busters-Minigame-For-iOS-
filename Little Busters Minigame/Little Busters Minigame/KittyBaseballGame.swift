@@ -11,10 +11,12 @@ import SpriteKit
 class KittyBaseballGame: SKScene {
     
     let GameView = SKNode()
+    var TouchAmount = 0 //监测触摸数量
+    
+    //初始化物体
     let Baseballfield = GameObject().Baseballfield()
-    let TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.05)) //帧数刷新延时
-    var TouchAmount = 0
-
+    let Baseball = GameObject().Baseball()
+    var Baseball_Shadow = SKShapeNode()
     
     //初始化角色
     //直枝 理樹
@@ -49,7 +51,7 @@ class KittyBaseballGame: SKScene {
         case Cat //猫
         case CharacterBehind //在后面的人物
         case Baseball //棒球
-        case Characterfront //在前面的人物
+        case CharacterFront //在前面的人物
         case Button //按钮
     }
     
@@ -66,10 +68,11 @@ class KittyBaseballGame: SKScene {
         /* Setup your scene here */
         addChild(GameView)
         Show_Baseballfield()//显示棒球场背景
-        Show_Characterfront()//显示在前面的人物
-        show_CharacterBehind()//显示在后面的人物
+        Show_CharacterFront()//显示在前面的人物
+        Show_CharacterBehind()//显示在后面的人物
         Show_Shadow()//显示阴影
         Show_Button()//显示按钮
+        Show_Baseball()//显示棒球
     }
     
     func Show_Baseballfield(){
@@ -77,26 +80,33 @@ class KittyBaseballGame: SKScene {
         GameView.addChild(Baseballfield)
     }
     
-    func Show_Characterfront(){
+    func Show_CharacterFront(){
         Naoe_Riki_View.position = Naoe_Riki.attribute.point
-        Naoe_Riki_View.zPosition = Layers.Characterfront.rawValue
+        Naoe_Riki_View.zPosition = Layers.CharacterFront.rawValue
         Baseballfield.addChild(Naoe_Riki_View)
-        Naoe_Riki_Range.zPosition = Layers.Characterfront.rawValue
+        Naoe_Riki_Range.zPosition = Layers.CharacterFront.rawValue
         Baseballfield.addChild(Naoe_Riki_Range)
     }
     
-    func show_CharacterBehind(){
+    func Show_CharacterBehind(){
         Natsume_Rin_View.position = Natsume_Rin.attribute.point
         Natsume_Rin_View.zPosition = Layers.CharacterBehind.rawValue
         Baseballfield.addChild(Natsume_Rin_View)
-        
+    }
+    
+    func Show_Baseball(){
+        Baseball.zPosition = Layers.Baseball.rawValue
+        Baseballfield.addChild(Baseball)
     }
     
     func Show_Shadow(){
-        Naoe_Riki_Shadow = GameObject().Shadow( Naoe_Riki.attribute.point.x + Naoe_Riki.attribute.Shadow_x, y: Naoe_Riki.attribute.point.y + Naoe_Riki.attribute.Shadow_y, w: Naoe_Riki.attribute.Shadow_w, h: Naoe_Riki.attribute.Shadow_h)
+        Naoe_Riki_Shadow = GameObject().Shadow(Naoe_Riki.attribute.point.x + Naoe_Riki.attribute.Shadow_x, y: Naoe_Riki.attribute.point.y + Naoe_Riki.attribute.Shadow_y, w: Naoe_Riki.attribute.Shadow_w, h: Naoe_Riki.attribute.Shadow_h)
         Baseballfield.addChild(Naoe_Riki_Shadow)
-        Natsume_Rin_Shadow = GameObject().Shadow( Natsume_Rin.attribute.point.x + Natsume_Rin.attribute.Shadow_x, y: Natsume_Rin.attribute.point.y + Natsume_Rin.attribute.Shadow_y, w: Natsume_Rin.attribute.Shadow_w, h: Natsume_Rin.attribute.Shadow_h)
+        Natsume_Rin_Shadow = GameObject().Shadow(Natsume_Rin.attribute.point.x + Natsume_Rin.attribute.Shadow_x, y: Natsume_Rin.attribute.point.y + Natsume_Rin.attribute.Shadow_y, w: Natsume_Rin.attribute.Shadow_w, h: Natsume_Rin.attribute.Shadow_h)
         Baseballfield.addChild(Natsume_Rin_Shadow)
+        
+        Baseball_Shadow = GameObject().Shadow(Baseball.position.x, y: Baseball.position.y, w: Baseball.frame.width, h: Baseball.frame.height / 2)
+        Baseballfield.addChild(Baseball_Shadow)
     }
     
     func Show_Button(){
@@ -107,6 +117,7 @@ class KittyBaseballGame: SKScene {
         MovingButton.addChild(MovingButton_Right)
         GameView.addChild(MovingButton)
     }
+
     
     //MARK: 点击
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -186,16 +197,19 @@ class KittyBaseballGame: SKScene {
         MovingButton_Right.fillColor = SKColor.clearColor()
     }
     
+    
+    //MARK: 更新
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         //更新人物状态
         Status_Naoe_Riki() //理 树
+        Status_Natsume_Rin()//棗 鈴
         
     }
     
+    //MARK: 动作更新
+    //MARK: 理 樹
     func Status_Naoe_Riki(){
-        //直枝 理樹
-        
         switch MovingButton_Status{
         case .UP:
             Naoe_Riki_View.position = CGPoint(x: Naoe_Riki_View.position.x, y: Naoe_Riki_View.position.y + 1)
@@ -234,22 +248,56 @@ class KittyBaseballGame: SKScene {
             if(Naoe_Riki.attribute.imageNumber.hashValue > 9){
                 Naoe_Riki.attribute.imageNumber = 0
                 Naoe_Riki_View.runAction(SKAction.setTexture(SKTexture(image: Naoe_Riki.image[Naoe_Riki.attribute.imageNumber])))
-                Naoe_Riki.attribute.status = GameCharacter.Naoe_Riki_Status.NR_static.hashValue
+                Naoe_Riki.attribute.status = GameCharacter.Naoe_Riki_Status.NR_Static.hashValue
                 return
             }
             let Naoe_Riki_Start = SKAction.runBlock(Naoe_Riki_Swing)
+            //帧数刷新延时
+            var TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.01))
+            if(Naoe_Riki.attribute.imageNumber.hashValue == 9){
+                TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.2))
+            }
             let Naoe_Riki_SwingAction = SKAction.sequence([Naoe_Riki_Start,TimeInterval])
             runAction(Naoe_Riki_SwingAction, withKey: "Naoe_Riki_SwingAction")
             break
         default:
             break
         }
-        
-
-        
     }
     func Naoe_Riki_Swing(){
         Naoe_Riki_View.runAction(SKAction.setTexture(SKTexture(image: Naoe_Riki.image[Naoe_Riki.attribute.imageNumber++])))
     }
     
+    //MARK: 棗 鈴
+    func Status_Natsume_Rin(){
+        if((actionForKey("Natsume_Rin_SwingAction")) != nil){
+            return
+        }
+        switch Natsume_Rin.attribute.status{
+        case GameCharacter.Natsume_Rin_Status.NR_Swing.hashValue:
+            if(Natsume_Rin.attribute.imageNumber.hashValue < 9){
+                Natsume_Rin.attribute.imageNumber = 9
+            }
+            if(Natsume_Rin.attribute.imageNumber.hashValue > 15){
+                Natsume_Rin.attribute.imageNumber = 0
+                Natsume_Rin_View.runAction(SKAction.setTexture(SKTexture(image: Natsume_Rin.image[Natsume_Rin.attribute.imageNumber])))
+                Natsume_Rin.attribute.status = GameCharacter.Natsume_Rin_Status.NR_Static.hashValue
+                return
+            }
+            let Natsume_Rin_Start = SKAction.runBlock(Natsume_Rin_Swing)
+            //帧数刷新延时
+            var TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.05))
+            if(Naoe_Riki.attribute.imageNumber.hashValue == 14){
+                TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.5))
+            }
+            let Natsume_Rin_SwingAction = SKAction.sequence([Natsume_Rin_Start,TimeInterval])
+            runAction(Natsume_Rin_SwingAction, withKey: "Natsume_Rin_SwingAction")
+            break
+        default:
+            break
+        }
+    }
+    func Natsume_Rin_Swing(){
+        Natsume_Rin_View.runAction(SKAction.setTexture(SKTexture(image: Natsume_Rin.image[Natsume_Rin.attribute.imageNumber++])))
+    }
 }
