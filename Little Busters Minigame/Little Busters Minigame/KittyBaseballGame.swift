@@ -97,6 +97,7 @@ class KittyBaseballGame: SKScene {
     func Show_Baseball(){
         Baseball.zPosition = Layers.Baseball.rawValue
         Baseballfield.addChild(Baseball)
+        Baseball.hidden = true
     }
     
     func Show_Shadow(){
@@ -107,6 +108,8 @@ class KittyBaseballGame: SKScene {
         
         Baseball_Shadow = GameObject().Shadow(Baseball.position.x, y: Baseball.position.y, w: Baseball.frame.width, h: Baseball.frame.height / 2)
         Baseballfield.addChild(Baseball_Shadow)
+        Baseball_Shadow.hidden = true
+        
     }
     
     func Show_Button(){
@@ -203,8 +206,10 @@ class KittyBaseballGame: SKScene {
         /* Called before each frame is rendered */
         //更新人物状态
         Status_Naoe_Riki() //理 树
-        Status_Natsume_Rin()//棗 鈴
-        
+        Status_Natsume_Rin() //棗 鈴
+        Status_Baseball() //棒 球
+
+
     }
     
     //MARK: 动作更新
@@ -284,6 +289,10 @@ class KittyBaseballGame: SKScene {
                 Natsume_Rin.attribute.status = GameCharacter.Natsume_Rin_Status.NR_Static.hashValue
                 return
             }
+            if(Natsume_Rin.attribute.imageNumber.hashValue == 13){
+                //球已投出
+                Baseball_Cast()
+            }
             let Natsume_Rin_Start = SKAction.runBlock(Natsume_Rin_Swing)
             //帧数刷新延时
             var TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.05))
@@ -300,4 +309,23 @@ class KittyBaseballGame: SKScene {
     func Natsume_Rin_Swing(){
         Natsume_Rin_View.runAction(SKAction.setTexture(SKTexture(image: Natsume_Rin.image[Natsume_Rin.attribute.imageNumber++])))
     }
+    
+    func Status_Baseball(){
+        Baseball.position = CGPoint(x: Baseball_Shadow.position.x, y: Baseball_Shadow.position.y)
+    }
+    
+    func Baseball_Cast(){
+        Baseball.hidden = false
+        Baseball_Shadow.hidden = false
+        let BallPath = UIBezierPath()
+        BallPath.moveToPoint(CGPoint(x: Baseball.position.x, y: Baseball.position.y))
+        BallPath.addLineToPoint(CGPoint(x: Baseball.position.x, y: -(Baseballfield.frame.height * Baseballfield.anchorPoint.y)))
+        BallPath.addLineToPoint(CGPoint(x: GameObject().Baseballfield().anchorPoint.x, y: GameObject().Baseball().position.y))
+        Baseball_Shadow.runAction(SKAction.followPath(BallPath.CGPath, asOffset: false, orientToPath: true, speed: 500)) {
+            self.Baseball.hidden = true
+            self.Baseball_Shadow.hidden = true
+        }
+    }
+    
 }
+
