@@ -33,7 +33,7 @@ class GameObject{
     //棒球
     internal func Baseball() -> SKSpriteNode{
         let image = SKSpriteNode(imageNamed: "Baseball")
-        image.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x, y: GameObject().Baseballfield().anchorPoint.y + 200)
+        image.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x - 17, y: GameObject().Baseballfield().anchorPoint.y + 200)
         image.size = CGSizeMake(13, 13)
         image.anchorPoint = CGPoint(x: 0.5, y: 0)
         image.zPosition = KittyBaseballGame.Layers.Baseball.rawValue

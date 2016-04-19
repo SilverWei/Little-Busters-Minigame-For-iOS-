@@ -76,7 +76,7 @@ class KittyBaseballGame: SKScene {
     }
     
     func Show_Baseballfield(){
-        Baseballfield.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        Baseballfield.position = CGPoint(x: size.width / 2 + 20, y: size.height / 2 - 30)
         GameView.addChild(Baseballfield)
     }
     
@@ -289,7 +289,7 @@ class KittyBaseballGame: SKScene {
                 Natsume_Rin.attribute.status = GameCharacter.Natsume_Rin_Status.NR_Static.hashValue
                 return
             }
-            if(Natsume_Rin.attribute.imageNumber.hashValue == 13){
+            if(Natsume_Rin.attribute.imageNumber.hashValue == 12){
                 //球已投出
                 Baseball_Cast()
             }
@@ -320,7 +320,7 @@ class KittyBaseballGame: SKScene {
         let BallPath = UIBezierPath()
         BallPath.moveToPoint(CGPoint(x: Baseball.position.x, y: Baseball.position.y))
         BallPath.addLineToPoint(CGPoint(x: Baseball.position.x, y: -(Baseballfield.frame.height * Baseballfield.anchorPoint.y)))
-        BallPath.addLineToPoint(CGPoint(x: GameObject().Baseballfield().anchorPoint.x, y: GameObject().Baseball().position.y))
+        BallPath.addLineToPoint(CGPoint(x: GameObject().Baseball().position.x, y: GameObject().Baseball().position.y))
         Baseball_Shadow.runAction(SKAction.followPath(BallPath.CGPath, asOffset: false, orientToPath: true, speed: 500)) {
             self.Baseball.hidden = true
             self.Baseball_Shadow.hidden = true
