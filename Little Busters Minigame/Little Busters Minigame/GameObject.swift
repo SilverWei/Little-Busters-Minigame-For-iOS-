@@ -37,7 +37,31 @@ class GameObject{
         image.size = CGSizeMake(13, 13)
         image.anchorPoint = CGPoint(x: 0.5, y: 0)
         image.zPosition = KittyBaseballGame.Layers.Baseball.rawValue
+        let path = CGPathCreateMutable()
+        CGPathMoveToPoint(path, nil, -3, 7)
+        CGPathAddLineToPoint(path, nil, 3, 7)
+        CGPathAddLineToPoint(path, nil, 7, 3)
+        CGPathAddLineToPoint(path, nil, 7, -3)
+        CGPathAddLineToPoint(path, nil, 3, -7)
+        CGPathAddLineToPoint(path, nil, -3, -7)
+        CGPathAddLineToPoint(path, nil, -7, -3)
+        CGPathAddLineToPoint(path, nil, -7, 3)
+        CGPathCloseSubpath(path)
+        image.physicsBody = SKPhysicsBody(polygonFromPath: path)
+        image.physicsBody?.categoryBitMask = KittyBaseballGame.Collision.Baseball
+        image.physicsBody?.collisionBitMask = 0
+        image.physicsBody?.contactTestBitMask = KittyBaseballGame.Collision.BaseballBat
         return image
+    }
+    //动作状态
+    enum Baseball_Status{
+        case B_Static //静止
+        case B_Cast //投出
+    }
+    enum Baseball_UpDown{
+        case B_Up
+        case B_Down
+        case B_Static
     }
     
     //按钮
@@ -114,6 +138,15 @@ class GameObject{
         return Triangle
     }
     
+    //测试按钮
+    internal func TestButton() -> SKSpriteNode{
+        let View_Width:CGFloat = 120
+        let View = SKSpriteNode(color: SKColor.blackColor(), size: CGSize(width: View_Width, height: View_Width * 0.75))
+        View.alpha = 0.5
+        View.anchorPoint = CGPoint(x: 0, y: 0)
+        View.position = CGPoint(x: 20, y: 200)
+        return View
+    }
 
 }
 
