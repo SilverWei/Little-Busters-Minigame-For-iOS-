@@ -14,9 +14,6 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     var TouchAmount = 0 //监测触摸数量
     var DateTime: NSTimeInterval = 0
     var LastDateTime: NSTimeInterval = 0
-    let Gravity:CGFloat = -2500.0
-    let ClimbingSpeed:CGFloat = 4000.0
-    var BallSpeed:CGFloat = 0
     
     //MARK: 初始化物体
     let Baseballfield = GameObject().Baseballfield()
@@ -24,6 +21,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     let Baseball = GameObject().Baseball()
     var Baseball_Status = GameObject.Baseball_Status.B_Static
     var Baseball_UpDown = GameObject.Baseball_UpDown.B_Static
+    var Baseball_Power = GameObject.Baseball_Power(ball_x: 0,ball_y: 0,height: 0,length: 0)
     var Baseball_Shadow = SKShapeNode()
     
     //MARK: 初始化角色
@@ -247,6 +245,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             DateTime = 0
         }
         LastDateTime = currentTime
+       
+        Baseball_Power.ball_x = Baseball_Power.ball_x + CGFloat(DateTime) * 50
         
         //更新人物状态
         Status_Naoe_Riki() //理 树
@@ -389,7 +389,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     //MARK: 棒球
     func Status_Baseball(){
         
-        switch Baseball_UpDown{
+   /*     switch Baseball_UpDown{
         case .B_Up:
             BallSpeed = BallSpeed - Gravity * CGFloat(DateTime)
             if BallSpeed > ClimbingSpeed{
@@ -404,23 +404,25 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             break
         case .B_Static:
             break
+        }*/
+        Baseball_Power.ball_y = (-((Baseball_Power.ball_x * Baseball_Power.ball_x)) + Baseball_Power.length * Baseball_Power.ball_x) / Baseball_Power.height
+        if(Baseball_Power.ball_y < 0){
+            Baseball_Power.ball_y = 0
         }
-        
-        print(BallSpeed)
-        Baseball.position = CGPoint(x: Baseball_Shadow.position.x, y: Baseball_Shadow.position.y + BallSpeed * CGFloat(DateTime))
+        print(Baseball_Power.ball_y)
+        Baseball.position = CGPoint(x: Baseball_Shadow.position.x, y: Baseball_Shadow.position.y + Baseball_Power.ball_y)
     }
     
     func Baseball_Cast(){
         Baseball.hidden = false
         Baseball_Shadow.hidden = false
-        
-        Baseball_UpDown = GameObject.Baseball_UpDown.B_Up
-        BallSpeed = 0
+
+        Baseball_Power = GameObject.Baseball_Power(ball_x: 2,ball_y: 0,height: 3, length: 35)
         
         let BallPath = UIBezierPath()
         BallPath.moveToPoint(CGPoint(x: GameObject().Baseball().position.x, y: GameObject().Baseball().position.y))
         BallPath.addLineToPoint(CGPoint(x: Baseball.position.x, y: -(Baseballfield.frame.height * Baseballfield.anchorPoint.y)))
-        Baseball_Shadow.runAction(SKAction.followPath(BallPath.CGPath, asOffset: false, orientToPath: true, speed: 100)) {
+        Baseball_Shadow.runAction(SKAction.followPath(BallPath.CGPath, asOffset: false, orientToPath: true, speed: 500)) {
             self.Baseball.hidden = true
             self.Baseball_Shadow.hidden = true
             self.Baseball_Status = GameObject.Baseball_Status.B_Static
@@ -429,6 +431,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     
     func Baseball_Return(){
         Baseball_Shadow.removeAllActions()
+        
+        Baseball_Power = GameObject.Baseball_Power(ball_x: 2,ball_y: 0,height: 3, length: 35)
         let BallPath = UIBezierPath()
         BallPath.moveToPoint(CGPoint(x: Baseball_Shadow.position.x, y: Baseball_Shadow.position.y))
         BallPath.addLineToPoint(CGPoint(x: Baseball_Shadow.position.x, y: GameObject().Baseball().position.y))

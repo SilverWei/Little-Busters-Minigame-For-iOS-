@@ -63,6 +63,13 @@ class GameObject{
         case B_Down
         case B_Static
     }
+    struct Baseball_Power {
+        var ball_x: CGFloat //已运动距离
+        var ball_y: CGFloat //已运动高度
+        var height: CGFloat //高度
+        var length: CGFloat //总运动距离
+    }
+    
     
     //按钮
     internal func MovingButton() -> SKSpriteNode{
