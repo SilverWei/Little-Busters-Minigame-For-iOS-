@@ -57,11 +57,7 @@ class GameObject{
     enum Baseball_Status{
         case B_Static //静止
         case B_Cast //投出
-    }
-    enum Baseball_UpDown{
-        case B_Up
-        case B_Down
-        case B_Static
+        case B_Return //投出
     }
     struct Baseball_Power {
         var ball_x: CGFloat //已运动距离

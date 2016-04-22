@@ -25,8 +25,11 @@ class GameCharacter{
         var Shadow_w: CGFloat
         var Shadow_h: CGFloat
     }
+    func ImageInterception(character: Attribute, x: CGFloat, y: CGFloat, w: CGFloat,h: CGFloat) -> UIImage {
+        return UIImage(CGImage: CGImageCreateWithImageInRect(character.image.CGImage, CGRectMake(x, y, w, h))!)
+    }
     
-    //直枝 理樹
+    //MARK: 直枝 理樹
     var Naoe_Riki_Attribute = Attribute(image: UIImage(named: "NaoeRiki")!,
         point: CGPoint(x:  GameObject().Baseballfield().anchorPoint.x, y: GameObject().Baseballfield().anchorPoint.y - 100),
         status: 0,
@@ -88,7 +91,31 @@ class GameCharacter{
         return Range
     }
     
-    //棗 鈴
+    func Naoe_Riki_Contact() -> [CGPath]{
+        var Contact_Array:[CGPath] = []
+        let path1 = CGPathCreateMutable()
+        CGPathMoveToPoint(path1, nil, 13, -10)
+        CGPathAddLineToPoint(path1, nil, 37, -19)
+        CGPathAddLineToPoint(path1, nil, 21, -29)
+        CGPathCloseSubpath(path1)
+        Contact_Array.append(path1)
+        let path2 = CGPathCreateMutable()
+        CGPathMoveToPoint(path2, nil, 19, -6)
+        CGPathAddLineToPoint(path2, nil, 48, -5)
+        CGPathAddLineToPoint(path2, nil, 39, -12)
+        CGPathCloseSubpath(path2)
+        Contact_Array.append(path2)
+        let path3 = CGPathCreateMutable()
+        CGPathMoveToPoint(path3, nil, 15, -3)
+        CGPathAddLineToPoint(path3, nil, 41, 8)
+        CGPathAddLineToPoint(path3, nil, 37, -2)
+        CGPathCloseSubpath(path3)
+        Contact_Array.append(path3)
+        return Contact_Array
+    }
+    
+    
+    //MARK: 棗 鈴
     var Natsume_Rin_Attribute = Attribute(image: UIImage(named: "NatsumeRin")!,
         point: CGPoint(x:  GameObject().Baseballfield().anchorPoint.x, y: GameObject().Baseballfield().anchorPoint.y + 235),
         status: 0,
@@ -166,8 +193,6 @@ class GameCharacter{
         case NR_ShelterRight //右躲避
     }
 
-    func ImageInterception(character: Attribute, x: CGFloat, y: CGFloat, w: CGFloat,h: CGFloat) -> UIImage {
-        return UIImage(CGImage: CGImageCreateWithImageInRect(character.image.CGImage, CGRectMake(x, y, w, h))!)
-    }
+
 }
 
