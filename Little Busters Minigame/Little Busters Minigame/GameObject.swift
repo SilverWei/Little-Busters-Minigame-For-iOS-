@@ -31,7 +31,13 @@ class GameObject{
     }
     
     //棒球
-    internal func Baseball() -> SKSpriteNode{
+    struct Baseball {
+        let Baseball_Image = GameObject().Baseball_Image()
+        var Baseball_Status = GameObject.Baseball_Status.B_Static
+        var Baseball_Power = GameObject.Baseball_Power(ball_x: 0,ball_y: 0,height: 0,length: 0)
+        var Baseball_Shadow = SKShapeNode()
+    }
+    internal func Baseball_Image() -> SKSpriteNode{
         let image = SKSpriteNode(imageNamed: "Baseball")
         image.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x - 17, y: GameObject().Baseballfield().anchorPoint.y + 200)
         image.size = CGSizeMake(13, 13)

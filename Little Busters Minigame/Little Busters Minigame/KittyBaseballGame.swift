@@ -18,10 +18,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     //MARK: 初始化物体
     let Baseballfield = GameObject().Baseballfield()
     
-    let Baseball = GameObject().Baseball()
-    var Baseball_Status = GameObject.Baseball_Status.B_Static
-    var Baseball_Power = GameObject.Baseball_Power(ball_x: 0,ball_y: 0,height: 0,length: 0)
-    var Baseball_Shadow = SKShapeNode()
+    var Baseball = [GameObject.Baseball()]
     
     //MARK: 初始化角色
     //直枝 理樹
@@ -118,9 +115,9 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     }
     
     func Show_Baseball(){
-        Baseball.zPosition = Layers.Baseball.rawValue        
-        Baseballfield.addChild(Baseball)
-        Baseball.hidden = true
+        Baseball[0].Baseball_Image.zPosition = Layers.Baseball.rawValue
+        Baseballfield.addChild(Baseball[0].Baseball_Image)
+        Baseball[0].Baseball_Image.hidden = true
     }
     
     func Show_Shadow(){
@@ -130,9 +127,9 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Natsume_Rin_Shadow = GameObject().Shadow(Natsume_Rin.attribute.point.x + Natsume_Rin.attribute.Shadow_x, y: Natsume_Rin.attribute.point.y + Natsume_Rin.attribute.Shadow_y, w: Natsume_Rin.attribute.Shadow_w, h: Natsume_Rin.attribute.Shadow_h)
         Baseballfield.addChild(Natsume_Rin_Shadow)
         
-        Baseball_Shadow = GameObject().Shadow(Baseball.position.x, y: Baseball.position.y, w: Baseball.frame.width, h: Baseball.frame.height / 2)
-        Baseballfield.addChild(Baseball_Shadow)
-        Baseball_Shadow.hidden = true
+        Baseball[0].Baseball_Shadow = GameObject().Shadow(Baseball[0].Baseball_Image.position.x, y: Baseball[0].Baseball_Image.position.y, w: Baseball[0].Baseball_Image.frame.width, h: Baseball[0].Baseball_Image.frame.height / 2)
+        Baseballfield.addChild(Baseball[0].Baseball_Shadow)
+        Baseball[0].Baseball_Shadow.hidden = true
         
     }
     
@@ -173,9 +170,9 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 MovingButton_Right.fillColor = SKColor.whiteColor()
             }
             else if TestButton.containsPoint(location){
-                if(Baseball_Status != GameObject.Baseball_Status.B_Cast){
+                if(Baseball[0].Baseball_Status != GameObject.Baseball_Status.B_Cast){
                     self.Natsume_Rin.attribute.status = GameCharacter.Natsume_Rin_Status.NR_Swing.hashValue
-                    self.Baseball_Status = GameObject.Baseball_Status.B_Cast
+                    self.Baseball[0].Baseball_Status = GameObject.Baseball_Status.B_Cast
                 }
             }
             else{
@@ -245,12 +242,12 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         }
         LastDateTime = currentTime
        
-        Baseball_Power.ball_x = Baseball_Power.ball_x + CGFloat(DateTime) * 50
+        Baseball[0].Baseball_Power.ball_x = Baseball[0].Baseball_Power.ball_x + CGFloat(DateTime) * 50
         
         //更新人物状态
         Status_Naoe_Riki() //理 树
         Status_Natsume_Rin() //棗 鈴
-        Status_Baseball() //棒 球
+        Status_Baseball(0) //棒 球
 
     }
     
@@ -352,7 +349,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             }
             if(Natsume_Rin.attribute.imageNumber.hashValue == 12){
                 //球已投出
-                Baseball_Cast()
+                Baseball_Cast(0)
             }
             let Natsume_Rin_Start = SKAction.runBlock(Natsume_Rin_Swing)
             //帧数刷新延时
@@ -372,38 +369,37 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     }
     
     //MARK: 棒球
-    func Status_Baseball(){
+    func Status_Baseball(Baseball_Number: Int){
         
-        Baseball_Power.ball_y = (-((Baseball_Power.ball_x * Baseball_Power.ball_x)) + Baseball_Power.length * Baseball_Power.ball_x) / Baseball_Power.height
-        if(Baseball_Power.ball_y < 0){
-            Baseball_Power.ball_y = 0
+        Baseball[Baseball_Number].Baseball_Power.ball_y = (-((Baseball[Baseball_Number].Baseball_Power.ball_x * Baseball[Baseball_Number].Baseball_Power.ball_x)) + Baseball[Baseball_Number].Baseball_Power.length * Baseball[Baseball_Number].Baseball_Power.ball_x) / Baseball[Baseball_Number].Baseball_Power.height
+        if(Baseball[Baseball_Number].Baseball_Power.ball_y < 0){
+            Baseball[Baseball_Number].Baseball_Power.ball_y = 0
         }
-        //print(Baseball_Power.ball_y)
-        Baseball.position = CGPoint(x: Baseball_Shadow.position.x, y: Baseball_Shadow.position.y + Baseball_Power.ball_y)
+        Baseball[Baseball_Number].Baseball_Image.position = CGPoint(x: Baseball[Baseball_Number].Baseball_Shadow.position.x, y: Baseball[Baseball_Number].Baseball_Shadow.position.y + Baseball[Baseball_Number].Baseball_Power.ball_y)
     }
     
-    func Baseball_Cast(){
-        Baseball.hidden = false
-        Baseball_Shadow.hidden = false
+    func Baseball_Cast(Baseball_Number:Int){
+        Baseball[Baseball_Number].Baseball_Image.hidden = false
+        Baseball[Baseball_Number].Baseball_Shadow.hidden = false
 
-        Baseball_Power = GameObject.Baseball_Power(ball_x: 2,ball_y: 0,height: 3, length: 35)
+        Baseball[Baseball_Number].Baseball_Power = GameObject.Baseball_Power(ball_x: 2,ball_y: 0,height: 3, length: 35)
         
         let BallPath = UIBezierPath()
-        BallPath.moveToPoint(CGPoint(x: GameObject().Baseball().position.x, y: GameObject().Baseball().position.y))
-        BallPath.addLineToPoint(CGPoint(x: GameObject().Baseball().position.x, y: -(Baseballfield.frame.height * Baseballfield.anchorPoint.y)))
-        Baseball_Shadow.runAction(SKAction.followPath(BallPath.CGPath, asOffset: false, orientToPath: true, speed: 500)) {
-            self.Baseball.hidden = true
-            self.Baseball_Shadow.hidden = true
-            self.Baseball_Status = GameObject.Baseball_Status.B_Static
+        BallPath.moveToPoint(CGPoint(x: GameObject.Baseball().Baseball_Image.position.x, y: GameObject.Baseball().Baseball_Image.position.y))
+        BallPath.addLineToPoint(CGPoint(x: GameObject.Baseball().Baseball_Image.position.x, y: -(Baseballfield.frame.height * Baseballfield.anchorPoint.y)))
+        Baseball[Baseball_Number].Baseball_Shadow.runAction(SKAction.followPath(BallPath.CGPath, asOffset: false, orientToPath: true, speed: 500)) {
+            self.Baseball[Baseball_Number].Baseball_Image.hidden = true
+            self.Baseball[Baseball_Number].Baseball_Shadow.hidden = true
+            self.Baseball[Baseball_Number].Baseball_Status = GameObject.Baseball_Status.B_Static
         }
     }
     
-    func Baseball_Return(contact: CGPoint){
-        Baseball_Shadow.removeAllActions()
+    func Baseball_Return(Baseball_Number: Int,contact: CGPoint){
+        Baseball[Baseball_Number].Baseball_Shadow.removeAllActions()
         
-        Baseball_Power = GameObject.Baseball_Power(ball_x: 2,ball_y: 0,height: 3, length: 35)
+        Baseball[Baseball_Number].Baseball_Power = GameObject.Baseball_Power(ball_x: 2,ball_y: 0,height: 3, length: 35)
         let BallPath = UIBezierPath()
-        BallPath.moveToPoint(CGPoint(x: Baseball_Shadow.position.x, y: Baseball_Shadow.position.y))
+        BallPath.moveToPoint(CGPoint(x: Baseball[Baseball_Number].Baseball_Shadow.position.x, y: Baseball[Baseball_Number].Baseball_Shadow.position.y))
         if Naoe_Riki.attribute.imageNumber.hashValue == 4 {
             let HeightRatio = (contact.x - CGPathGetBoundingBox(GameCharacter().Naoe_Riki_Contact()[0]).minX) / CGPathGetBoundingBox(GameCharacter().Naoe_Riki_Contact()[0]).width
             BallPath.addLineToPoint(CGPoint(x: Baseballfield.frame.width / 2, y: Baseballfield.frame.height * (1 - HeightRatio) - Baseballfield.frame.height * Baseballfield.anchorPoint.y))
@@ -416,19 +412,19 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             let HeightRatio = (contact.x - CGPathGetBoundingBox(GameCharacter().Naoe_Riki_Contact()[2]).minX) / CGPathGetBoundingBox(GameCharacter().Naoe_Riki_Contact()[2]).width
             BallPath.addLineToPoint(CGPoint(x: -Baseballfield.frame.width / 2, y: Baseballfield.frame.height * HeightRatio - Baseballfield.frame.height * Baseballfield.anchorPoint.y))
         }
-        Baseball_Status = .B_Return
-        Baseball_Shadow.runAction(SKAction.followPath(BallPath.CGPath, asOffset: false, orientToPath: true, speed: 500)) {
-            self.Baseball.hidden = true
-            self.Baseball_Shadow.hidden = true
-            self.Baseball_Status = .B_Static
+        Baseball[Baseball_Number].Baseball_Status = .B_Return
+        Baseball[Baseball_Number].Baseball_Shadow.runAction(SKAction.followPath(BallPath.CGPath, asOffset: false, orientToPath: true, speed: 500)) {
+            self.Baseball[Baseball_Number].Baseball_Image.hidden = true
+            self.Baseball[Baseball_Number].Baseball_Shadow.hidden = true
+            self.Baseball[Baseball_Number].Baseball_Status = .B_Static
         }
     }
     
     //NARK: 物理撞击
     func didBeginContact(contact: SKPhysicsContact) {
         let ContactUnit = contact.bodyA.categoryBitMask == Collision.Baseball ? contact.bodyB : contact.bodyA
-        if ContactUnit.categoryBitMask == Collision.BaseballBat && Baseball_Status == GameObject.Baseball_Status.B_Cast{
-            Baseball_Return(convertPoint(contact.contactPoint, toNode: Naoe_Riki_View))
+        if ContactUnit.categoryBitMask == Collision.BaseballBat && Baseball[0].Baseball_Status == GameObject.Baseball_Status.B_Cast{
+            Baseball_Return(0, contact: convertPoint(contact.contactPoint, toNode: Naoe_Riki_View))
         }
     }
     
