@@ -244,7 +244,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             DateTime = 0
         }
         LastDateTime = currentTime
-       
+        
         Baseball[0].Baseball_Power.ball_x = Baseball[0].Baseball_Power.ball_x + CGFloat(DateTime) * 50
         
         //更新人物状态
@@ -389,9 +389,15 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     //MARK: 棒球
     func Status_Baseball(Baseball_Number: Int){
         
-        Baseball[Baseball_Number].Baseball_Power.ball_y = (-((Baseball[Baseball_Number].Baseball_Power.ball_x * Baseball[Baseball_Number].Baseball_Power.ball_x)) + Baseball[Baseball_Number].Baseball_Power.length * Baseball[Baseball_Number].Baseball_Power.ball_x) / Baseball[Baseball_Number].Baseball_Power.height
+        Baseball[Baseball_Number].Baseball_Power.ball_y = (-(Baseball[Baseball_Number].Baseball_Power.ball_x * Baseball[Baseball_Number].Baseball_Power.ball_x) + Baseball[Baseball_Number].Baseball_Power.length * Baseball[Baseball_Number].Baseball_Power.ball_x) / Baseball[Baseball_Number].Baseball_Power.height
         if(Baseball[Baseball_Number].Baseball_Power.ball_y < 0){
-            Baseball[Baseball_Number].Baseball_Power.ball_y = 0
+            if Baseball[Baseball_Number].Baseball_Power.height < 25 {
+                Baseball[Baseball_Number].Baseball_Power.ball_x = 0
+                Baseball[Baseball_Number].Baseball_Power.height = Baseball[Baseball_Number].Baseball_Power.height * 3
+            }
+            else{
+                Baseball[Baseball_Number].Baseball_Power.ball_y = 0
+            }
         }
         Baseball[Baseball_Number].Baseball_Image.position = CGPoint(x: Baseball[Baseball_Number].Baseball_Unit.position.x, y: Baseball[Baseball_Number].Baseball_Unit.position.y + Baseball[Baseball_Number].Baseball_Power.ball_y)
         Baseball[Baseball_Number].Baseball_Shadow.position = CGPoint(x: Baseball[0].Baseball_Unit.position.x, y: Baseball[0].Baseball_Unit.position.y)
@@ -402,16 +408,13 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Baseball[Baseball_Number].Baseball_Image.hidden = false
         Baseball[Baseball_Number].Baseball_Shadow.hidden = false
 
-        Baseball[Baseball_Number].Baseball_Power = GameObject.Baseball_Power(ball_x: 2,ball_y: 0,height: 3, length: 35)
+        Baseball[Baseball_Number].Baseball_Power = GameObject.Baseball_Power(ball_x: 2,ball_y: 0,height: 10, length: 50)
         
         let BallPath = UIBezierPath()
         BallPath.moveToPoint(CGPoint(x: GameObject.Baseball().Baseball_Image.position.x, y: GameObject.Baseball().Baseball_Image.position.y))
         BallPath.addLineToPoint(CGPoint(x: GameObject.Baseball().Baseball_Image.position.x, y: -(Baseballfield.frame.height * Baseballfield.anchorPoint.y)))
-        //BallPath.addLineToPoint(CGPoint(x: GameObject.Baseball().Baseball_Image.position.x + 500, y: GameObject.Baseball().Baseball_Image.position.y))
-        Baseball[Baseball_Number].Baseball_Unit.runAction(SKAction.followPath(BallPath.CGPath, asOffset: false, orientToPath: false, speed: 500)) {
-            self.Baseball[Baseball_Number].Baseball_Image.hidden = true
-            self.Baseball[Baseball_Number].Baseball_Shadow.hidden = true
-            self.Baseball[Baseball_Number].Baseball_Status = GameObject.Baseball_Status.B_Static
+        Baseball[Baseball_Number].Baseball_Unit.runAction(SKAction.followPath(BallPath.CGPath, asOffset: false, orientToPath: false, speed: 400)) {
+            self.Baseball_Static(0)
         }
     }
     
@@ -435,16 +438,22 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         }
         Baseball[Baseball_Number].Baseball_Status = .B_Return
         Baseball[Baseball_Number].Baseball_Unit.runAction(SKAction.followPath(BallPath.CGPath, asOffset: false, orientToPath: false, speed: 500)) {
-            self.Baseball[Baseball_Number].Baseball_Image.hidden = true
-            self.Baseball[Baseball_Number].Baseball_Shadow.hidden = true
-            self.Baseball[Baseball_Number].Baseball_Status = .B_Static
+            self.Baseball_Static(0)
         }
+        Baseball[0].Baseball_Unit.runAction(SKAction.speedTo(0, duration: 4), completion: { () -> Void in
+            self.Baseball_Static(0)
+        })
+    }
+    func Baseball_Static(Baseball_Number: Int){
+        Baseball[Baseball_Number].Baseball_Image.hidden = true
+        Baseball[Baseball_Number].Baseball_Shadow.hidden = true
+        Baseball[Baseball_Number].Baseball_Status = .B_Static
+        Baseball[Baseball_Number].Baseball_Unit.runAction(SKAction.speedTo(1, duration: 0))
     }
     
     //MARK: 视图
     func Status_View(Object_Point: CGPoint){
         //移动整个Map
-        print(Object_Point)
         Baseballfield.position = CGPoint(x: -Object_Point.x + (size.width / 2), y: -Object_Point.y + (size.height / 2))
     }
     
