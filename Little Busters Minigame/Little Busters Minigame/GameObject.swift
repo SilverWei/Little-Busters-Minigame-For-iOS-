@@ -15,6 +15,7 @@ class GameObject{
         let BaseballfieldMagnification:CGFloat = 2
         image.size = CGSizeMake(image.size.width * BaseballfieldMagnification, image.size.height * BaseballfieldMagnification)
         image.anchorPoint = CGPoint(x: 0.5, y: 0.25)
+        image.position = CGPoint(x: 230, y: 200)
         image.zPosition = KittyBaseballGame.Layers.Baseballfield.rawValue
         return image
     }
@@ -36,6 +37,7 @@ class GameObject{
         var Baseball_Status = GameObject.Baseball_Status.B_Static
         var Baseball_Power = GameObject.Baseball_Power(ball_x: 0,ball_y: 0,height: 0,length: 0)
         var Baseball_Shadow = SKShapeNode()
+        var Baseball_Unit = SKShapeNode()
     }
     internal func Baseball_Image() -> SKSpriteNode{
         let image = SKSpriteNode(imageNamed: "Baseball")
@@ -63,7 +65,7 @@ class GameObject{
     enum Baseball_Status{
         case B_Static //静止
         case B_Cast //投出
-        case B_Return //投出
+        case B_Return //击回
     }
     struct Baseball_Power {
         var ball_x: CGFloat //已运动距离
