@@ -413,6 +413,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         let BallPath = UIBezierPath()
         BallPath.moveToPoint(CGPoint(x: GameObject.Baseball().Baseball_Image.position.x, y: GameObject.Baseball().Baseball_Image.position.y))
         BallPath.addLineToPoint(CGPoint(x: GameObject.Baseball().Baseball_Image.position.x, y: -(Baseballfield.frame.height * Baseballfield.anchorPoint.y)))
+        Baseball[Baseball_Number].Baseball_Unit.runAction(SKAction.speedTo(1, duration: 0))
         Baseball[Baseball_Number].Baseball_Unit.runAction(SKAction.followPath(BallPath.CGPath, asOffset: false, orientToPath: false, speed: 400)) {
             self.Baseball_Static(0)
         }
@@ -437,6 +438,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             BallPath.addLineToPoint(CGPoint(x: -Baseballfield.frame.width / 2, y: Baseballfield.frame.height * HeightRatio - Baseballfield.frame.height * Baseballfield.anchorPoint.y))
         }
         Baseball[Baseball_Number].Baseball_Status = .B_Return
+        Baseball[Baseball_Number].Baseball_Unit.runAction(SKAction.speedTo(1, duration: 0))
         Baseball[Baseball_Number].Baseball_Unit.runAction(SKAction.followPath(BallPath.CGPath, asOffset: false, orientToPath: false, speed: 500)) {
             self.Baseball_Static(0)
         }
@@ -448,7 +450,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Baseball[Baseball_Number].Baseball_Image.hidden = true
         Baseball[Baseball_Number].Baseball_Shadow.hidden = true
         Baseball[Baseball_Number].Baseball_Status = .B_Static
-        Baseball[Baseball_Number].Baseball_Unit.runAction(SKAction.speedTo(1, duration: 0))
+        Baseball[Baseball_Number].Baseball_Unit.removeAllActions()
     }
     
     //MARK: 视图
