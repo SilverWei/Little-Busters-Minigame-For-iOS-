@@ -8,8 +8,6 @@
 
 import SpriteKit
 
-
-
 class GameMenu: SKScene {
     
     let MenuView = SKNode()

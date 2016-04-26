@@ -11,7 +11,7 @@
 		07913F121CBB54A4005ED5D4 /* Menu.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 07913F111CBB54A4005ED5D4 /* Menu.atlas */; };
 		07913F161CBB8BC1005ED5D4 /* KittyBaseballGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07913F151CBB8BC1005ED5D4 /* KittyBaseballGame.swift */; };
 		07913F1C1CBB95F1005ED5D4 /* KittyBaseballGame.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 07913F1B1CBB95F1005ED5D4 /* KittyBaseballGame.atlas */; };
-		07913F1E1CBC88C5005ED5D4 /* GameCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07913F1D1CBC88C5005ED5D4 /* GameCharacter.swift */; };
+		07913F1E1CBC88C5005ED5D4 /* GamePeople.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07913F1D1CBC88C5005ED5D4 /* GamePeople.swift */; };
 		07913F201CBC90BA005ED5D4 /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07913F1F1CBC90BA005ED5D4 /* GameObject.swift */; };
 		07F57DBC1CBB4077000CC1CD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F57DBB1CBB4077000CC1CD /* AppDelegate.swift */; };
 		07F57DC01CBB4077000CC1CD /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F57DBF1CBB4077000CC1CD /* GameScene.swift */; };
@@ -37,7 +37,7 @@
 		07913F111CBB54A4005ED5D4 /* Menu.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Menu.atlas; sourceTree = "<group>"; };
 		07913F151CBB8BC1005ED5D4 /* KittyBaseballGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KittyBaseballGame.swift; sourceTree = "<group>"; };
 		07913F1B1CBB95F1005ED5D4 /* KittyBaseballGame.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = KittyBaseballGame.atlas; sourceTree = "<group>"; };
-		07913F1D1CBC88C5005ED5D4 /* GameCharacter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCharacter.swift; sourceTree = "<group>"; };
+		07913F1D1CBC88C5005ED5D4 /* GamePeople.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamePeople.swift; sourceTree = "<group>"; };
 		07913F1F1CBC90BA005ED5D4 /* GameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 		07F57DB81CBB4077000CC1CD /* Little Busters Minigame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Little Busters Minigame.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		07F57DBB1CBB4077000CC1CD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 				07913F061CBB50E0005ED5D4 /* GameMenu.swift */,
 				07913F151CBB8BC1005ED5D4 /* KittyBaseballGame.swift */,
 				07913F1F1CBC90BA005ED5D4 /* GameObject.swift */,
-				07913F1D1CBC88C5005ED5D4 /* GameCharacter.swift */,
+				07913F1D1CBC88C5005ED5D4 /* GamePeople.swift */,
 				07F57DC61CBB4077000CC1CD /* Assets.xcassets */,
 				07F57DC31CBB4077000CC1CD /* Main.storyboard */,
 				07F57DC81CBB4077000CC1CD /* LaunchScreen.storyboard */,
@@ -232,7 +232,7 @@
 				07913F201CBC90BA005ED5D4 /* GameObject.swift in Sources */,
 				07913F161CBB8BC1005ED5D4 /* KittyBaseballGame.swift in Sources */,
 				07F57DC01CBB4077000CC1CD /* GameScene.swift in Sources */,
-				07913F1E1CBC88C5005ED5D4 /* GameCharacter.swift in Sources */,
+				07913F1E1CBC88C5005ED5D4 /* GamePeople.swift in Sources */,
 				07F57DC21CBB4077000CC1CD /* GameViewController.swift in Sources */,
 				07F57DBC1CBB4077000CC1CD /* AppDelegate.swift in Sources */,
 			);

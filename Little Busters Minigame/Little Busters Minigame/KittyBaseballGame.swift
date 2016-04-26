@@ -19,21 +19,22 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     let Baseballfield = GameObject().Baseballfield()
     
     var Baseball = [GameObject.Baseball()]
+    var Baseball_Jumps: CGFloat = 2
     
     //MARK: 初始化角色
     //直枝 理樹
-    var Naoe_Riki = GameCharacter.Unit(attribute: GameCharacter().Naoe_Riki_Attribute,
-        image: GameCharacter().Naoe_Riki_Array()
+    var Naoe_Riki = GamePeople.Unit(attribute: GamePeople().Naoe_Riki_Attribute,
+        image: GamePeople().Naoe_Riki_Array()
     )
-    var Naoe_Riki_View = SKSpriteNode(texture: SKTexture(image: GameCharacter().Naoe_Riki_Array()[0]))
+    var Naoe_Riki_View = SKSpriteNode(texture: SKTexture(image: GamePeople().Naoe_Riki_Array()[0]))
     var Naoe_Riki_Shadow = SKShapeNode()
-    var Naoe_Riki_Range = GameCharacter().Naoe_Riki_Range()
+    var Naoe_Riki_Range = GamePeople().Naoe_Riki_Range()
     
     //棗 鈴
-    var Natsume_Rin = GameCharacter.Unit(attribute: GameCharacter().Natsume_Rin_Attribute,
-        image: GameCharacter().Natsume_Rin_Array()
+    var Natsume_Rin = GamePeople.Unit(attribute: GamePeople().Natsume_Rin_Attribute,
+        image: GamePeople().Natsume_Rin_Array()
     )
-    var Natsume_Rin_View = SKSpriteNode(texture: SKTexture(image: GameCharacter().Natsume_Rin_Array()[0]))
+    var Natsume_Rin_View = SKSpriteNode(texture: SKTexture(image: GamePeople().Natsume_Rin_Array()[0]))
     var Natsume_Rin_Shadow = SKShapeNode()
     
     
@@ -53,9 +54,9 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         case shadow //阴影
         case OtherBody //其他物件
         case Cat //猫
-        case CharacterBehind //在后面的人物
+        case PeopleBehind //在后面的人物
         case Baseball //棒球
-        case CharacterFront //在前面的人物
+        case PeopleFront //在前面的人物
         case Button //按钮
     }
     
@@ -64,7 +65,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         static let null: UInt32 = 0
         static let Baseball: UInt32 = 0b1
         static let BaseballBat: UInt32 = 0b10
-        static let CharacterFront: UInt32 = 0b100
+        static let PeopleFront: UInt32 = 0b100
     }
     
     //MARK: 按钮状态
@@ -87,8 +88,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         
         addChild(GameView)
         Show_Baseballfield()//显示棒球场背景
-        Show_CharacterFront()//显示在前面的人物
-        Show_CharacterBehind()//显示在后面的人物
+        Show_PeopleFront()//显示在前面的人物
+        Show_PeopleBehind()//显示在后面的人物
         Show_Shadow()//显示阴影
         Show_Button()//显示按钮
         Show_Baseball()//显示棒球
@@ -98,18 +99,19 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         GameView.addChild(Baseballfield)
     }
     
-    func Show_CharacterFront(){
+    func Show_PeopleFront(){
         Naoe_Riki_View.position = Naoe_Riki.attribute.point
-        Naoe_Riki_View.zPosition = Layers.CharacterFront.rawValue
+        Naoe_Riki_View.zPosition = Layers.PeopleFront.rawValue
+        Naoe_Riki_View.addChild(GamePeople().Naoe_Riki_BodyContact())
         Baseballfield.addChild(Naoe_Riki_View)
         
-        Naoe_Riki_Range.zPosition = Layers.CharacterFront.rawValue
+        Naoe_Riki_Range.zPosition = Layers.PeopleFront.rawValue
         Baseballfield.addChild(Naoe_Riki_Range)
     }
     
-    func Show_CharacterBehind(){
+    func Show_PeopleBehind(){
         Natsume_Rin_View.position = Natsume_Rin.attribute.point
-        Natsume_Rin_View.zPosition = Layers.CharacterBehind.rawValue
+        Natsume_Rin_View.zPosition = Layers.PeopleBehind.rawValue
         Baseballfield.addChild(Natsume_Rin_View)
     }
     
@@ -144,7 +146,6 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         MovingButton.addChild(MovingButton_Right)
         GameView.addChild(MovingButton)
         
-        
         TestButton.zPosition = Layers.Button.rawValue
         GameView.addChild(TestButton)
     }
@@ -174,12 +175,12 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             }
             else if TestButton.containsPoint(location){
                 if(Baseball[0].Baseball_Status != GameObject.Baseball_Status.B_Cast){
-                    self.Natsume_Rin.attribute.status = GameCharacter.Natsume_Rin_Status.NR_Swing.hashValue
+                    self.Natsume_Rin.attribute.status = GamePeople.Natsume_Rin_Status.NR_Swing.hashValue
                     self.Baseball[0].Baseball_Status = GameObject.Baseball_Status.B_Cast
                 }
             }
             else{
-                Naoe_Riki.attribute.status = GameCharacter.Naoe_Riki_Status.NR_Swing.hashValue
+                Naoe_Riki.attribute.status = GamePeople.Naoe_Riki_Status.NR_Swing.hashValue
             }
         }
         if(++TouchAmount > 2){
@@ -268,56 +269,63 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     //MARK: 动作更新
     //MARK: 理 樹
     func Status_Naoe_Riki(){
-        switch MovingButton_Status{
-        case .UP:
-            Naoe_Riki_View.position = CGPoint(x: Naoe_Riki_View.position.x, y: Naoe_Riki_View.position.y + 1)
-            break
-        case .Down:
-            Naoe_Riki_View.position = CGPoint(x: Naoe_Riki_View.position.x, y: Naoe_Riki_View.position.y - 1)
-            break
-        case .Left:
-            Naoe_Riki_View.position = CGPoint(x: Naoe_Riki_View.position.x - 1, y: Naoe_Riki_View.position.y)
-            break
-        case .Right:
-            Naoe_Riki_View.position = CGPoint(x: Naoe_Riki_View.position.x + 1, y: Naoe_Riki_View.position.y)
-            break
-        default:
-            break
+        if(Naoe_Riki.attribute.status != GamePeople.Naoe_Riki_Status.NR_FallDown.hashValue){
+            switch MovingButton_Status{
+            case .UP:
+                Naoe_Riki_View.position = CGPoint(x: Naoe_Riki_View.position.x, y: Naoe_Riki_View.position.y + 1)
+                break
+            case .Down:
+                Naoe_Riki_View.position = CGPoint(x: Naoe_Riki_View.position.x, y: Naoe_Riki_View.position.y - 1)
+                break
+            case .Left:
+                Naoe_Riki_View.position = CGPoint(x: Naoe_Riki_View.position.x - 1, y: Naoe_Riki_View.position.y)
+                break
+            case .Right:
+                Naoe_Riki_View.position = CGPoint(x: Naoe_Riki_View.position.x + 1, y: Naoe_Riki_View.position.y)
+                break
+            default:
+                break
+            }
+            if(Naoe_Riki_View.position.x < Naoe_Riki_Range.position.x){
+                Naoe_Riki_View.position.x = Naoe_Riki_Range.position.x
+            }
+            if(Naoe_Riki_View.position.x > Naoe_Riki_Range.position.x + Naoe_Riki_Range.frame.width){
+                Naoe_Riki_View.position.x = Naoe_Riki_Range.position.x + Naoe_Riki_Range.frame.width
+            }
+            if(Naoe_Riki_View.position.y < Naoe_Riki_Range.position.y){
+                Naoe_Riki_View.position.y = Naoe_Riki_Range.position.y
+            }
+            if(Naoe_Riki_View.position.y > Naoe_Riki_Range.position.y + Naoe_Riki_Range.frame.height){
+                Naoe_Riki_View.position.y = Naoe_Riki_Range.position.y + Naoe_Riki_Range.frame.height
+            }
+            Naoe_Riki_Shadow.position = CGPoint(x: Naoe_Riki_View.position.x + Naoe_Riki.attribute.Shadow_x, y: Naoe_Riki_View.position.y + Naoe_Riki.attribute.Shadow_y)
         }
-        if(Naoe_Riki_View.position.x < Naoe_Riki_Range.position.x){
-            Naoe_Riki_View.position.x = Naoe_Riki_Range.position.x
-        }
-        if(Naoe_Riki_View.position.x > Naoe_Riki_Range.position.x + Naoe_Riki_Range.frame.width){
-            Naoe_Riki_View.position.x = Naoe_Riki_Range.position.x + Naoe_Riki_Range.frame.width
-        }
-        if(Naoe_Riki_View.position.y < Naoe_Riki_Range.position.y){
-            Naoe_Riki_View.position.y = Naoe_Riki_Range.position.y
-        }
-        if(Naoe_Riki_View.position.y > Naoe_Riki_Range.position.y + Naoe_Riki_Range.frame.height){
-            Naoe_Riki_View.position.y = Naoe_Riki_Range.position.y + Naoe_Riki_Range.frame.height
-        }
-        Naoe_Riki_Shadow.position = CGPoint(x: Naoe_Riki_View.position.x + Naoe_Riki.attribute.Shadow_x, y: Naoe_Riki_View.position.y + Naoe_Riki.attribute.Shadow_y)
         
-        if((actionForKey("Naoe_Riki_SwingAction")) != nil){
-            return
-        }
+        var TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.01)) //帧数刷新延时
         switch Naoe_Riki.attribute.status{
-        case GameCharacter.Naoe_Riki_Status.NR_Swing.hashValue:
+        case GamePeople.Naoe_Riki_Status.NR_Swing.hashValue:
+            if((actionForKey("Naoe_Riki_StatusAction")) != nil){
+                return
+            }
             if(Naoe_Riki.attribute.imageNumber.hashValue > 9){
                 Naoe_Riki.attribute.imageNumber = 0
                 Naoe_Riki_View.runAction(SKAction.setTexture(SKTexture(image: Naoe_Riki.image[Naoe_Riki.attribute.imageNumber])))
-                Naoe_Riki.attribute.status = GameCharacter.Naoe_Riki_Status.NR_Static.hashValue
+                Naoe_Riki.attribute.status = GamePeople.Naoe_Riki_Status.NR_Static.hashValue
                 return
             }
+            if(Naoe_Riki.attribute.imageNumber.hashValue == 9){
+                TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.2))
+            }
+            
             if(Naoe_Riki.attribute.imageNumber.hashValue == 3){
-                Naoe_Riki_View.physicsBody = SKPhysicsBody(polygonFromPath: GameCharacter().Naoe_Riki_Contact()[0])
+                Naoe_Riki_View.physicsBody = SKPhysicsBody(polygonFromPath: GamePeople().Naoe_Riki_Contact()[0])
             }
             else if(Naoe_Riki.attribute.imageNumber.hashValue == 4){
                 
-                Naoe_Riki_View.physicsBody = SKPhysicsBody(polygonFromPath: GameCharacter().Naoe_Riki_Contact()[1])
+                Naoe_Riki_View.physicsBody = SKPhysicsBody(polygonFromPath: GamePeople().Naoe_Riki_Contact()[1])
             }
             else if(Naoe_Riki.attribute.imageNumber.hashValue == 5){
-                Naoe_Riki_View.physicsBody = SKPhysicsBody(polygonFromPath: GameCharacter().Naoe_Riki_Contact()[2])
+                Naoe_Riki_View.physicsBody = SKPhysicsBody(polygonFromPath: GamePeople().Naoe_Riki_Contact()[2])
             }
             else{
                 Naoe_Riki_View.physicsBody = nil
@@ -326,17 +334,38 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             Naoe_Riki_View.physicsBody?.collisionBitMask = 0
             Naoe_Riki_View.physicsBody?.contactTestBitMask = Collision.Baseball
             
-            let Naoe_Riki_Start = SKAction.runBlock(Naoe_Riki_Swing)
-            var TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.01)) //帧数刷新延时
-            if(Naoe_Riki.attribute.imageNumber.hashValue == 9){
-                TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.2))
+            break
+        case GamePeople.Naoe_Riki_Status.NR_FallDown.hashValue:
+            if((actionForKey("Naoe_Riki_StatusAction")) != nil && Naoe_Riki.attribute.status == GamePeople.Naoe_Riki_Status.NR_FallDown.hashValue){
+                return
             }
-            let Naoe_Riki_SwingAction = SKAction.sequence([Naoe_Riki_Start,TimeInterval])
-            runAction(Naoe_Riki_SwingAction, withKey: "Naoe_Riki_SwingAction")
+            if(Naoe_Riki.attribute.imageNumber.hashValue > 31){
+                Naoe_Riki.attribute.imageNumber = 0
+                Naoe_Riki_View.runAction(SKAction.setTexture(SKTexture(image: Naoe_Riki.image[Naoe_Riki.attribute.imageNumber])))
+                Naoe_Riki.attribute.status = GamePeople.Naoe_Riki_Status.NR_Static.hashValue
+                return
+            }
+            TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.05))
+            if(Naoe_Riki.attribute.imageNumber.hashValue < 10){
+                Naoe_Riki.attribute.imageNumber = 10
+                Naoe_Riki_View.physicsBody = nil
+            }
+            if(Naoe_Riki.attribute.imageNumber.hashValue > 16){
+                TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.1))
+            }
+            if(Naoe_Riki.attribute.imageNumber.hashValue == 18){
+                TimeInterval = SKAction.waitForDuration(NSTimeInterval(2))
+            }
             break
         default:
             break
         }
+        if(Naoe_Riki.attribute.status != GamePeople.Naoe_Riki_Status.NR_Static.hashValue){
+            let Naoe_Riki_Start = SKAction.runBlock(Naoe_Riki_Swing)
+            let Naoe_Riki_SwingAction = SKAction.sequence([Naoe_Riki_Start,TimeInterval])
+            runAction(Naoe_Riki_SwingAction, withKey: "Naoe_Riki_StatusAction")
+        }
+        
     }
     func Naoe_Riki_Swing(){
         Naoe_Riki_View.runAction(SKAction.setTexture(SKTexture(image: Naoe_Riki.image[Naoe_Riki.attribute.imageNumber++])))
@@ -344,28 +373,27 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     
     //MARK: 棗 鈴
     func Status_Natsume_Rin(){
-        if((actionForKey("Natsume_Rin_SwingAction")) != nil){
+        if((actionForKey("Natsume_Rin_StatusAction")) != nil){
             return
         }
+        //帧数刷新延时
+        var TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.05))
         switch Natsume_Rin.attribute.status{
-        case GameCharacter.Natsume_Rin_Status.NR_Swing.hashValue:
+        case GamePeople.Natsume_Rin_Status.NR_Swing.hashValue:
             if(Natsume_Rin.attribute.imageNumber.hashValue < 9){
                 Natsume_Rin.attribute.imageNumber = 9
             }
             if(Natsume_Rin.attribute.imageNumber.hashValue > 15){
                 Natsume_Rin.attribute.imageNumber = 0
                 Natsume_Rin_View.runAction(SKAction.setTexture(SKTexture(image: Natsume_Rin.image[Natsume_Rin.attribute.imageNumber])))
-                Natsume_Rin.attribute.status = GameCharacter.Natsume_Rin_Status.NR_Static.hashValue
+                Natsume_Rin.attribute.status = GamePeople.Natsume_Rin_Status.NR_Static.hashValue
                 return
             }
             if(Natsume_Rin.attribute.imageNumber.hashValue == 12){
                 //球已投出
                 Baseball_Cast(0)
             }
-            let Natsume_Rin_Start = SKAction.runBlock(Natsume_Rin_Swing)
-            //帧数刷新延时
-            var TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.05))
-            
+
             if(Natsume_Rin.attribute.imageNumber.hashValue == 9){
                 Baseballfield.position = GameObject().Baseballfield().position
             }
@@ -375,12 +403,17 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             if(Natsume_Rin.attribute.imageNumber.hashValue == 14){
                 TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.5))
             }
-            let Natsume_Rin_SwingAction = SKAction.sequence([Natsume_Rin_Start,TimeInterval])
-            runAction(Natsume_Rin_SwingAction, withKey: "Natsume_Rin_SwingAction")
+            Natsume_Rin_StatusAction(TimeInterval)
             break
         default:
             break
         }
+        
+    }
+    func Natsume_Rin_StatusAction(TimeInterval:SKAction){
+        let Natsume_Rin_Start = SKAction.runBlock(Natsume_Rin_Swing)
+        let Natsume_Rin_SwingAction = SKAction.sequence([Natsume_Rin_Start,TimeInterval])
+        runAction(Natsume_Rin_SwingAction, withKey: "Natsume_Rin_StatusAction")
     }
     func Natsume_Rin_Swing(){
         Natsume_Rin_View.runAction(SKAction.setTexture(SKTexture(image: Natsume_Rin.image[Natsume_Rin.attribute.imageNumber++])))
@@ -391,9 +424,9 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         
         Baseball[Baseball_Number].Baseball_Power.ball_y = (-(Baseball[Baseball_Number].Baseball_Power.ball_x * Baseball[Baseball_Number].Baseball_Power.ball_x) + Baseball[Baseball_Number].Baseball_Power.length * Baseball[Baseball_Number].Baseball_Power.ball_x) / Baseball[Baseball_Number].Baseball_Power.height
         if(Baseball[Baseball_Number].Baseball_Power.ball_y < 0){
-            if Baseball[Baseball_Number].Baseball_Power.height < 25 {
+            if Baseball[Baseball_Number].Baseball_Power.height < 12 {
                 Baseball[Baseball_Number].Baseball_Power.ball_x = 0
-                Baseball[Baseball_Number].Baseball_Power.height = Baseball[Baseball_Number].Baseball_Power.height * 3
+                Baseball[Baseball_Number].Baseball_Power.height = Baseball[Baseball_Number].Baseball_Power.height * Baseball_Jumps++
             }
             else{
                 Baseball[Baseball_Number].Baseball_Power.ball_y = 0
@@ -405,45 +438,46 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     }
     
     func Baseball_Cast(Baseball_Number:Int){
-        Baseball[Baseball_Number].Baseball_Image.hidden = false
-        Baseball[Baseball_Number].Baseball_Shadow.hidden = false
 
-        Baseball[Baseball_Number].Baseball_Power = GameObject.Baseball_Power(ball_x: 2,ball_y: 0,height: 10, length: 50)
+        Baseball[Baseball_Number].Baseball_Power = GameObject.Baseball_Power(ball_x: 2,ball_y: 0,height: 5, length: 60)
+        Baseball_Jumps = 2
         
         let BallPath = UIBezierPath()
         BallPath.moveToPoint(CGPoint(x: GameObject.Baseball().Baseball_Image.position.x, y: GameObject.Baseball().Baseball_Image.position.y))
         BallPath.addLineToPoint(CGPoint(x: GameObject.Baseball().Baseball_Image.position.x, y: -(Baseballfield.frame.height * Baseballfield.anchorPoint.y)))
         Baseball[Baseball_Number].Baseball_Unit.runAction(SKAction.speedTo(1, duration: 0))
         Baseball[Baseball_Number].Baseball_Unit.runAction(SKAction.followPath(BallPath.CGPath, asOffset: false, orientToPath: false, speed: 400)) {
-            self.Baseball_Static(0)
+            self.Baseball_Static(Baseball_Number)
         }
+        Baseball[Baseball_Number].Baseball_Image.hidden = false
+        Baseball[Baseball_Number].Baseball_Shadow.hidden = false
     }
     
     func Baseball_Return(Baseball_Number: Int,contact: CGPoint){
         Baseball[Baseball_Number].Baseball_Unit.removeAllActions()
         
-        Baseball[Baseball_Number].Baseball_Power = GameObject.Baseball_Power(ball_x: 2,ball_y: 0,height: 3, length: 35)
+        Baseball[Baseball_Number].Baseball_Power = GameObject.Baseball_Power(ball_x: 2,ball_y: 0,height: 2, length: 35)
         let BallPath = UIBezierPath()
         BallPath.moveToPoint(CGPoint(x: Baseball[Baseball_Number].Baseball_Unit.position.x, y: Baseball[Baseball_Number].Baseball_Unit.position.y))
         if Naoe_Riki.attribute.imageNumber.hashValue == 4 {
-            let HeightRatio = (contact.x - CGPathGetBoundingBox(GameCharacter().Naoe_Riki_Contact()[0]).minX) / CGPathGetBoundingBox(GameCharacter().Naoe_Riki_Contact()[0]).width
+            let HeightRatio = (contact.x - CGPathGetBoundingBox(GamePeople().Naoe_Riki_Contact()[0]).minX) / CGPathGetBoundingBox(GamePeople().Naoe_Riki_Contact()[0]).width
             BallPath.addLineToPoint(CGPoint(x: Baseballfield.frame.width / 2, y: Baseballfield.frame.height * (1 - HeightRatio) - Baseballfield.frame.height * Baseballfield.anchorPoint.y))
         }
         else if Naoe_Riki.attribute.imageNumber.hashValue == 5{
-            let WidthRatio = (contact.x - CGPathGetBoundingBox(GameCharacter().Naoe_Riki_Contact()[1]).minX) / CGPathGetBoundingBox(GameCharacter().Naoe_Riki_Contact()[1]).width
+            let WidthRatio = (contact.x - CGPathGetBoundingBox(GamePeople().Naoe_Riki_Contact()[1]).minX) / CGPathGetBoundingBox(GamePeople().Naoe_Riki_Contact()[1]).width
             BallPath.addLineToPoint(CGPoint(x: Baseballfield.frame.width * WidthRatio - Baseballfield.frame.width * Baseballfield.anchorPoint.x, y: Baseballfield.frame.height - Baseballfield.frame.height * Baseballfield.anchorPoint.y))
         }
         else{
-            let HeightRatio = (contact.x - CGPathGetBoundingBox(GameCharacter().Naoe_Riki_Contact()[2]).minX) / CGPathGetBoundingBox(GameCharacter().Naoe_Riki_Contact()[2]).width
+            let HeightRatio = (contact.x - CGPathGetBoundingBox(GamePeople().Naoe_Riki_Contact()[2]).minX) / CGPathGetBoundingBox(GamePeople().Naoe_Riki_Contact()[2]).width
             BallPath.addLineToPoint(CGPoint(x: -Baseballfield.frame.width / 2, y: Baseballfield.frame.height * HeightRatio - Baseballfield.frame.height * Baseballfield.anchorPoint.y))
         }
         Baseball[Baseball_Number].Baseball_Status = .B_Return
         Baseball[Baseball_Number].Baseball_Unit.runAction(SKAction.speedTo(1, duration: 0))
         Baseball[Baseball_Number].Baseball_Unit.runAction(SKAction.followPath(BallPath.CGPath, asOffset: false, orientToPath: false, speed: 500)) {
-            self.Baseball_Static(0)
+            self.Baseball_Static(Baseball_Number)
         }
-        Baseball[0].Baseball_Unit.runAction(SKAction.speedTo(0, duration: 4), completion: { () -> Void in
-            self.Baseball_Static(0)
+        Baseball[Baseball_Number].Baseball_Unit.runAction(SKAction.speedTo(0, duration: 5), completion: { () -> Void in
+            self.Baseball_Static(Baseball_Number)
         })
     }
     func Baseball_Static(Baseball_Number: Int){
@@ -465,6 +499,13 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         let ContactUnit = contact.bodyA.categoryBitMask == Collision.Baseball ? contact.bodyB : contact.bodyA
         if ContactUnit.categoryBitMask == Collision.BaseballBat && Baseball[0].Baseball_Status == GameObject.Baseball_Status.B_Cast{
             Baseball_Return(0, contact: convertPoint(contact.contactPoint, toNode: Naoe_Riki_View))
+        }
+        if ContactUnit.categoryBitMask == Collision.PeopleFront && Baseball[0].Baseball_Status == GameObject.Baseball_Status.B_Cast{
+            Naoe_Riki.attribute.status = GamePeople.Naoe_Riki_Status.NR_FallDown.hashValue
+            Baseball[0].Baseball_Status = GameObject.Baseball_Status.B_Static
+            Baseball[0].Baseball_Image.hidden = true
+            Baseball[0].Baseball_Shadow.hidden = true
+            Baseball[0].Baseball_Status = .B_Static
         }
     }
     

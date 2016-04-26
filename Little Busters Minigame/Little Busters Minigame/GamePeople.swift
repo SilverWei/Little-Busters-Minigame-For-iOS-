@@ -1,5 +1,5 @@
 //
-//  GameCharacter.swift
+//  GamePeople.swift
 //  Little Busters Minigame
 //
 //  Created by dmqlMAC on 16/4/12.
@@ -9,7 +9,7 @@
 import SpriteKit
 import UIKit
 
-class GameCharacter{
+class GamePeople{
     
     struct Unit {
         var attribute: Attribute
@@ -25,8 +25,8 @@ class GameCharacter{
         var Shadow_w: CGFloat
         var Shadow_h: CGFloat
     }
-    func ImageInterception(character: Attribute, x: CGFloat, y: CGFloat, w: CGFloat,h: CGFloat) -> UIImage {
-        return UIImage(CGImage: CGImageCreateWithImageInRect(character.image.CGImage, CGRectMake(x, y, w, h))!)
+    func ImageInterception(People: Attribute, x: CGFloat, y: CGFloat, w: CGFloat,h: CGFloat) -> UIImage {
+        return UIImage(CGImage: CGImageCreateWithImageInRect(People.image.CGImage, CGRectMake(x, y, w, h))!)
     }
     
     //MARK: 直枝 理樹
@@ -62,11 +62,26 @@ class GameCharacter{
         
         Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: 0, w: 79, h: Naoe_Riki_H))
         Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H, w: 79, h: Naoe_Riki_H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: 0, w: 79, h: Naoe_Riki_H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195, y: Naoe_Riki_H * 4, w: 79, h: Naoe_Riki_H))
+        
         Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 2, w: 79, h: Naoe_Riki_H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 3, w: 79, h: Naoe_Riki_H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 4, w: 79, h: Naoe_Riki_H))
+        //
+        
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79 * 2, y: 0, w: 79, h: Naoe_Riki_H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 4, w: 79, h: Naoe_Riki_H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 3, w: 79, h: Naoe_Riki_H))
         Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 3, w: 79, h: Naoe_Riki_H))
         Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 4, w: 79, h: Naoe_Riki_H))
         
         Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79 * 2, y: 0, w: 79, h: Naoe_Riki_H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 4, w: 79, h: Naoe_Riki_H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 3, w: 79, h: Naoe_Riki_H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 2, w: 79, h: Naoe_Riki_H))
+        
+        
         Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79 * 2, y: Naoe_Riki_H, w: 79, h: Naoe_Riki_H))
         
         return Naoe_Riki_Array
@@ -75,6 +90,7 @@ class GameCharacter{
     enum Naoe_Riki_Status{
         case NR_Static //静止
         case NR_Swing //挥动
+        case NR_FallDown //摔倒
     }
     func Naoe_Riki_Range() -> SKShapeNode{
         let RangePath = UIBezierPath()
@@ -90,7 +106,6 @@ class GameCharacter{
         Range.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x - 60, y: GameObject().Baseballfield().anchorPoint.y - 150)
         return Range
     }
-    
     func Naoe_Riki_Contact() -> [CGPath]{
         var Contact_Array:[CGPath] = []
         let path1 = CGPathCreateMutable()
@@ -112,6 +127,20 @@ class GameCharacter{
         CGPathCloseSubpath(path3)
         Contact_Array.append(path3)
         return Contact_Array
+    }
+    func Naoe_Riki_BodyContact() -> SKShapeNode{
+        let Body = SKShapeNode()
+        let path = CGPathCreateMutable()
+        CGPathMoveToPoint(path, nil, 3, -15)
+        CGPathAddLineToPoint(path, nil, 3, -20)
+        CGPathAddLineToPoint(path, nil, -10, -20)
+        CGPathAddLineToPoint(path, nil, -10, -15)
+        CGPathCloseSubpath(path)
+        Body.physicsBody = SKPhysicsBody(polygonFromPath: path)
+        Body.physicsBody?.categoryBitMask = KittyBaseballGame.Collision.PeopleFront
+        Body.physicsBody?.collisionBitMask = 0
+        Body.physicsBody?.contactTestBitMask = KittyBaseballGame.Collision.Baseball
+        return Body
     }
     
     
