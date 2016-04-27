@@ -41,48 +41,48 @@ class GamePeople{
     )
     func Naoe_Riki_Array() -> [UIImage]{
         var Naoe_Riki_Array:[UIImage] = []
-        let Naoe_Riki_H = Naoe_Riki_Attribute.image.size.height / 5
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 0, y: 0, w: 97, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 0, y: Naoe_Riki_H, w: 97, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 0, y: Naoe_Riki_H * 2, w: 97, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 0, y: Naoe_Riki_H * 3, w: 97, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 0, y: Naoe_Riki_H * 4, w: 97, h: Naoe_Riki_H))
+        let H = Naoe_Riki_Attribute.image.size.height / 5
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 0, y: 0, w: 97, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 0, y: H, w: 97, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 0, y: H * 2, w: 97, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 0, y: H * 3, w: 97, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 0, y: H * 4, w: 97, h: H))
         
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 97, y: 0, w: 97, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 97, y: Naoe_Riki_H, w: 97, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 97, y: Naoe_Riki_H * 2, w: 97, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 97, y: Naoe_Riki_H * 3, w: 97, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 97, y: Naoe_Riki_H * 4, w: 97, h: Naoe_Riki_H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 97, y: 0, w: 97, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 97, y: H, w: 97, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 97, y: H * 2, w: 97, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 97, y: H * 3, w: 97, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 97, y: H * 4, w: 97, h: H))
         
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195, y: 0, w: 79, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195, y: Naoe_Riki_H, w: 79, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195, y: Naoe_Riki_H * 2, w: 79, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195, y: Naoe_Riki_H * 3, w: 79, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195, y: Naoe_Riki_H * 4, w: 79, h: Naoe_Riki_H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195, y: 0, w: 79, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195, y: H, w: 79, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195, y: H * 2, w: 79, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195, y: H * 3, w: 79, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195, y: H * 4, w: 79, h: H))
         
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: 0, w: 79, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H, w: 79, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: 0, w: 79, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195, y: Naoe_Riki_H * 4, w: 79, h: Naoe_Riki_H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: 0, w: 79, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: H, w: 79, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: 0, w: 79, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195, y: H * 4, w: 79, h: H))
         
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 2, w: 79, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 3, w: 79, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 4, w: 79, h: Naoe_Riki_H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: H * 2, w: 79, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: H * 3, w: 79, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: H * 4, w: 79, h: H))
         //
         
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79 * 2, y: 0, w: 79, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 4, w: 79, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 3, w: 79, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 3, w: 79, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 4, w: 79, h: Naoe_Riki_H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79 * 2 + 2, y: 0, w: 79, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: H * 4, w: 79, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: H * 3, w: 79, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: H * 3, w: 79, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: H * 4, w: 79, h: H))
         
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79 * 2, y: 0, w: 79, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 4, w: 79, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 3, w: 79, h: Naoe_Riki_H))
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: Naoe_Riki_H * 2, w: 79, h: Naoe_Riki_H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79 * 2 + 2, y: 0, w: 79, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: H * 4, w: 79, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: H * 3, w: 79, h: H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: H * 2, w: 79, h: H))
         
         
-        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79 * 2, y: Naoe_Riki_H, w: 79, h: Naoe_Riki_H))
+        Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79 * 2 + 2, y: H, w: 79, h: H))
         
         return Naoe_Riki_Array
     }
@@ -156,65 +156,63 @@ class GamePeople{
     )
     func Natsume_Rin_Array() -> [UIImage]{
         var Natsume_Rin_Array:[UIImage] = []
-        var Natsume_Rin_H:CGFloat = 73
-        var Natsume_Rin_W:CGFloat = 68
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: -1, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: -1 + Natsume_Rin_H, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: -1 + Natsume_Rin_H * 2, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        var H:CGFloat = 73
+        var W:CGFloat = 68
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: -1, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: -1 + H, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: -1 + H * 2, w: W, h: H))
         
-        Natsume_Rin_H = 65
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 224, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 305, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        H = 65
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 224, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 305, w: W, h: H))
         
-        Natsume_Rin_H = 80
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 375, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 375 + Natsume_Rin_H, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 375 + Natsume_Rin_H * 2, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        H = 80
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 375, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 375 + H, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: 0, y: 375 + H * 2, w: W, h: H))
         
-        Natsume_Rin_H = 640 / 8
-        var Natsume_Rin_L:CGFloat = 68
-        var Natsume_Rin_T:CGFloat = -6
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 2, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 3, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 4, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 5, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 6, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 7, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        H = 640 / 8
+        var L:CGFloat = 68
+        var T:CGFloat = -6
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 2, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 3, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 4, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 5, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 6, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 7, w: W, h: H))
         
         
-        Natsume_Rin_L = 135
-        Natsume_Rin_W = 56
-        Natsume_Rin_T = -1
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 2, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 3, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 4, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 5, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 6, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 7, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        L = 135
+        W = 56
+        T = -6
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 2, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 3, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 4, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 5, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 6, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 7, w: W, h: H))
         
-        Natsume_Rin_L = 191
-        Natsume_Rin_W = 70
-        Natsume_Rin_T = -7
-        Natsume_Rin_H = 643 / 8
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 2, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 3, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 4, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 5, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 6, w: Natsume_Rin_W, h: Natsume_Rin_H))
-        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: Natsume_Rin_L, y: Natsume_Rin_T + Natsume_Rin_H * 7, w: Natsume_Rin_W, h: Natsume_Rin_H))
+        L = 191
+        W = 70
+        T = -7
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 2, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 3, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 4, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 5, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 6, w: W, h: H))
+        Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 7, w: W, h: H))
         return Natsume_Rin_Array
     }
     //动作状态
     enum Natsume_Rin_Status{
         case NR_Static //静止
-        case NR_TopBall //接顶球
-        case NR_DownBall //接底球
+        case NR_Catch //接球
         case NR_Anger //愤怒
         case NR_Swing //挥动
         case NR_Surprise //惊讶
@@ -222,6 +220,125 @@ class GamePeople{
         case NR_ShelterRight //右躲避
     }
 
-
+    //MARK: 棗 恭介
+    var Natsume_Kyousuke_Attribute = Attribute(image: UIImage(named: "NatsumeKyousuke")!,
+        point: CGPoint(x:  GameObject().Baseballfield().anchorPoint.x - 630, y: GameObject().Baseballfield().anchorPoint.y + 220),
+        status: 0,
+        imageNumber: 0,
+        Shadow_x: 0,
+        Shadow_y: -30,
+        Shadow_w: 35,
+        Shadow_h: 15
+    )
+    func Natsume_Kyousuke_Array() -> [UIImage]{
+        var Natsume_Kyousuke_Array:[UIImage] = []
+        let H:CGFloat = 72
+        let W:CGFloat = 64
+        let T:CGFloat = 5
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: 0, y: T, w: W, h: H)) //1:1
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: 0, y: T + H, w: W, h: H)) //1:2
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: 0, y: T + H * 2, w: W, h: H)) //1:3
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: 0, y: T + H * 3, w: W, h: H)) //1:4
+        
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W, y: T, w: W, h: H)) //2:1
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W, y: T + H, w: W, h: H)) //2:2
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W, y: T + H * 2, w: W, h: H)) //2:3
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W, y: T + H * 3, w: W, h: H)) //2:4
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W, y: T + H * 4, w: W, h: H)) //2:5
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W, y: T + H * 5, w: W, h: H)) //2:6
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W, y: T + H * 6, w: W, h: H)) //2:7
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W, y: T + H * 7, w: W, h: H)) //2:8
+        
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 2, y: T, w: W, h: H)) //3:1
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 2, y: T + H, w: W, h: H)) //3:2
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 2, y: T + H * 2, w: W, h: H)) //3:3
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 2, y: T + H * 3, w: W, h: H)) //3:4
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 2, y: T + H * 4, w: W, h: H)) //3:5
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 2, y: T + H * 5, w: W, h: H)) //3:6
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 2, y: T + H * 6, w: W, h: H)) //3:7
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 2, y: T + H * 7, w: W, h: H)) //3:8
+        
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 3, y: T, w: W, h: H))			//4:1
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 3, y: T + H, w: W, h: H))		//4:2
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 3, y: T + H * 2, w: W, h: H)) 	//4:3
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 3, y: T + H * 3, w: W, h: H)) 	//4:4
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 3, y: T + H * 4, w: W, h: H)) 	//4:5
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 3, y: T + H * 5, w: W, h: H)) 	//4:6
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 3, y: T + H * 6, w: W, h: H)) 	//4:7
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 3, y: T + H * 7, w: W, h: H)) 	//4:8
+        
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 4, y: T, w: W, h: H))			//5:1
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 4, y: T + H, w: W, h: H))		//5:2
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 4, y: T + H * 2, w: W, h: H)) 	//5:3
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 4, y: T + H * 3, w: W, h: H)) 	//5:4
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 4, y: T + H * 4, w: W, h: H)) 	//5:5
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 4, y: T + H * 5, w: W, h: H)) 	//5:6
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 4, y: T + H * 6, w: W, h: H)) 	//5:7
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 4, y: T + H * 7, w: W, h: H)) 	//5:8
+        
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 5, y: T, w: W, h: H))			//6:1
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 5, y: T + H, w: W, h: H))		//6:2
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 5, y: T + H * 2, w: W, h: H)) 	//6:3
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 5, y: T + H * 3, w: W, h: H)) 	//6:4
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 5, y: T + H * 4, w: W, h: H)) 	//6:5
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 5, y: T + H * 5, w: W, h: H)) 	//6:6
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 5, y: T + H * 6, w: W, h: H)) 	//6:7
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 5, y: T + H * 7, w: W, h: H)) 	//6:8
+        
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 6, y: T, w: W, h: H))			//7:1
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 6, y: T + H, w: W, h: H))		//7:2
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 6, y: T + H * 2, w: W, h: H)) 	//7:3
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 6, y: T + H * 3, w: W, h: H)) 	//7:4
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 6, y: T + H * 4, w: W, h: H)) 	//7:5
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 6, y: T + H * 5, w: W, h: H)) 	//7:6
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 6, y: T + H * 6, w: W, h: H)) 	//7:7
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 6, y: T + H * 7, w: W, h: H)) 	//7:8
+        
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 7, y: T, w: W, h: H))			//8:1
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 7, y: T + H, w: W, h: H))		//8:2
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 7, y: T + H * 2, w: W, h: H)) 	//8:3
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 7, y: T + H * 3, w: W, h: H)) 	//8:4
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 7, y: T + H * 4, w: W, h: H)) 	//8:5
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 7, y: T + H * 5, w: W, h: H)) 	//8:6
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 7, y: T + H * 6, w: W, h: H)) 	//8:7
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 7, y: T + H * 7, w: W, h: H)) 	//8:8
+        
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 8, y: T, w: W, h: H))			//9:1
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 8, y: T + H, w: W, h: H))		//9:2
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 8, y: T + H * 2, w: W, h: H)) 	//9:3
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 8, y: T + H * 3, w: W, h: H)) 	//9:4
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 8, y: T + H * 4, w: W, h: H)) 	//9:5
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 8, y: T + H * 5, w: W, h: H)) 	//9:6
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 8, y: T + H * 6, w: W, h: H)) 	//9:7
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 8, y: T + H * 7, w: W, h: H)) 	//9:8
+        
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 9, y: T, w: W, h: H))			//10:1
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 9, y: T + H, w: W, h: H))		//10:2
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 9, y: T + H * 2, w: W, h: H)) 	//10:3
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 9, y: T + H * 3, w: W, h: H)) 	//10:4
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 9, y: T + H * 4, w: W, h: H)) 	//10:5
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 9, y: T + H * 5, w: W, h: H)) 	//10:6
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 9, y: T + H * 6, w: W, h: H)) 	//10:7
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 9, y: T + H * 7, w: W, h: H)) 	//10:8
+        
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 10, y: T, w: W, h: H))			//11:1
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 10, y: T + H, w: W, h: H))		//11:2
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 10, y: T + H * 2, w: W, h: H)) 	//11:3
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 10, y: T + H * 3, w: W, h: H)) 	//11:4
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 10, y: T + H * 4, w: W, h: H)) 	//11:5
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 10, y: T + H * 5, w: W, h: H)) 	//11:6
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 10, y: T + H * 6, w: W, h: H)) 	//11:7
+        Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 10, y: T + H * 7, w: W, h: H)) 	//11:8
+        
+        return Natsume_Kyousuke_Array
+    }
+    //动作状态
+    enum Natsume_Kyousuke_Status{
+        case NK_Static //静止
+        case NK_Run //跑
+        case NK_Swing //挥动
+        case NK_Catch //接球
+        case NK_Wave //招手
+    }
 }
 
