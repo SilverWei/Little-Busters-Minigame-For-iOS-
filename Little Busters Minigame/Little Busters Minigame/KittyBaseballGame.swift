@@ -33,12 +33,10 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     //棗 鈴
     var Natsume_Rin = GamePeople.Unit(attribute: GamePeople().Natsume_Rin_Attribute,image: GamePeople().Natsume_Rin_Array())
     var Natsume_Rin_View = SKSpriteNode(texture: SKTexture(image: GamePeople().Natsume_Rin_Array()[0]))
-    var Natsume_Rin_Shadow = SKShapeNode()
     
     //棗 恭介
     var Natsume_Kyousuke = GamePeople.Unit(attribute: GamePeople().Natsume_Kyousuke_Attribute, image: GamePeople().Natsume_Kyousuke_Array())
     var Natsume_Kyousuke_View = SKSpriteNode(texture: SKTexture(image: GamePeople().Natsume_Kyousuke_Array()[0]))
-    var Natsume_Kyousuke_Shadow = SKShapeNode()
     
     //MARK: 初始化按钮
     var MovingButton_Status = MovingButton_Touch.Stop
@@ -106,8 +104,11 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     func Show_PeopleFront(){
         Naoe_Riki_View.position = Naoe_Riki.attribute.point
         Naoe_Riki_View.zPosition = Layers.PeopleFront.rawValue
-        Naoe_Riki_View.addChild(GamePeople().Naoe_Riki_BodyContact())
+        Naoe_Riki.attribute.Unit.position = Naoe_Riki.attribute.point
+        Baseballfield.addChild(Naoe_Riki.attribute.Unit)
         Baseballfield.addChild(Naoe_Riki_View)
+        
+        Naoe_Riki_View.addChild(GamePeople().Naoe_Riki_BodyContact())
         
         Naoe_Riki_Range.zPosition = Layers.PeopleFront.rawValue
         Baseballfield.addChild(Naoe_Riki_Range)
@@ -120,8 +121,10 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         
         Natsume_Kyousuke_View.position = Natsume_Kyousuke.attribute.point
         Natsume_Kyousuke_View.zPosition = Layers.PeopleBehind.rawValue
-        Natsume_Kyousuke_View.speed = 0
+        Natsume_Kyousuke.attribute.Unit.position = Natsume_Kyousuke_View.position
+        Natsume_Kyousuke.attribute.Unit.speed = 0
         Baseballfield.addChild(Natsume_Kyousuke_View)
+        Baseballfield.addChild(Natsume_Kyousuke.attribute.Unit)
     }
     
     func Show_Baseball(){
@@ -130,7 +133,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Baseball[0].Baseball_Image.hidden = true
         
         //位置单位
-        Baseball[0].Baseball_Unit.position = CGPoint(x: Baseball[0].Baseball_Image.position.x, y: Baseball[0].Baseball_Image.position.y)
+        Baseball[0].Baseball_Unit.position = Baseball[0].Baseball_Image.position
         Baseballfield.addChild(Baseball[0].Baseball_Unit)
     }
     
@@ -138,11 +141,11 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Naoe_Riki.attribute.Shadow = GameObject().Shadow(Naoe_Riki.attribute.point.x + Naoe_Riki.attribute.Shadow_x, y: Naoe_Riki.attribute.point.y + Naoe_Riki.attribute.Shadow_y, w: Naoe_Riki.attribute.Shadow_w, h: Naoe_Riki.attribute.Shadow_h)
         Baseballfield.addChild(Naoe_Riki.attribute.Shadow)
         
-        Natsume_Rin_Shadow = GameObject().Shadow(Natsume_Rin.attribute.point.x + Natsume_Rin.attribute.Shadow_x, y: Natsume_Rin.attribute.point.y + Natsume_Rin.attribute.Shadow_y, w: Natsume_Rin.attribute.Shadow_w, h: Natsume_Rin.attribute.Shadow_h)
-        Baseballfield.addChild(Natsume_Rin_Shadow)
+        Natsume_Rin.attribute.Shadow = GameObject().Shadow(Natsume_Rin.attribute.point.x + Natsume_Rin.attribute.Shadow_x, y: Natsume_Rin.attribute.point.y + Natsume_Rin.attribute.Shadow_y, w: Natsume_Rin.attribute.Shadow_w, h: Natsume_Rin.attribute.Shadow_h)
+        Baseballfield.addChild(Natsume_Rin.attribute.Shadow)
         
-        Natsume_Kyousuke_Shadow = GameObject().Shadow(Natsume_Kyousuke.attribute.point.x + Natsume_Kyousuke.attribute.Shadow_x, y: Natsume_Kyousuke.attribute.point.y + Natsume_Kyousuke.attribute.Shadow_y, w: Natsume_Kyousuke.attribute.Shadow_w, h: Natsume_Kyousuke.attribute.Shadow_h)
-        Baseballfield.addChild(Natsume_Kyousuke_Shadow)
+        Natsume_Kyousuke.attribute.Shadow = GameObject().Shadow(Natsume_Kyousuke.attribute.point.x + Natsume_Kyousuke.attribute.Shadow_x, y: Natsume_Kyousuke.attribute.point.y + Natsume_Kyousuke.attribute.Shadow_y, w: Natsume_Kyousuke.attribute.Shadow_w, h: Natsume_Kyousuke.attribute.Shadow_h)
+        Baseballfield.addChild(Natsume_Kyousuke.attribute.Shadow)
         
         Baseball[0].Baseball_Shadow = GameObject().Shadow(Baseball[0].Baseball_Image.position.x, y: Baseball[0].Baseball_Image.position.y, w: Baseball[0].Baseball_Image.frame.width, h: Baseball[0].Baseball_Image.frame.height / 2)
         Baseballfield.addChild(Baseball[0].Baseball_Shadow)
@@ -277,7 +280,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             break
         case .B_Return:
             //Status_View(Baseball[0].Baseball_Unit.position)
-            Status_View(Natsume_Kyousuke_View.position)
+            Status_View(Natsume_Kyousuke.attribute.Unit.position)
             break
         }
 
@@ -289,33 +292,34 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         if(Naoe_Riki.attribute.status != GamePeople.Naoe_Riki_Status.NR_FallDown.hashValue){
             switch MovingButton_Status{
             case .UP:
-                Naoe_Riki_View.position = CGPoint(x: Naoe_Riki_View.position.x, y: Naoe_Riki_View.position.y + 1)
+                Naoe_Riki.attribute.Unit.position = CGPoint(x: Naoe_Riki.attribute.Unit.position.x, y: Naoe_Riki.attribute.Unit.position.y + 1)
                 break
             case .Down:
-                Naoe_Riki_View.position = CGPoint(x: Naoe_Riki_View.position.x, y: Naoe_Riki_View.position.y - 1)
+                Naoe_Riki.attribute.Unit.position = CGPoint(x: Naoe_Riki.attribute.Unit.position.x, y: Naoe_Riki.attribute.Unit.position.y - 1)
                 break
             case .Left:
-                Naoe_Riki_View.position = CGPoint(x: Naoe_Riki_View.position.x - 1, y: Naoe_Riki_View.position.y)
+                Naoe_Riki.attribute.Unit.position = CGPoint(x: Naoe_Riki.attribute.Unit.position.x - 1, y: Naoe_Riki.attribute.Unit.position.y)
                 break
             case .Right:
-                Naoe_Riki_View.position = CGPoint(x: Naoe_Riki_View.position.x + 1, y: Naoe_Riki_View.position.y)
+                Naoe_Riki.attribute.Unit.position = CGPoint(x: Naoe_Riki.attribute.Unit.position.x + 1, y: Naoe_Riki.attribute.Unit.position.y)
                 break
             default:
                 break
             }
-            if(Naoe_Riki_View.position.x < Naoe_Riki_Range.position.x){
-                Naoe_Riki_View.position.x = Naoe_Riki_Range.position.x
+            if(Naoe_Riki.attribute.Unit.position.x < Naoe_Riki_Range.position.x){
+                Naoe_Riki.attribute.Unit.position.x = Naoe_Riki_Range.position.x
             }
-            if(Naoe_Riki_View.position.x > Naoe_Riki_Range.position.x + Naoe_Riki_Range.frame.width){
-                Naoe_Riki_View.position.x = Naoe_Riki_Range.position.x + Naoe_Riki_Range.frame.width
+            if(Naoe_Riki.attribute.Unit.position.x > Naoe_Riki_Range.position.x + Naoe_Riki_Range.frame.width){
+                Naoe_Riki.attribute.Unit.position.x = Naoe_Riki_Range.position.x + Naoe_Riki_Range.frame.width
             }
-            if(Naoe_Riki_View.position.y < Naoe_Riki_Range.position.y){
-                Naoe_Riki_View.position.y = Naoe_Riki_Range.position.y
+            if(Naoe_Riki.attribute.Unit.position.y < Naoe_Riki_Range.position.y){
+                Naoe_Riki.attribute.Unit.position.y = Naoe_Riki_Range.position.y
             }
-            if(Naoe_Riki_View.position.y > Naoe_Riki_Range.position.y + Naoe_Riki_Range.frame.height){
-                Naoe_Riki_View.position.y = Naoe_Riki_Range.position.y + Naoe_Riki_Range.frame.height
+            if(Naoe_Riki.attribute.Unit.position.y > Naoe_Riki_Range.position.y + Naoe_Riki_Range.frame.height){
+                Naoe_Riki.attribute.Unit.position.y = Naoe_Riki_Range.position.y + Naoe_Riki_Range.frame.height
             }
-            Naoe_Riki.attribute.Shadow.position = CGPoint(x: Naoe_Riki_View.position.x + Naoe_Riki.attribute.Shadow_x, y: Naoe_Riki_View.position.y + Naoe_Riki.attribute.Shadow_y)
+            Naoe_Riki.attribute.Shadow.position = CGPoint(x: Naoe_Riki.attribute.Unit.position.x + Naoe_Riki.attribute.Shadow_x, y: Naoe_Riki.attribute.Unit.position.y + Naoe_Riki.attribute.Shadow_y)
+            Naoe_Riki_View.position = Naoe_Riki.attribute.Unit.position
         }
         
         var TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.01)) //帧数刷新延时
@@ -467,11 +471,11 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         let TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.1))
         switch Natsume_Kyousuke.attribute.status{
         case GamePeople.Natsume_Kyousuke_Status.NK_Run.hashValue:
-            if(Natsume_Kyousuke_View.speed == 0){
-                Natsume_Kyousuke_View.removeAllActions()
+            if(Natsume_Kyousuke.attribute.Unit.speed == 0){
+                Natsume_Kyousuke.attribute.Unit.removeAllActions()
                 let RunPath = UIBezierPath()
-                RunPath.moveToPoint(Natsume_Kyousuke_View.position)
-                if(GetAngle(Baseball[0].Baseball_Unit.position, b: Natsume_Kyousuke_View.position) > Baseball_Angle){
+                RunPath.moveToPoint(Natsume_Kyousuke.attribute.Unit.position)
+                if(GetAngle(Baseball[0].Baseball_Unit.position, b: Natsume_Kyousuke.attribute.Unit.position) > Baseball_Angle){
                     RunPath.addLineToPoint(CGPoint(x: GameObject().Baseballfield().anchorPoint.x - 310, y: GameObject().Baseballfield().anchorPoint.y + 360))
                 }
                 else{
@@ -488,18 +492,19 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 Natsume_Kyousuke_View.physicsBody?.categoryBitMask = KittyBaseballGame.Collision.PeopleBehind
                 Natsume_Kyousuke_View.physicsBody?.collisionBitMask = 0
                 Natsume_Kyousuke_View.physicsBody?.contactTestBitMask = KittyBaseballGame.Collision.BallTrackPath
-                Natsume_Kyousuke_View.speed = 1
-                Natsume_Kyousuke_View.runAction(SKAction.followPath(RunPath.CGPath, asOffset: false, orientToPath: false, speed: 200), completion: { () -> Void in
+                Natsume_Kyousuke.attribute.Unit.speed = 1
+                Natsume_Kyousuke.attribute.Unit.runAction(SKAction.followPath(RunPath.CGPath, asOffset: false, orientToPath: false, speed: 200), completion: { () -> Void in
                     self.Natsume_Kyousuke_Static()
                     self.Natsume_Kyousuke.attribute.status = GamePeople.Natsume_Kyousuke_Status.NK_Return.hashValue
                 })
             }
-            Natsume_Kyousuke_Shadow.position = CGPoint(x: Natsume_Kyousuke_View.position.x + Natsume_Kyousuke.attribute.Shadow_x, y: Natsume_Kyousuke_View.position.y + Natsume_Kyousuke.attribute.Shadow_y)
+            Natsume_Kyousuke.attribute.Shadow.position = CGPoint(x: Natsume_Kyousuke.attribute.Unit.position.x + Natsume_Kyousuke.attribute.Shadow_x, y: Natsume_Kyousuke.attribute.Unit.position.y + Natsume_Kyousuke.attribute.Shadow_y)
+            Natsume_Kyousuke_View.position = Natsume_Kyousuke.attribute.Unit.position
             
             if((actionForKey("Natsume_Kyousuke_StatusAction")) != nil){
                 return
             }
-            if GetAngle(Baseball_ReturnPoint, b: Natsume_Kyousuke_View.position) > Baseball_Angle{
+            if GetAngle(Baseball_ReturnPoint, b: Natsume_Kyousuke.attribute.Unit.position) > Baseball_Angle{
                 if(Natsume_Kyousuke.attribute.imageNumber.hashValue < 8 || Natsume_Kyousuke.attribute.imageNumber.hashValue > 11){
                     Natsume_Kyousuke.attribute.imageNumber = 8
                 }
@@ -525,22 +530,23 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             Natsume_Kyousuke_View.physicsBody?.contactTestBitMask = KittyBaseballGame.Collision.Baseball
             break
         case GamePeople.Natsume_Kyousuke_Status.NK_Return.hashValue:
-            if(Natsume_Kyousuke_View.speed == 0){
-                Natsume_Kyousuke_View.removeAllActions()
+            if(Natsume_Kyousuke.attribute.Unit.speed == 0){
+                Natsume_Kyousuke.attribute.Unit.removeAllActions()
                 let RunPath = UIBezierPath()
-                RunPath.moveToPoint(Natsume_Kyousuke_View.position)
+                RunPath.moveToPoint(Natsume_Kyousuke.attribute.Unit.position)
                 RunPath.addLineToPoint(GamePeople().Natsume_Kyousuke_Attribute.point)
-                Natsume_Kyousuke_View.speed = 1
-                Natsume_Kyousuke_View.runAction(SKAction.followPath(RunPath.CGPath, asOffset: false, orientToPath: false, speed: 200), completion: { () -> Void in
+                Natsume_Kyousuke.attribute.Unit.speed = 1
+                Natsume_Kyousuke.attribute.Unit.runAction(SKAction.followPath(RunPath.CGPath, asOffset: false, orientToPath: false, speed: 200), completion: { () -> Void in
                     self.Natsume_Kyousuke_Static()
                 })
             }
-            Natsume_Kyousuke_Shadow.position = CGPoint(x: Natsume_Kyousuke_View.position.x + Natsume_Kyousuke.attribute.Shadow_x, y: Natsume_Kyousuke_View.position.y + Natsume_Kyousuke.attribute.Shadow_y)
+            Natsume_Kyousuke.attribute.Shadow.position = CGPoint(x: Natsume_Kyousuke.attribute.Unit.position.x + Natsume_Kyousuke.attribute.Shadow_x, y: Natsume_Kyousuke.attribute.Unit.position.y + Natsume_Kyousuke.attribute.Shadow_y)
+            Natsume_Kyousuke_View.position = Natsume_Kyousuke.attribute.Unit.position
             
             if((actionForKey("Natsume_Kyousuke_StatusAction")) != nil){
                 return
             }
-            if Natsume_Kyousuke_View.position.x < GamePeople().Natsume_Kyousuke_Attribute.point.x{
+            if Natsume_Kyousuke.attribute.Unit.position.x < GamePeople().Natsume_Kyousuke_Attribute.point.x{
                 if(Natsume_Kyousuke.attribute.imageNumber.hashValue < 8 || Natsume_Kyousuke.attribute.imageNumber.hashValue > 11){
                     Natsume_Kyousuke.attribute.imageNumber = 8
                 }
@@ -575,7 +581,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Natsume_Kyousuke_View.runAction(SKAction.setTexture(SKTexture(image: Natsume_Kyousuke.image[0])))
         Natsume_Kyousuke_View.size = Natsume_Rin.image[Natsume_Kyousuke.attribute.imageNumber].size
         Natsume_Kyousuke.attribute.status = GamePeople.Natsume_Kyousuke_Status.NK_Static.hashValue
-        Natsume_Kyousuke_View.speed = 0
+        Natsume_Kyousuke.attribute.Unit.speed = 0
     }
     
     //MARK: 棒球
