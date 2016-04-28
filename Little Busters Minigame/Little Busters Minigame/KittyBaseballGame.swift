@@ -105,11 +105,10 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Naoe_Riki_View.position = Naoe_Riki.attribute.point
         Naoe_Riki_View.zPosition = Layers.PeopleFront.rawValue
         Naoe_Riki.attribute.Unit.position = Naoe_Riki.attribute.point
+        Naoe_Riki.attribute.Unit.addChild(GamePeople().Naoe_Riki_BodyContact())
         Baseballfield.addChild(Naoe_Riki.attribute.Unit)
         Baseballfield.addChild(Naoe_Riki_View)
-        
-        Naoe_Riki_View.addChild(GamePeople().Naoe_Riki_BodyContact())
-        
+
         Naoe_Riki_Range.zPosition = Layers.PeopleFront.rawValue
         Baseballfield.addChild(Naoe_Riki_Range)
     }
@@ -370,7 +369,6 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.05))
             if(Naoe_Riki.attribute.imageNumber.hashValue < 10){
                 Naoe_Riki.attribute.imageNumber = 10
-                Naoe_Riki_View.physicsBody = nil
             }
             if(Naoe_Riki.attribute.imageNumber.hashValue > 16){
                 TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.1))
@@ -518,16 +516,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             Natsume_Kyousuke_StatusAction(TimeInterval)
             break
         case GamePeople.Natsume_Kyousuke_Status.NK_Static.hashValue:
-            let path = CGPathCreateMutable()
-            CGPathMoveToPoint(path, nil, 0, 30)
-            CGPathAddLineToPoint(path, nil, 0, -40)
-            CGPathAddLineToPoint(path, nil, -10, -40)
-            CGPathAddLineToPoint(path, nil, -10, 30)
-            CGPathCloseSubpath(path)
-            Natsume_Kyousuke_View.physicsBody = SKPhysicsBody(polygonFromPath: path)
-            Natsume_Kyousuke_View.physicsBody?.categoryBitMask = KittyBaseballGame.Collision.PeopleBehind
-            Natsume_Kyousuke_View.physicsBody?.collisionBitMask = 0
-            Natsume_Kyousuke_View.physicsBody?.contactTestBitMask = KittyBaseballGame.Collision.Baseball
+            Natsume_Kyousuke_View.physicsBody = nil
             break
         case GamePeople.Natsume_Kyousuke_Status.NK_Return.hashValue:
             if(Natsume_Kyousuke.attribute.Unit.speed == 0){
@@ -558,6 +547,18 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             }
             
             Natsume_Kyousuke_StatusAction(TimeInterval)
+            break
+        case GamePeople.Natsume_Kyousuke_Status.NK_Catch.hashValue:
+            let path = CGPathCreateMutable()
+            CGPathMoveToPoint(path, nil, 0, 30)
+            CGPathAddLineToPoint(path, nil, 0, -40)
+            CGPathAddLineToPoint(path, nil, -10, -40)
+            CGPathAddLineToPoint(path, nil, -10, 30)
+            CGPathCloseSubpath(path)
+            Natsume_Kyousuke_View.physicsBody = SKPhysicsBody(polygonFromPath: path)
+            Natsume_Kyousuke_View.physicsBody?.categoryBitMask = KittyBaseballGame.Collision.PeopleBehind
+            Natsume_Kyousuke_View.physicsBody?.collisionBitMask = 0
+            Natsume_Kyousuke_View.physicsBody?.contactTestBitMask = KittyBaseballGame.Collision.Baseball
             break
         case GamePeople.Natsume_Kyousuke_Status.NK_Swing.hashValue:
             Natsume_Kyousuke_View.physicsBody = nil
@@ -696,16 +697,27 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 Natsume_Rin.attribute.status = GamePeople.Natsume_Rin_Status.NR_Surprise.hashValue
                 Baseball_Static(0)
             }
-            if ContactUnit.categoryBitMask == Collision.PeopleBehind && Natsume_Kyousuke.attribute.status == GamePeople.Natsume_Kyousuke_Status.NK_Static.hashValue{
+            if ContactUnit.categoryBitMask == Collision.PeopleBehind && Natsume_Kyousuke.attribute.status == GamePeople.Natsume_Kyousuke_Status.NK_Catch.hashValue{
                 Baseball_Static(0)
+                
                 Natsume_Kyousuke.attribute.status = GamePeople.Natsume_Kyousuke_Status.NK_Swing.hashValue
-                print("接住")
+                print("投掷")
             }
         }
         if contact.bodyA.categoryBitMask == Collision.BallTrackPath || contact.bodyB.categoryBitMask == Collision.BallTrackPath{
+            if(contact.bodyA.categoryBitMask == Collision.Baseball || contact.bodyB.categoryBitMask == Collision.Baseball){
+                return
+            }
             let ContactUnit = contact.bodyA.categoryBitMask == Collision.BallTrackPath ? contact.bodyB : contact.bodyA
-            if ContactUnit.categoryBitMask == Collision.PeopleBehind{
+            Baseballfield.removeChildrenInArray([BallTrackPath])
+            if ContactUnit.categoryBitMask == Collision.PeopleBehind && Natsume_Kyousuke.attribute.Unit.position.x > Baseball[0].Baseball_Unit.position.x{
                 self.Natsume_Kyousuke_Static()
+                self.Natsume_Kyousuke.attribute.status = GamePeople.Natsume_Kyousuke_Status.NK_Return.hashValue
+            }
+            else{
+                self.Natsume_Kyousuke_Static()
+                Natsume_Kyousuke.attribute.status = GamePeople.Natsume_Kyousuke_Status.NK_Catch.hashValue
+                print("接住")
             }
         }
     }
