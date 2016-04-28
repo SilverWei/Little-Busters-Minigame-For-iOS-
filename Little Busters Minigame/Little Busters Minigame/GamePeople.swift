@@ -24,6 +24,8 @@ class GamePeople{
         var Shadow_y: CGFloat
         var Shadow_w: CGFloat
         var Shadow_h: CGFloat
+        var Unit: SKShapeNode
+        var Shadow: SKShapeNode
     }
     func ImageInterception(People: Attribute, x: CGFloat, y: CGFloat, w: CGFloat,h: CGFloat) -> UIImage {
         return UIImage(CGImage: CGImageCreateWithImageInRect(People.image.CGImage, CGRectMake(x, y, w, h))!)
@@ -37,7 +39,9 @@ class GamePeople{
         Shadow_x: -5,
         Shadow_y: -35,
         Shadow_w: 35,
-        Shadow_h: 15
+        Shadow_h: 15,
+        Unit: SKShapeNode(),
+        Shadow: SKShapeNode()
     )
     func Naoe_Riki_Array() -> [UIImage]{
         var Naoe_Riki_Array:[UIImage] = []
@@ -152,7 +156,9 @@ class GamePeople{
         Shadow_x: -4,
         Shadow_y: -33,
         Shadow_w: 35,
-        Shadow_h: 15
+        Shadow_h: 15,
+        Unit: SKShapeNode(),
+        Shadow: SKShapeNode()
     )
     func Natsume_Rin_Array() -> [UIImage]{
         var Natsume_Rin_Array:[UIImage] = []
@@ -228,7 +234,9 @@ class GamePeople{
         Shadow_x: 0,
         Shadow_y: -30,
         Shadow_w: 35,
-        Shadow_h: 15
+        Shadow_h: 15,
+        Unit: SKShapeNode(),
+        Shadow: SKShapeNode()
     )
     func Natsume_Kyousuke_Array() -> [UIImage]{
         var Natsume_Kyousuke_Array:[UIImage] = []
@@ -239,7 +247,6 @@ class GamePeople{
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: 0, y: T + H, w: W, h: H)) //1:2
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: 0, y: T + H * 2, w: W, h: H)) //1:3
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: 0, y: T + H * 3, w: W, h: H)) //1:4
-        
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W, y: T, w: W, h: H)) //2:1
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W, y: T + H, w: W, h: H)) //2:2
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W, y: T + H * 2, w: W, h: H)) //2:3
@@ -248,7 +255,6 @@ class GamePeople{
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W, y: T + H * 5, w: W, h: H)) //2:6
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W, y: T + H * 6, w: W, h: H)) //2:7
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W, y: T + H * 7, w: W, h: H)) //2:8
-        
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 2, y: T, w: W, h: H)) //3:1
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 2, y: T + H, w: W, h: H)) //3:2
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 2, y: T + H * 2, w: W, h: H)) //3:3
@@ -257,7 +263,6 @@ class GamePeople{
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 2, y: T + H * 5, w: W, h: H)) //3:6
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 2, y: T + H * 6, w: W, h: H)) //3:7
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 2, y: T + H * 7, w: W, h: H)) //3:8
-        
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 3, y: T, w: W, h: H))			//4:1
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 3, y: T + H, w: W, h: H))		//4:2
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 3, y: T + H * 2, w: W, h: H)) 	//4:3
@@ -266,7 +271,6 @@ class GamePeople{
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 3, y: T + H * 5, w: W, h: H)) 	//4:6
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 3, y: T + H * 6, w: W, h: H)) 	//4:7
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 3, y: T + H * 7, w: W, h: H)) 	//4:8
-        
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 4, y: T, w: W, h: H))			//5:1
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 4, y: T + H, w: W, h: H))		//5:2
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 4, y: T + H * 2, w: W, h: H)) 	//5:3
@@ -275,7 +279,6 @@ class GamePeople{
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 4, y: T + H * 5, w: W, h: H)) 	//5:6
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 4, y: T + H * 6, w: W, h: H)) 	//5:7
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 4, y: T + H * 7, w: W, h: H)) 	//5:8
-        
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 5, y: T, w: W, h: H))			//6:1
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 5, y: T + H, w: W, h: H))		//6:2
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 5, y: T + H * 2, w: W, h: H)) 	//6:3
@@ -284,7 +287,6 @@ class GamePeople{
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 5, y: T + H * 5, w: W, h: H)) 	//6:6
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 5, y: T + H * 6, w: W, h: H)) 	//6:7
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 5, y: T + H * 7, w: W, h: H)) 	//6:8
-        
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 6, y: T, w: W, h: H))			//7:1
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 6, y: T + H, w: W, h: H))		//7:2
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 6, y: T + H * 2, w: W, h: H)) 	//7:3
@@ -293,7 +295,6 @@ class GamePeople{
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 6, y: T + H * 5, w: W, h: H)) 	//7:6
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 6, y: T + H * 6, w: W, h: H)) 	//7:7
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 6, y: T + H * 7, w: W, h: H)) 	//7:8
-        
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 7, y: T, w: W, h: H))			//8:1
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 7, y: T + H, w: W, h: H))		//8:2
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 7, y: T + H * 2, w: W, h: H)) 	//8:3
@@ -302,7 +303,6 @@ class GamePeople{
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 7, y: T + H * 5, w: W, h: H)) 	//8:6
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 7, y: T + H * 6, w: W, h: H)) 	//8:7
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 7, y: T + H * 7, w: W, h: H)) 	//8:8
-        
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 8, y: T, w: W, h: H))			//9:1
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 8, y: T + H, w: W, h: H))		//9:2
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 8, y: T + H * 2, w: W, h: H)) 	//9:3
@@ -311,7 +311,6 @@ class GamePeople{
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 8, y: T + H * 5, w: W, h: H)) 	//9:6
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 8, y: T + H * 6, w: W, h: H)) 	//9:7
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 8, y: T + H * 7, w: W, h: H)) 	//9:8
-        
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 9, y: T, w: W, h: H))			//10:1
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 9, y: T + H, w: W, h: H))		//10:2
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 9, y: T + H * 2, w: W, h: H)) 	//10:3
@@ -320,7 +319,6 @@ class GamePeople{
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 9, y: T + H * 5, w: W, h: H)) 	//10:6
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 9, y: T + H * 6, w: W, h: H)) 	//10:7
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 9, y: T + H * 7, w: W, h: H)) 	//10:8
-        
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 10, y: T, w: W, h: H))			//11:1
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 10, y: T + H, w: W, h: H))		//11:2
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: W * 10, y: T + H * 2, w: W, h: H)) 	//11:3
@@ -336,6 +334,7 @@ class GamePeople{
     enum Natsume_Kyousuke_Status{
         case NK_Static //静止
         case NK_Run //跑
+        case NK_Return //返回
         case NK_Swing //挥动
         case NK_Catch //接球
         case NK_Wave //招手
