@@ -242,7 +242,7 @@ class GamePeople{
         var Natsume_Kyousuke_Array:[UIImage] = []
         let H:CGFloat = 72
         let W:CGFloat = 64
-        let T:CGFloat = 5
+        let T:CGFloat = 3
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: 0, y: T, w: W, h: H)) //1:1
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: 0, y: T + H, w: W, h: H)) //1:2
         Natsume_Kyousuke_Array.append(ImageInterception(Natsume_Kyousuke_Attribute, x: 0, y: T + H * 2, w: W, h: H)) //1:3
@@ -338,6 +338,7 @@ class GamePeople{
         case NK_Swing //挥动
         case NK_Catch //接球
         case NK_Wave //招手
+        case NK_PickUp //捡起
     }
 }
 
