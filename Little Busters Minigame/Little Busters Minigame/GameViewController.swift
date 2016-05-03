@@ -21,8 +21,9 @@ class GameViewController: UIViewController {
                 let GameMenuView = GameMenu(size: CGSize(width: 320, height: 320 * MainViewAspectRatio))
                 MainView.showsFPS = true
                 MainView.showsNodeCount = true
-                MainView.showsPhysics = true
-                MainView.ignoresSiblingOrder = true
+                MainView.showsDrawCount = true
+                MainView.showsPhysics = true //
+                MainView.ignoresSiblingOrder = false
                 GameMenuView.scaleMode = .AspectFill
                 MainView.presentScene(GameMenuView)
             }

@@ -23,6 +23,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     var Baseball_Angle: CGFloat = 0.0
     var Baseball_ReturnPoint: CGPoint = CGPoint.zero
     var Baseball_JumpsHeight: CGFloat = 0.0
+    //var Baseball_TrackPoint: CGPoint = CGPoint.zero
     var Baseball_Speed:CGFloat = 0
     let BallTrackPath = SKShapeNode()
     
@@ -190,7 +191,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 MovingButton_Right.fillColor = SKColor.whiteColor()
             }
             else if TestButton.containsPoint(location){ //Test
-                if(Baseball[0].Baseball_Status != GameObject.Baseball_Status.B_Cast && Baseball[0].Baseball_Status != GameObject.Baseball_Status.B_Return && Natsume_Rin.attribute.status == GamePeople.Natsume_Rin_Status.NR_Static.hashValue){
+                if(Baseball[0].Baseball_Status != GameObject.Baseball_Status.B_Cast && Baseball[0].Baseball_Status != GameObject.Baseball_Status.B_Return && Baseball[0].Baseball_Status != GameObject.Baseball_Status.B_ReturnAgain && Natsume_Rin.attribute.status == GamePeople.Natsume_Rin_Status.NR_Static.hashValue){
                     self.Natsume_Rin.attribute.imageNumber = 0
                     self.Natsume_Rin.attribute.status = GamePeople.Natsume_Rin_Status.NR_Swing.hashValue
                 }
@@ -280,9 +281,14 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         case .B_Cast:
             break
         case .B_Return:
-            Status_View(Baseball[0].Baseball_Unit.position)
-            //Status_View(Natsume_Kyousuke.attribute.Unit.position)
+            //Status_View(Baseball[0].Baseball_Unit.position)
+            Status_View(Natsume_Kyousuke.attribute.Unit.position)
             break
+        case .B_ReturnAgain:
+            Status_View(Baseball[0].Baseball_Unit.position)
+            //Baseballfield.position = GameObject().Baseballfield().position
+            break
+            
         }
 
     }
@@ -348,6 +354,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             }
             else if(Naoe_Riki.attribute.imageNumber.hashValue == 5){
                 Naoe_Riki_View.physicsBody = SKPhysicsBody(polygonFromPath: GamePeople().Naoe_Riki_Contact()[2])
+                
             }
             else{
                 Naoe_Riki_View.physicsBody = nil
@@ -414,7 +421,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             }
             if(Natsume_Rin.attribute.imageNumber.hashValue == 12){
                 //球已投出
-                Baseball[0].Baseball_Power = GameObject.Baseball_Power(ball_x: 2,ball_y: 0,height: 5, length: 60)
+                Baseball[0].Baseball_Power = GameObject.Baseball_Power(ball_x: 2,ball_y: 0,height: 3, length: 30)
                 Baseball_Jumps = 2
                 Baseball_Speed = 400
                 let BallPath = UIBezierPath()
@@ -475,6 +482,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     
     //MARK: 棗 恭介
     func Status_Natsume_Kyousuke(){
+        //print(Natsume_Kyousuke.attribute.status)
+        print(GetAngle(Baseball[0].Baseball_Unit.position, b: Natsume_Kyousuke.attribute.Unit.position) - Baseball_Angle)
         //帧数刷新延时
         let TimeInterval = SKAction.waitForDuration(NSTimeInterval(0.1))
         switch Natsume_Kyousuke.attribute.status{
@@ -617,12 +626,14 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 Baseball_Speed = 800
                 let BallPath = UIBezierPath()
                 BallPath.moveToPoint(Baseball[0].Baseball_Unit.position)
-                BallPath.addLineToPoint(CGPoint(x: GameObject.Baseball().Baseball_Image.position.x + 600, y: -(Baseballfield.frame.height * Baseballfield.anchorPoint.y)))
+                Baseball_ReturnPoint.y = Baseball_ReturnPoint.y + 20
+                let BallAddPath = CGSize(width: Baseball_ReturnPoint.x - Baseball[0].Baseball_Unit.position.x, height: Baseball[0].Baseball_Unit.position.y - Baseball_ReturnPoint.y)
+                BallPath.addLineToPoint(CGPoint(x: BallPath.currentPoint.x + (BallAddPath.width * 3), y: BallPath.currentPoint.y - (BallAddPath.height * 3)))
                 Baseball_Cast(0,BallPath: BallPath)
                 Baseball[0].Baseball_Unit.runAction(SKAction.speedTo(0, duration: 5), completion: { () -> Void in
                     self.Baseball_Static(0)
                 })
-                Baseball[0].Baseball_Status = GameObject.Baseball_Status.B_Return
+                Baseball[0].Baseball_Status = GameObject.Baseball_Status.B_ReturnAgain
             }
 
             Natsume_Kyousuke_StatusAction(TimeInterval)
@@ -682,7 +693,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         
         Baseball[Baseball_Number].Baseball_Power = GameObject.Baseball_Power(ball_x: 2,ball_y: 0,height: 2, length: 35)
         let BallPath = UIBezierPath()
-        BallPath.moveToPoint(CGPoint(x: Baseball[Baseball_Number].Baseball_Unit.position.x, y: Baseball[Baseball_Number].Baseball_Unit.position.y))
+        BallPath.moveToPoint(Baseball[Baseball_Number].Baseball_Unit.position)
         if Naoe_Riki.attribute.imageNumber.hashValue == 4 {
             let HeightRatio = (contact.x - CGPathGetBoundingBox(GamePeople().Naoe_Riki_Contact()[0]).minX) / CGPathGetBoundingBox(GamePeople().Naoe_Riki_Contact()[0]).width
             BallPath.addLineToPoint(CGPoint(x: Baseballfield.frame.width / 2, y: Baseballfield.frame.height * (1 - HeightRatio) - Baseballfield.frame.height * Baseballfield.anchorPoint.y))
@@ -744,8 +755,9 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     func didBeginContact(contact: SKPhysicsContact) {
         if contact.bodyA.categoryBitMask == Collision.Baseball || contact.bodyB.categoryBitMask == Collision.Baseball{
             let ContactUnit = contact.bodyA.categoryBitMask == Collision.Baseball ? contact.bodyB : contact.bodyA
-            if ContactUnit.categoryBitMask == Collision.BaseballBat && Baseball[0].Baseball_Status == GameObject.Baseball_Status.B_Cast{
+            if ContactUnit.categoryBitMask == Collision.BaseballBat && (Baseball[0].Baseball_Status == GameObject.Baseball_Status.B_Cast || Baseball[0].Baseball_Status == GameObject.Baseball_Status.B_ReturnAgain){
                 //击球后
+                print("击球后")
                 Baseball_Return(0, contact: convertPoint(contact.contactPoint, toNode: Naoe_Riki_View))
                 Natsume_Kyousuke.attribute.status = GamePeople.Natsume_Kyousuke_Status.NK_Run.hashValue
             }
@@ -771,6 +783,9 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             if ContactUnit.categoryBitMask == Collision.PeopleBehind && Natsume_Kyousuke.attribute.Unit.position.x > Baseball[0].Baseball_Unit.position.x{
                 self.Natsume_Kyousuke_Static()
                 self.Natsume_Kyousuke.attribute.status = GamePeople.Natsume_Kyousuke_Status.NK_Return.hashValue
+            }
+            else if ContactUnit.categoryBitMask == Collision.PeopleFront{
+                return
             }
             else{
                 self.Natsume_Kyousuke_Static()
