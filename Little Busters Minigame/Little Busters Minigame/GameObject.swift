@@ -66,7 +66,7 @@ class GameObject{
         case B_Static //静止
         case B_Cast //投出
         case B_Return //击回
-        case B_ReturnAgain
+        case B_ReturnAgain //扔回
     }
     struct Baseball_Power {
         var ball_x: CGFloat //已运动距离

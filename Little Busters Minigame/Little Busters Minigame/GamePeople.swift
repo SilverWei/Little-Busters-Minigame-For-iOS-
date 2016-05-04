@@ -340,5 +340,19 @@ class GamePeople{
         case NK_Wave //招手
         case NK_PickUp //捡起
     }
+    func Natsume_Kyousuke_Range() -> SKShapeNode{
+        let RangePath = UIBezierPath()
+        RangePath.moveToPoint(CGPoint(x: 0, y: 0))
+        RangePath.addLineToPoint(CGPoint(x: 0, y: 320))
+        RangePath.addLineToPoint(CGPoint(x: 500, y: 320))
+        RangePath.addLineToPoint(CGPoint(x: 500, y: 0))
+        RangePath.addLineToPoint(CGPoint(x: 0, y: 0))
+        let Range = SKShapeNode(path: RangePath.CGPath)
+        Range.lineWidth = 1.0
+        Range.fillColor = SKColor.clearColor()
+        Range.strokeColor = SKColor.blueColor()
+        Range.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x - 810, y: GameObject().Baseballfield().anchorPoint.y + 70)
+        return Range
+    }
 }
 
