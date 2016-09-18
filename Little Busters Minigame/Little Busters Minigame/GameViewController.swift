@@ -24,7 +24,7 @@ class GameViewController: UIViewController {
                 MainView.showsDrawCount = true
                 MainView.showsPhysics = true //
                 MainView.ignoresSiblingOrder = false
-                GameMenuView.scaleMode = .AspectFill
+                GameMenuView.scaleMode = .aspectFill
                 MainView.presentScene(GameMenuView)
             }
         }
@@ -35,7 +35,7 @@ class GameViewController: UIViewController {
         // Release any cached data, images, etc that aren't in use.
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 }

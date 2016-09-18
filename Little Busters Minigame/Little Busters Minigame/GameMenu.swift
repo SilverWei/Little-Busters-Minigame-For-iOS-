@@ -14,11 +14,11 @@ class GameMenu: SKScene {
     var KittyBaseballGame_Button:SKNode! = nil
     
     enum Layers: CGFloat{
-        case Background
-        case Button
+        case background
+        case button
     }
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         /* Setup your scene here */
         addChild(MenuView)
         ShowBackground()
@@ -28,35 +28,35 @@ class GameMenu: SKScene {
 
     func ShowBackground(){
         let BackgroundImage = SKSpriteNode(imageNamed: "MenuBackground")
-        BackgroundImage.size = CGSizeMake(size.height * (BackgroundImage.size.width / BackgroundImage.size.height), size.height)
-        BackgroundImage.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
-        BackgroundImage.zPosition = Layers.Background.rawValue
+        BackgroundImage.size = CGSize(width: size.height * (BackgroundImage.size.width / BackgroundImage.size.height), height: size.height)
+        BackgroundImage.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+        BackgroundImage.zPosition = Layers.background.rawValue
         MenuView.addChild(BackgroundImage)
     }
     
     func ShowButton(){
-        KittyBaseballGame_Button = SKSpriteNode(color: SKColor.blackColor(), size: CGSize(width: 150, height: 44))
+        KittyBaseballGame_Button = SKSpriteNode(color: SKColor.black, size: CGSize(width: 150, height: 44))
         KittyBaseballGame_Button.position = CGPoint(x: size.width / 2, y:(size.height / 3) * 2)
         KittyBaseballGame_Button.alpha = 0.7
-        KittyBaseballGame_Button.zPosition = Layers.Button.rawValue
+        KittyBaseballGame_Button.zPosition = Layers.button.rawValue
         
         let KittyBaseballGame_Label = SKLabelNode(text: "Kitty Baseball")
-        KittyBaseballGame_Label.fontColor = SKColor.whiteColor()
-        KittyBaseballGame_Label.position = CGPointMake(0, 0)
+        KittyBaseballGame_Label.fontColor = SKColor.white
+        KittyBaseballGame_Label.position = CGPoint(x: 0, y: 0)
         KittyBaseballGame_Label.fontSize = 20
-        KittyBaseballGame_Label.verticalAlignmentMode = .Center
+        KittyBaseballGame_Label.verticalAlignmentMode = .center
         KittyBaseballGame_Label.fontName = "AvenirNext-Bold"
         KittyBaseballGame_Button.addChild(KittyBaseballGame_Label)
         MenuView.addChild(KittyBaseballGame_Button)
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Loop over all the touches in this event
         for touch: AnyObject in touches {
             // Get the location of the touch in this scene
-            let location = touch.locationInNode(self)
+            let location = touch.location(in: self)
             // Check if the location of the touch is within the button's bounds
-            if KittyBaseballGame_Button.containsPoint(location) {
+            if KittyBaseballGame_Button.contains(location) {
                 print("进入棒球小游戏!")
                 let nextScene = KittyBaseballGame(size: self.size)
                 self.view?.presentScene(nextScene)

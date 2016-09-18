@@ -13,18 +13,18 @@ class GameObject{
     internal func Baseballfield() -> SKSpriteNode{
         let image = SKSpriteNode(imageNamed: "Baseballfield-day")
         let BaseballfieldMagnification:CGFloat = 2
-        image.size = CGSizeMake(image.size.width * BaseballfieldMagnification, image.size.height * BaseballfieldMagnification)
+        image.size = CGSize(width: image.size.width * BaseballfieldMagnification, height: image.size.height * BaseballfieldMagnification)
         image.anchorPoint = CGPoint(x: 0.5, y: 0.25)
         image.position = CGPoint(x: 230, y: 200)
-        image.zPosition = KittyBaseballGame.Layers.Baseballfield.rawValue
+        image.zPosition = KittyBaseballGame.Layers.baseballfield.rawValue
         return image
     }
     
     //阴影
-    internal func Shadow(x: CGFloat, y: CGFloat, w: CGFloat, h: CGFloat) -> SKShapeNode{
-        let ShadowForm = SKShapeNode(ellipseOfSize: CGSize(width: w, height: h))
-        ShadowForm.fillColor = SKColor.blackColor()
-        ShadowForm.strokeColor = SKColor.clearColor()
+    internal func Shadow(_ x: CGFloat, y: CGFloat, w: CGFloat, h: CGFloat) -> SKShapeNode{
+        let ShadowForm = SKShapeNode(ellipseOf: CGSize(width: w, height: h))
+        ShadowForm.fillColor = SKColor.black
+        ShadowForm.strokeColor = SKColor.clear
         ShadowForm.alpha = 0.3
         ShadowForm.position = CGPoint(x: x, y: y)
         ShadowForm.zPosition = KittyBaseballGame.Layers.shadow.rawValue
@@ -34,7 +34,7 @@ class GameObject{
     //棒球
     struct Baseball {
         let Baseball_Image = GameObject().Baseball_Image()
-        var Baseball_Status = GameObject.Baseball_Status.B_Static
+        var Baseball_Status = GameObject.Baseball_Status.b_Static
         var Baseball_Power = GameObject.Baseball_Power(ball_x: 0,ball_y: 0,height: 0,length: 0)
         var Baseball_Shadow = SKShapeNode()
         var Baseball_Unit = SKShapeNode()
@@ -42,20 +42,20 @@ class GameObject{
     internal func Baseball_Image() -> SKSpriteNode{
         let image = SKSpriteNode(imageNamed: "Baseball")
         image.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x - 17, y: GameObject().Baseballfield().anchorPoint.y + 200)
-        image.size = CGSizeMake(13, 13)
+        image.size = CGSize(width: 13, height: 13)
         image.anchorPoint = CGPoint(x: 0.5, y: 0)
-        image.zPosition = KittyBaseballGame.Layers.Baseball.rawValue
-        let path = CGPathCreateMutable()
-        CGPathMoveToPoint(path, nil, -3, 7)
-        CGPathAddLineToPoint(path, nil, 3, 7)
-        CGPathAddLineToPoint(path, nil, 7, 3)
-        CGPathAddLineToPoint(path, nil, 7, -3)
-        CGPathAddLineToPoint(path, nil, 3, -7)
-        CGPathAddLineToPoint(path, nil, -3, -7)
-        CGPathAddLineToPoint(path, nil, -7, -3)
-        CGPathAddLineToPoint(path, nil, -7, 3)
-        CGPathCloseSubpath(path)
-        image.physicsBody = SKPhysicsBody(polygonFromPath: path)
+        image.zPosition = KittyBaseballGame.Layers.baseball.rawValue
+        let path = CGMutablePath()
+        path.move(to:CGPoint(x:-3, y:7))
+        path.addLine(to:CGPoint(x:3, y:7))
+        path.addLine(to:CGPoint(x:7, y:3))
+        path.addLine(to:CGPoint(x:7, y:-3))
+        path.addLine(to:CGPoint(x:3, y:-7))
+        path.addLine(to:CGPoint(x:-3, y:-7))
+        path.addLine(to:CGPoint(x:-7, y:-3))
+        path.addLine(to:CGPoint(x:-7, y:3))
+        path.closeSubpath()
+        image.physicsBody = SKPhysicsBody(polygonFrom: path)
         image.physicsBody?.categoryBitMask = KittyBaseballGame.Collision.Baseball
         image.physicsBody?.collisionBitMask = 0
         image.physicsBody?.contactTestBitMask = KittyBaseballGame.Collision.BaseballBat
@@ -63,10 +63,10 @@ class GameObject{
     }
     //动作状态
     enum Baseball_Status{
-        case B_Static //静止
-        case B_Cast //投出
-        case B_Return //击回
-        case B_ReturnAgain //扔回
+        case b_Static //静止
+        case b_Cast //投出
+        case b_Return //击回
+        case b_ReturnAgain //扔回
     }
     struct Baseball_Power {
         var ball_x: CGFloat //已运动距离
@@ -79,7 +79,7 @@ class GameObject{
     //按钮
     internal func MovingButton() -> SKSpriteNode{
         let View_Width:CGFloat = 120
-        let View = SKSpriteNode(color: SKColor.blackColor(), size: CGSize(width: View_Width, height: View_Width * 0.75))
+        let View = SKSpriteNode(color: SKColor.black, size: CGSize(width: View_Width, height: View_Width * 0.75))
         View.alpha = 0.5
         View.anchorPoint = CGPoint(x: 0, y: 0)
         View.position = CGPoint(x: 10, y: 10)
@@ -89,14 +89,14 @@ class GameObject{
     internal func MovingButton_UP() -> SKShapeNode{
         let TrianglePath = UIBezierPath()
         let MovingButtonFrame = MovingButton().frame
-        TrianglePath.moveToPoint(CGPoint(x: 0, y: MovingButtonFrame.height))
-        TrianglePath.addLineToPoint(CGPoint(x: MovingButtonFrame.width / 2, y: MovingButtonFrame.height / 2))
-        TrianglePath.addLineToPoint(CGPoint(x: MovingButtonFrame.width, y: MovingButtonFrame.height))
-        TrianglePath.addLineToPoint(CGPoint(x: 0, y: MovingButtonFrame.height))
-        let Triangle = SKShapeNode(path: TrianglePath.CGPath)
+        TrianglePath.move(to: CGPoint(x: 0, y: MovingButtonFrame.height))
+        TrianglePath.addLine(to: CGPoint(x: MovingButtonFrame.width / 2, y: MovingButtonFrame.height / 2))
+        TrianglePath.addLine(to: CGPoint(x: MovingButtonFrame.width, y: MovingButtonFrame.height))
+        TrianglePath.addLine(to: CGPoint(x: 0, y: MovingButtonFrame.height))
+        let Triangle = SKShapeNode(path: TrianglePath.cgPath)
         Triangle.lineWidth = 1.0
-        Triangle.fillColor = SKColor.clearColor()
-        Triangle.strokeColor = SKColor.whiteColor()
+        Triangle.fillColor = SKColor.clear
+        Triangle.strokeColor = SKColor.white
         Triangle.position = CGPoint(x: 0, y: 0)
         
         return Triangle
@@ -105,14 +105,14 @@ class GameObject{
     internal func MovingButton_Down() -> SKShapeNode{
         let TrianglePath = UIBezierPath()
         let MovingButtonFrame = MovingButton().frame
-        TrianglePath.moveToPoint(CGPoint(x: 0, y: 0))
-        TrianglePath.addLineToPoint(CGPoint(x: MovingButtonFrame.width / 2, y: MovingButtonFrame.height / 2))
-        TrianglePath.addLineToPoint(CGPoint(x: MovingButtonFrame.width, y: 0))
-        TrianglePath.addLineToPoint(CGPoint(x: 0, y: 0))
-        let Triangle = SKShapeNode(path: TrianglePath.CGPath)
+        TrianglePath.move(to: CGPoint(x: 0, y: 0))
+        TrianglePath.addLine(to: CGPoint(x: MovingButtonFrame.width / 2, y: MovingButtonFrame.height / 2))
+        TrianglePath.addLine(to: CGPoint(x: MovingButtonFrame.width, y: 0))
+        TrianglePath.addLine(to: CGPoint(x: 0, y: 0))
+        let Triangle = SKShapeNode(path: TrianglePath.cgPath)
         Triangle.lineWidth = 1.0
-        Triangle.fillColor = SKColor.clearColor()
-        Triangle.strokeColor = SKColor.whiteColor()
+        Triangle.fillColor = SKColor.clear
+        Triangle.strokeColor = SKColor.white
         Triangle.position = CGPoint(x: 0, y: 0)
         
         return Triangle
@@ -121,14 +121,14 @@ class GameObject{
     internal func MovingButton_Left() -> SKShapeNode{
         let TrianglePath = UIBezierPath()
         let MovingButtonFrame = MovingButton().frame
-        TrianglePath.moveToPoint(CGPoint(x: 0, y: MovingButtonFrame.height))
-        TrianglePath.addLineToPoint(CGPoint(x: MovingButtonFrame.width / 2, y: MovingButtonFrame.height / 2))
-        TrianglePath.addLineToPoint(CGPoint(x: 0, y: 0))
-        TrianglePath.addLineToPoint(CGPoint(x: 0, y: MovingButtonFrame.height))
-        let Triangle = SKShapeNode(path: TrianglePath.CGPath)
+        TrianglePath.move(to: CGPoint(x: 0, y: MovingButtonFrame.height))
+        TrianglePath.addLine(to: CGPoint(x: MovingButtonFrame.width / 2, y: MovingButtonFrame.height / 2))
+        TrianglePath.addLine(to: CGPoint(x: 0, y: 0))
+        TrianglePath.addLine(to: CGPoint(x: 0, y: MovingButtonFrame.height))
+        let Triangle = SKShapeNode(path: TrianglePath.cgPath)
         Triangle.lineWidth = 1.0
-        Triangle.fillColor = SKColor.clearColor()
-        Triangle.strokeColor = SKColor.whiteColor()
+        Triangle.fillColor = SKColor.clear
+        Triangle.strokeColor = SKColor.white
         Triangle.position = CGPoint(x: 0, y: 0)
         
         return Triangle
@@ -137,14 +137,14 @@ class GameObject{
     internal func MovingButton_Right() -> SKShapeNode{
         let TrianglePath = UIBezierPath()
         let MovingButtonFrame = MovingButton().frame
-        TrianglePath.moveToPoint(CGPoint(x: MovingButtonFrame.width, y: MovingButtonFrame.height))
-        TrianglePath.addLineToPoint(CGPoint(x: MovingButtonFrame.width / 2, y: MovingButtonFrame.height / 2))
-        TrianglePath.addLineToPoint(CGPoint(x: MovingButtonFrame.width, y: 0))
-        TrianglePath.addLineToPoint(CGPoint(x: MovingButtonFrame.width, y: MovingButtonFrame.height))
-        let Triangle = SKShapeNode(path: TrianglePath.CGPath)
+        TrianglePath.move(to: CGPoint(x: MovingButtonFrame.width, y: MovingButtonFrame.height))
+        TrianglePath.addLine(to: CGPoint(x: MovingButtonFrame.width / 2, y: MovingButtonFrame.height / 2))
+        TrianglePath.addLine(to: CGPoint(x: MovingButtonFrame.width, y: 0))
+        TrianglePath.addLine(to: CGPoint(x: MovingButtonFrame.width, y: MovingButtonFrame.height))
+        let Triangle = SKShapeNode(path: TrianglePath.cgPath)
         Triangle.lineWidth = 1.0
-        Triangle.fillColor = SKColor.clearColor()
-        Triangle.strokeColor = SKColor.whiteColor()
+        Triangle.fillColor = SKColor.clear
+        Triangle.strokeColor = SKColor.white
         Triangle.position = CGPoint(x: 0, y: 0)
         
         return Triangle
@@ -153,7 +153,7 @@ class GameObject{
     //测试按钮
     internal func TestButton() -> SKSpriteNode{
         let View_Width:CGFloat = 120
-        let View = SKSpriteNode(color: SKColor.blackColor(), size: CGSize(width: View_Width, height: View_Width * 0.75))
+        let View = SKSpriteNode(color: SKColor.black, size: CGSize(width: View_Width, height: View_Width * 0.75))
         View.alpha = 0.5
         View.anchorPoint = CGPoint(x: 0, y: 0)
         View.position = CGPoint(x: 20, y: 200)

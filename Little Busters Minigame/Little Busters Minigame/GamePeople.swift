@@ -27,8 +27,8 @@ class GamePeople{
         var Unit: SKShapeNode
         var Shadow: SKShapeNode
     }
-    func ImageInterception(People: Attribute, x: CGFloat, y: CGFloat, w: CGFloat,h: CGFloat) -> UIImage {
-        return UIImage(CGImage: CGImageCreateWithImageInRect(People.image.CGImage, CGRectMake(x, y, w, h))!)
+    func ImageInterception(_ People: Attribute, x: CGFloat, y: CGFloat, w: CGFloat,h: CGFloat) -> UIImage {
+        return UIImage(cgImage: People.image.cgImage!.cropping(to: CGRect(x: x, y: y, width: w, height: h))!)
     }
     
     //MARK: 直枝 理樹
@@ -92,55 +92,55 @@ class GamePeople{
     }
     //动作状态
     enum Naoe_Riki_Status{
-        case NR_Static //静止
-        case NR_Swing //挥动
-        case NR_FallDown //摔倒
+        case nr_Static //静止
+        case nr_Swing //挥动
+        case nr_FallDown //摔倒
     }
     func Naoe_Riki_Range() -> SKShapeNode{
         let RangePath = UIBezierPath()
-        RangePath.moveToPoint(CGPoint(x: 0, y: 0))
-        RangePath.addLineToPoint(CGPoint(x: 0, y: 100))
-        RangePath.addLineToPoint(CGPoint(x: 120, y: 100))
-        RangePath.addLineToPoint(CGPoint(x: 120, y: 0))
-        RangePath.addLineToPoint(CGPoint(x: 0, y: 0))
-        let Range = SKShapeNode(path: RangePath.CGPath)
+        RangePath.move(to: CGPoint(x: 0, y: 0))
+        RangePath.addLine(to: CGPoint(x: 0, y: 100))
+        RangePath.addLine(to: CGPoint(x: 120, y: 100))
+        RangePath.addLine(to: CGPoint(x: 120, y: 0))
+        RangePath.addLine(to: CGPoint(x: 0, y: 0))
+        let Range = SKShapeNode(path: RangePath.cgPath)
         Range.lineWidth = 1.0
-        Range.fillColor = SKColor.clearColor()
-        Range.strokeColor = SKColor.blueColor()
+        Range.fillColor = SKColor.clear
+        Range.strokeColor = SKColor.blue
         Range.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x - 60, y: GameObject().Baseballfield().anchorPoint.y - 150)
         return Range
     }
     func Naoe_Riki_Contact() -> [CGPath]{
         var Contact_Array:[CGPath] = []
-        let path1 = CGPathCreateMutable()
-        CGPathMoveToPoint(path1, nil, 13, -10)
-        CGPathAddLineToPoint(path1, nil, 37, -19)
-        CGPathAddLineToPoint(path1, nil, 21, -29)
-        CGPathCloseSubpath(path1)
+        let path1 = CGMutablePath()
+        path1.move(to: CGPoint(x: 13, y: -10))
+        path1.addLine(to:CGPoint(x: 37, y: -19))
+        path1.addLine(to:CGPoint(x: 21, y: -29))
+        path1.closeSubpath()
         Contact_Array.append(path1)
-        let path2 = CGPathCreateMutable()
-        CGPathMoveToPoint(path2, nil, 19, -6)
-        CGPathAddLineToPoint(path2, nil, 48, -5)
-        CGPathAddLineToPoint(path2, nil, 39, -12)
-        CGPathCloseSubpath(path2)
+        let path2 = CGMutablePath()
+        path2.move(to: CGPoint(x: 19, y: -6))
+        path2.addLine(to:CGPoint(x: 48, y: -5))
+        path2.addLine(to:CGPoint(x: 39, y: -12))
+        path2.closeSubpath()
         Contact_Array.append(path2)
-        let path3 = CGPathCreateMutable()
-        CGPathMoveToPoint(path3, nil, 15, -3)
-        CGPathAddLineToPoint(path3, nil, 41, 8)
-        CGPathAddLineToPoint(path3, nil, 37, -2)
-        CGPathCloseSubpath(path3)
+        let path3 = CGMutablePath()
+        path3.move(to: CGPoint(x: 15,y: -3))
+        path3.addLine(to:CGPoint(x: 41, y: 8))
+        path3.addLine(to:CGPoint(x: 37, y: -2))
+        path3.closeSubpath()
         Contact_Array.append(path3)
         return Contact_Array
     }
     func Naoe_Riki_BodyContact() -> SKShapeNode{
         let Body = SKShapeNode()
-        let path = CGPathCreateMutable()
-        CGPathMoveToPoint(path, nil, 3, -15)
-        CGPathAddLineToPoint(path, nil, 3, -20)
-        CGPathAddLineToPoint(path, nil, -10, -20)
-        CGPathAddLineToPoint(path, nil, -10, -15)
-        CGPathCloseSubpath(path)
-        Body.physicsBody = SKPhysicsBody(polygonFromPath: path)
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: 3,y: -15))
+        path.addLine(to:CGPoint(x: 3, y: -20))
+        path.addLine(to:CGPoint(x: -10, y: -20))
+        path.addLine(to:CGPoint(x: -10, y: -15))
+        path.closeSubpath()
+        Body.physicsBody = SKPhysicsBody(polygonFrom: path)
         Body.physicsBody?.categoryBitMask = KittyBaseballGame.Collision.PeopleFront
         Body.physicsBody?.collisionBitMask = 0
         Body.physicsBody?.contactTestBitMask = KittyBaseballGame.Collision.Baseball
@@ -217,13 +217,13 @@ class GamePeople{
     }
     //动作状态
     enum Natsume_Rin_Status{
-        case NR_Static //静止
-        case NR_Catch //接球
-        case NR_Anger //愤怒
-        case NR_Swing //挥动
-        case NR_Surprise //惊讶
-        case NR_ShelterLeft //左躲避
-        case NR_ShelterRight //右躲避
+        case nr_Static //静止
+        case nr_Catch //接球
+        case nr_Anger //愤怒
+        case nr_Swing //挥动
+        case nr_Surprise //惊讶
+        case nr_ShelterLeft //左躲避
+        case nr_ShelterRight //右躲避
     }
 
     //MARK: 棗 恭介
@@ -332,25 +332,25 @@ class GamePeople{
     }
     //动作状态
     enum Natsume_Kyousuke_Status{
-        case NK_Static //静止
-        case NK_Run //跑
-        case NK_Return //返回
-        case NK_Swing //挥动
-        case NK_Catch //接球
-        case NK_Wave //招手
-        case NK_PickUp //捡起
+        case nk_Static //静止
+        case nk_Run //跑
+        case nk_Return //返回
+        case nk_Swing //挥动
+        case nk_Catch //接球
+        case nk_Wave //招手
+        case nk_PickUp //捡起
     }
     func Natsume_Kyousuke_Range() -> SKShapeNode{
         let RangePath = UIBezierPath()
-        RangePath.moveToPoint(CGPoint(x: 0, y: 0))
-        RangePath.addLineToPoint(CGPoint(x: 0, y: 320))
-        RangePath.addLineToPoint(CGPoint(x: 500, y: 320))
-        RangePath.addLineToPoint(CGPoint(x: 500, y: 0))
-        RangePath.addLineToPoint(CGPoint(x: 0, y: 0))
-        let Range = SKShapeNode(path: RangePath.CGPath)
+        RangePath.move(to: CGPoint(x: 0, y: 0))
+        RangePath.addLine(to: CGPoint(x: 0, y: 320))
+        RangePath.addLine(to: CGPoint(x: 500, y: 320))
+        RangePath.addLine(to: CGPoint(x: 500, y: 0))
+        RangePath.addLine(to: CGPoint(x: 0, y: 0))
+        let Range = SKShapeNode(path: RangePath.cgPath)
         Range.lineWidth = 1.0
-        Range.fillColor = SKColor.clearColor()
-        Range.strokeColor = SKColor.blueColor()
+        Range.fillColor = SKColor.clear
+        Range.strokeColor = SKColor.blue
         Range.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x - 810, y: GameObject().Baseballfield().anchorPoint.y + 70)
         return Range
     }
