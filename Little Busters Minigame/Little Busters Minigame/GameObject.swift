@@ -9,7 +9,7 @@
 import SpriteKit
 
 class GameObject{
-    //棒球场背景
+    ///棒球场背景
     internal func Baseballfield() -> SKSpriteNode{
         let image = SKSpriteNode(imageNamed: "Baseballfield-day")
         let BaseballfieldMagnification:CGFloat = 2
@@ -20,7 +20,7 @@ class GameObject{
         return image
     }
     
-    //阴影
+    ///阴影
     internal func Shadow(_ x: CGFloat, y: CGFloat, w: CGFloat, h: CGFloat) -> SKShapeNode{
         let ShadowForm = SKShapeNode(ellipseOf: CGSize(width: w, height: h))
         ShadowForm.fillColor = SKColor.black
@@ -31,7 +31,7 @@ class GameObject{
         return ShadowForm
     }
     
-    //棒球
+    ///棒球
     struct Baseball {
         let Baseball_Image = GameObject().Baseball_Image()
         var Baseball_Status = GameObject.Baseball_Status.b_Static
@@ -61,13 +61,19 @@ class GameObject{
         image.physicsBody?.contactTestBitMask = KittyBaseballGame.Collision.BaseballBat
         return image
     }
-    //动作状态
+    /// 动作状态
+    ///
+    /// - b_Static:      静止
+    /// - b_Cast:        投出
+    /// - b_Return:      击回
+    /// - b_ReturnAgain: 扔回
     enum Baseball_Status{
-        case b_Static //静止
-        case b_Cast //投出
-        case b_Return //击回
-        case b_ReturnAgain //扔回
+        case b_Static
+        case b_Cast
+        case b_Return
+        case b_ReturnAgain
     }
+    
     struct Baseball_Power {
         var ball_x: CGFloat //已运动距离
         var ball_y: CGFloat //已运动高度
@@ -76,7 +82,7 @@ class GameObject{
     }
     
     
-    //按钮
+    ///按钮
     internal func MovingButton() -> SKSpriteNode{
         let View_Width:CGFloat = 120
         let View = SKSpriteNode(color: SKColor.black, size: CGSize(width: View_Width, height: View_Width * 0.75))
@@ -150,7 +156,7 @@ class GameObject{
         return Triangle
     }
     
-    //测试按钮
+    ///测试按钮
     internal func TestButton() -> SKSpriteNode{
         let View_Width:CGFloat = 120
         let View = SKSpriteNode(color: SKColor.black, size: CGSize(width: View_Width, height: View_Width * 0.75))

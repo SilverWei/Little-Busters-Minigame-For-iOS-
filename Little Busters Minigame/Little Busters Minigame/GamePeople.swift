@@ -72,7 +72,6 @@ class GamePeople{
         Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: H * 2, w: 79, h: H))
         Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: H * 3, w: 79, h: H))
         Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: H * 4, w: 79, h: H))
-        //
         
         Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79 * 2 + 2, y: 0, w: 79, h: H))
         Naoe_Riki_Array.append(ImageInterception(Naoe_Riki_Attribute, x: 195 + 79, y: H * 4, w: 79, h: H))
@@ -90,11 +89,15 @@ class GamePeople{
         
         return Naoe_Riki_Array
     }
-    //动作状态
+    /// 动作状态
+    ///
+    /// - nr_Static:   静止
+    /// - nr_Swing:    挥动
+    /// - nr_FallDown: 摔倒
     enum Naoe_Riki_Status{
-        case nr_Static //静止
-        case nr_Swing //挥动
-        case nr_FallDown //摔倒
+        case nr_Static
+        case nr_Swing
+        case nr_FallDown
     }
     func Naoe_Riki_Range() -> SKShapeNode{
         let RangePath = UIBezierPath()
@@ -215,15 +218,23 @@ class GamePeople{
         Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 7, w: W, h: H))
         return Natsume_Rin_Array
     }
-    //动作状态
+    /// 动作状态
+    ///
+    /// - nr_Static:        静止
+    /// - nr_Catch:         接球
+    /// - nr_Anger:         愤怒
+    /// - nr_Swing:         挥动
+    /// - nr_Surprise:      惊讶
+    /// - nr_ShelterLeft:  左躲避
+    /// - nr_ShelterRight: 右躲避
     enum Natsume_Rin_Status{
-        case nr_Static //静止
-        case nr_Catch //接球
-        case nr_Anger //愤怒
-        case nr_Swing //挥动
-        case nr_Surprise //惊讶
-        case nr_ShelterLeft //左躲避
-        case nr_ShelterRight //右躲避
+        case nr_Static
+        case nr_Catch
+        case nr_Anger
+        case nr_Swing
+        case nr_Surprise
+        case nr_ShelterLeft
+        case nr_ShelterRight
     }
 
     //MARK: 棗 恭介
@@ -330,15 +341,23 @@ class GamePeople{
         
         return Natsume_Kyousuke_Array
     }
-    //动作状态
+    /// 动作状态
+    ///
+    /// - nk_Static: 静止
+    /// - nk_Run:     跑
+    /// - nk_Return: 返回
+    /// - nk_Swing:  挥动
+    /// - nk_Catch:  接球
+    /// - nk_Wave:   招手
+    /// - nk_PickUp: 捡起
     enum Natsume_Kyousuke_Status{
-        case nk_Static //静止
-        case nk_Run //跑
-        case nk_Return //返回
-        case nk_Swing //挥动
-        case nk_Catch //接球
-        case nk_Wave //招手
-        case nk_PickUp //捡起
+        case nk_Static
+        case nk_Run
+        case nk_Return
+        case nk_Swing
+        case nk_Catch
+        case nk_Wave
+        case nk_PickUp
     }
     func Natsume_Kyousuke_Range() -> SKShapeNode{
         let RangePath = UIBezierPath()

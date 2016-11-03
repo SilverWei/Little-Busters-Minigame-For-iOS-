@@ -3,7 +3,7 @@
 //  Little Busters Minigame
 //
 //  Created by dmqlMAC on 16/4/11.
-//  Copyright © 2016年 dmqlacgal. All rights reserved.
+//  Copyright © 2016 dmqlacgal. All rights reserved.
 //
 
 import SpriteKit
@@ -288,11 +288,9 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             break
         case .b_Return:
             Status_View(Baseball[0].Baseball_Unit.position)
-            //Status_View(Natsume_Kyousuke.attribute.Unit.position)
             break
         case .b_ReturnAgain:
             Status_View(Baseball[0].Baseball_Unit.position)
-            //Baseballfield.position = GameObject().Baseballfield().position
             break
             
         }
@@ -303,35 +301,37 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     //MARK: 理 樹
     func Status_Naoe_Riki(){
         if(Naoe_Riki.attribute.status != GamePeople.Naoe_Riki_Status.nr_FallDown.hashValue){
+            var Naoe_Riki_position = Naoe_Riki.attribute.Unit.position
             switch MovingButton_Status{
             case .up:
-                Naoe_Riki.attribute.Unit.position = CGPoint(x: Naoe_Riki.attribute.Unit.position.x, y: Naoe_Riki.attribute.Unit.position.y + 1)
+                Naoe_Riki_position = CGPoint(x: Naoe_Riki_position.x, y: Naoe_Riki_position.y + 1)
                 break
             case .down:
-                Naoe_Riki.attribute.Unit.position = CGPoint(x: Naoe_Riki.attribute.Unit.position.x, y: Naoe_Riki.attribute.Unit.position.y - 1)
+                Naoe_Riki_position = CGPoint(x: Naoe_Riki_position.x, y: Naoe_Riki_position.y - 1)
                 break
             case .left:
-                Naoe_Riki.attribute.Unit.position = CGPoint(x: Naoe_Riki.attribute.Unit.position.x - 1, y: Naoe_Riki.attribute.Unit.position.y)
+                Naoe_Riki_position = CGPoint(x: Naoe_Riki_position.x - 1, y: Naoe_Riki_position.y)
                 break
             case .right:
-                Naoe_Riki.attribute.Unit.position = CGPoint(x: Naoe_Riki.attribute.Unit.position.x + 1, y: Naoe_Riki.attribute.Unit.position.y)
+                Naoe_Riki_position = CGPoint(x: Naoe_Riki_position.x + 1, y: Naoe_Riki_position.y)
                 break
             default:
                 break
             }
-            if(Naoe_Riki.attribute.Unit.position.x < Naoe_Riki_Range.position.x){
-                Naoe_Riki.attribute.Unit.position.x = Naoe_Riki_Range.position.x
+            if(Naoe_Riki_position.x < Naoe_Riki_Range.position.x){
+                Naoe_Riki_position.x = Naoe_Riki_Range.position.x
             }
-            if(Naoe_Riki.attribute.Unit.position.x > Naoe_Riki_Range.position.x + Naoe_Riki_Range.frame.width){
-                Naoe_Riki.attribute.Unit.position.x = Naoe_Riki_Range.position.x + Naoe_Riki_Range.frame.width
+            if(Naoe_Riki_position.x > Naoe_Riki_Range.position.x + Naoe_Riki_Range.frame.width){
+                Naoe_Riki_position.x = Naoe_Riki_Range.position.x + Naoe_Riki_Range.frame.width
             }
-            if(Naoe_Riki.attribute.Unit.position.y < Naoe_Riki_Range.position.y){
-                Naoe_Riki.attribute.Unit.position.y = Naoe_Riki_Range.position.y
+            if(Naoe_Riki_position.y < Naoe_Riki_Range.position.y){
+                Naoe_Riki_position.y = Naoe_Riki_Range.position.y
             }
-            if(Naoe_Riki.attribute.Unit.position.y > Naoe_Riki_Range.position.y + Naoe_Riki_Range.frame.height){
-                Naoe_Riki.attribute.Unit.position.y = Naoe_Riki_Range.position.y + Naoe_Riki_Range.frame.height
+            if(Naoe_Riki_position.y > Naoe_Riki_Range.position.y + Naoe_Riki_Range.frame.height){
+                Naoe_Riki_position.y = Naoe_Riki_Range.position.y + Naoe_Riki_Range.frame.height
             }
-            Naoe_Riki.attribute.Shadow.position = CGPoint(x: Naoe_Riki.attribute.Unit.position.x + Naoe_Riki.attribute.Shadow_x, y: Naoe_Riki.attribute.Unit.position.y + Naoe_Riki.attribute.Shadow_y)
+            Naoe_Riki.attribute.Shadow.position = CGPoint(x: Naoe_Riki_position.x + Naoe_Riki.attribute.Shadow_x, y: Naoe_Riki_position.y + Naoe_Riki.attribute.Shadow_y)
+            Naoe_Riki.attribute.Unit.position = Naoe_Riki_position
             Naoe_Riki_View.position = Naoe_Riki.attribute.Unit.position
         }
         
@@ -421,6 +421,9 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             if(Natsume_Rin.attribute.imageNumber.hashValue < 9){
                 Natsume_Rin.attribute.imageNumber = 9
                 self.Baseball[0].Baseball_Status = GameObject.Baseball_Status.b_Cast
+                //角色归位
+                self.Natsume_Kyousuke_Static()
+                self.Natsume_Kyousuke.attribute.status = GamePeople.Natsume_Kyousuke_Status.nk_Return.hashValue
             }
             if(Natsume_Rin.attribute.imageNumber.hashValue > 15){
                 Natsume_Rin_Static()
@@ -505,7 +508,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         let TimeInterval = SKAction.wait(forDuration: Foundation.TimeInterval(0.1))
         switch Natsume_Kyousuke.attribute.status{
         case GamePeople.Natsume_Kyousuke_Status.nk_Run.hashValue:
-            print("Kyousuke在定位")
+            print("恭介在定位")
             if(Natsume_Kyousuke.attribute.Unit.speed == 0){
                 Natsume_Kyousuke.attribute.Unit.removeAllActions()
                 let RunPath = UIBezierPath()
@@ -556,7 +559,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             Natsume_Kyousuke_View.physicsBody = nil
             break
         case GamePeople.Natsume_Kyousuke_Status.nk_Return.hashValue:
-            print("Kyousuke往回跑")
+            print("恭介往回跑")
             if(Natsume_Kyousuke.attribute.Unit.speed == 0){
                 Natsume_Kyousuke.attribute.Unit.removeAllActions()
                 let RunPath = UIBezierPath()
