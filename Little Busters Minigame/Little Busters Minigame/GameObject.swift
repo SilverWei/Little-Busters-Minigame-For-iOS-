@@ -32,6 +32,7 @@ class GameObject{
     }
     
     ///棒球
+    
     struct Baseball {
         let Baseball_Image = GameObject().Baseball_Image()
         var Baseball_Status = GameObject.Baseball_Status.b_Static

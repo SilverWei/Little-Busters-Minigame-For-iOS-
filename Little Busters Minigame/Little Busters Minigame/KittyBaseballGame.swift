@@ -18,14 +18,14 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     //MARK: 初始化物体
     let Baseballfield = GameObject().Baseballfield()
     
+    //棒球
     var Baseball = [GameObject.Baseball()]
-    var Baseball_Jumps: CGFloat = 2
-    var Baseball_Angle: CGFloat = 0.0
-    var Baseball_ReturnPoint: CGPoint = CGPoint.zero
-    var Baseball_JumpsHeight: CGFloat = 0.0
-    //var Baseball_TrackPoint: CGPoint = CGPoint.zero
-    var Baseball_Speed:CGFloat = 0
-    let BallTrackPath = SKShapeNode()
+    var Baseball_Jumps: CGFloat = 2 //激活状态的棒球
+    var Baseball_Angle: CGFloat = 0.0 //角度
+    var Baseball_ReturnPoint: CGPoint = CGPoint.zero //返回位置
+    var Baseball_JumpsHeight: CGFloat = 0.0 //高度
+    var Baseball_Speed:CGFloat = 0 //速度
+    let BallTrackPath = SKShapeNode() //棒球移动路径
     
     //MARK: 初始化角色
     //直枝 理樹
@@ -53,15 +53,25 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     let TestButton = GameObject().TestButton()
     
     //MARK: 图层
+    /// 图层
+    ///
+    /// - baseballfield: 棒球场背景
+    /// - shadow:           阴影
+    /// - otherBody:      其他物件
+    /// - cat:               猫
+    /// - peopleBehind: 在后面的人物
+    /// - baseball:         棒球
+    /// - peopleFront:  在前面的人物
+    /// - button:           按钮
     enum Layers: CGFloat{
-        case baseballfield //棒球场背景
-        case shadow //阴影
-        case otherBody //其他物件
-        case cat //猫
-        case peopleBehind //在后面的人物
-        case baseball //棒球
-        case peopleFront //在前面的人物
-        case button //按钮
+        case baseballfield
+        case shadow
+        case otherBody
+        case cat
+        case peopleBehind
+        case baseball
+        case peopleFront
+        case button
     }
     
     //MARK: 物理层
@@ -101,6 +111,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Show_Baseball()//显示棒球
     }
     
+    //MARK: 显示元素
     func Show_Baseballfield(){
         GameView.addChild(Baseballfield)
     }
@@ -138,7 +149,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Baseballfield.addChild(Baseball[0].Baseball_Image)
         Baseball[0].Baseball_Image.isHidden = true
         
-        //位置单位
+        //棒球位置
         Baseball[0].Baseball_Unit.position = Baseball[0].Baseball_Image.position
         Baseballfield.addChild(Baseball[0].Baseball_Unit)
     }
@@ -172,29 +183,17 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     }
 
     
-    //MARK: 点击
+    //MARK: 点击事件
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
             // Get the location of the touch in this scene
             let location = touch.location(in: self)
             // Check if the location of the touch is within the button's bounds
-            if MovingButton_UP.contains(location) {
-                MovingButton_Status = .up
-                MovingButton_UP.fillColor = SKColor.white
+            
+            if touchesButton(location) {
+                
             }
-            else if MovingButton_Down.contains(location) {
-                MovingButton_Status = .down
-                MovingButton_Down.fillColor = SKColor.white
-            }
-            else if MovingButton_Left.contains(location) {
-                MovingButton_Status = .left
-                MovingButton_Left.fillColor = SKColor.white
-            }
-            else if MovingButton_Right.contains(location) {
-                MovingButton_Status = .right
-                MovingButton_Right.fillColor = SKColor.white
-            }
-            else if TestButton.contains(location){ //Test
+            else if TestButton.contains(location){
                 if(Baseball[0].Baseball_Status != GameObject.Baseball_Status.b_Cast && Baseball[0].Baseball_Status != GameObject.Baseball_Status.b_Return && Baseball[0].Baseball_Status != GameObject.Baseball_Status.b_ReturnAgain && Natsume_Rin.attribute.status == GamePeople.Natsume_Rin_Status.nr_Static.hashValue){
                     self.Natsume_Rin.attribute.imageNumber = 0
                     self.Natsume_Rin.attribute.status = GamePeople.Natsume_Rin_Status.nr_Swing.hashValue
@@ -211,7 +210,6 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             TouchAmount = 2
         }
     }
-    
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
             // Get the location of the touch in this scene
@@ -219,23 +217,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             // Check if the location of the touch is within the button's bounds
             AllButtonColorClear()
             
-            if MovingButton_UP.contains(location) {
-                MovingButton_Status = .up
-                MovingButton_UP.fillColor = SKColor.white
-            }
-            else if MovingButton_Down.contains(location) {
-                MovingButton_Status = .down
-                MovingButton_Down.fillColor = SKColor.white
-            }
-            else if MovingButton_Left.contains(location) {
-                MovingButton_Status = .left
-                MovingButton_Left.fillColor = SKColor.white
-            }
-            else if MovingButton_Right.contains(location) {
-                MovingButton_Status = .right
-                MovingButton_Right.fillColor = SKColor.white
-            }
-            else{
+            if !touchesButton(location){
                 MovingButton_Status = .stop
                 
                 //移动整个Map
@@ -245,6 +227,29 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 print("Baseballfield:",Baseballfield.position)
             }
         }
+    }
+    func touchesButton(_ location: CGPoint) -> Bool {
+        if MovingButton_UP.contains(location) {
+            MovingButton_Status = .up
+            MovingButton_UP.fillColor = SKColor.white
+            return true
+        }
+        else if MovingButton_Down.contains(location) {
+            MovingButton_Status = .down
+            MovingButton_Down.fillColor = SKColor.white
+            return true
+        }
+        else if MovingButton_Left.contains(location) {
+            MovingButton_Status = .left
+            MovingButton_Left.fillColor = SKColor.white
+            return true
+        }
+        else if MovingButton_Right.contains(location) {
+            MovingButton_Status = .right
+            MovingButton_Right.fillColor = SKColor.white
+            return true
+        }
+        return false
     }
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         TouchAmount -= 1
@@ -261,7 +266,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     }
     
     
-    //MARK: 更新
+    //MARK: 帧更新
     override func update(_ currentTime: TimeInterval) {
         /* Called before each frame is rendered */
         if LastDateTime > 0{
@@ -272,6 +277,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         }
         LastDateTime = currentTime
         
+        //棒球位置
         Baseball[0].Baseball_Power.ball_x = Baseball[0].Baseball_Power.ball_x + CGFloat(DateTime) * 50
         
         //更新人物状态
@@ -300,6 +306,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     //MARK: 动作更新
     //MARK: 理 樹
     func Status_Naoe_Riki(){
+        //移动
         if(Naoe_Riki.attribute.status != GamePeople.Naoe_Riki_Status.nr_FallDown.hashValue){
             var Naoe_Riki_position = Naoe_Riki.attribute.Unit.position
             switch MovingButton_Status{
@@ -336,7 +343,10 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         }
         
         var TimeInterval = SKAction.wait(forDuration: Foundation.TimeInterval(0.01)) //帧数刷新延时
+        
+        ///状态
         switch Naoe_Riki.attribute.status{
+        //挥动
         case GamePeople.Naoe_Riki_Status.nr_Swing.hashValue:
             if((action(forKey: "Naoe_Riki_StatusAction")) != nil){
                 return
@@ -370,6 +380,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             Naoe_Riki_View.physicsBody?.contactTestBitMask = Collision.Baseball
             
             break
+        //摔倒
         case GamePeople.Naoe_Riki_Status.nr_FallDown.hashValue:
             if((action(forKey: "Naoe_Riki_StatusAction")) != nil && Naoe_Riki.attribute.status == GamePeople.Naoe_Riki_Status.nr_FallDown.hashValue){
                 return
