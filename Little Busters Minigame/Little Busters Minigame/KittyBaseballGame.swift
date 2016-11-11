@@ -428,7 +428,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         //帧数刷新延时
         var TimeInterval = SKAction.wait(forDuration: Foundation.TimeInterval(0.05))
         switch Natsume_Rin.attribute.status{
-        //静止
+        //挥动
         case GamePeople.Natsume_Rin_Status.nr_Swing.hashValue:
             if(Natsume_Rin.attribute.imageNumber.hashValue < 9){
                 Natsume_Rin.attribute.imageNumber = 9

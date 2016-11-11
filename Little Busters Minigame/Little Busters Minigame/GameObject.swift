@@ -32,7 +32,6 @@ class GameObject{
     }
     
     ///棒球
-    
     struct Baseball {
         let Baseball_Image = GameObject().Baseball_Image()
         var Baseball_Status = GameObject.Baseball_Status.b_Static
@@ -74,7 +73,7 @@ class GameObject{
         case b_Return
         case b_ReturnAgain
     }
-    
+    /// 棒球运动属性
     struct Baseball_Power {
         var ball_x: CGFloat //已运动距离
         var ball_y: CGFloat //已运动高度

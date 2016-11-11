@@ -10,11 +10,12 @@ import SpriteKit
 import UIKit
 
 class GamePeople{
-    
+
     struct Unit {
         var attribute: Attribute
         var image: [UIImage]
     }
+    /// 属性
     struct Attribute{
         var image: UIImage
         var point: CGPoint
@@ -27,6 +28,7 @@ class GamePeople{
         var Unit: SKShapeNode
         var Shadow: SKShapeNode
     }
+    //图像截取
     func ImageInterception(_ People: Attribute, x: CGFloat, y: CGFloat, w: CGFloat,h: CGFloat) -> UIImage {
         return UIImage(cgImage: People.image.cgImage!.cropping(to: CGRect(x: x, y: y, width: w, height: h))!)
     }
@@ -99,6 +101,9 @@ class GamePeople{
         case nr_Swing
         case nr_FallDown
     }
+    /// 范围
+    ///
+    /// - returns: SKShapeNode
     func Naoe_Riki_Range() -> SKShapeNode{
         let RangePath = UIBezierPath()
         RangePath.move(to: CGPoint(x: 0, y: 0))
@@ -113,6 +118,9 @@ class GamePeople{
         Range.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x - 60, y: GameObject().Baseballfield().anchorPoint.y - 150)
         return Range
     }
+    /// 物理接触点
+    ///
+    /// - returns: 接触范围
     func Naoe_Riki_Contact() -> [CGPath]{
         var Contact_Array:[CGPath] = []
         let path1 = CGMutablePath()
@@ -135,6 +143,9 @@ class GamePeople{
         Contact_Array.append(path3)
         return Contact_Array
     }
+    /// 身体接触点
+    ///
+    /// - returns: SKShapeNode
     func Naoe_Riki_BodyContact() -> SKShapeNode{
         let Body = SKShapeNode()
         let path = CGMutablePath()
@@ -191,7 +202,6 @@ class GamePeople{
         Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 5, w: W, h: H))
         Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 6, w: W, h: H))
         Natsume_Rin_Array.append(ImageInterception(Natsume_Rin_Attribute, x: L, y: T + H * 7, w: W, h: H))
-        
         
         L = 135
         W = 56
@@ -359,6 +369,9 @@ class GamePeople{
         case nk_Wave
         case nk_PickUp
     }
+    /// 移动范围
+    ///
+    /// - returns: SKShapeNode
     func Natsume_Kyousuke_Range() -> SKShapeNode{
         let RangePath = UIBezierPath()
         RangePath.move(to: CGPoint(x: 0, y: 0))
