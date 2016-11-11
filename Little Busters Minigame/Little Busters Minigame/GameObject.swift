@@ -70,7 +70,7 @@ class GameObject{
     /// - b_ReturnAgain: 扔回
     enum Baseball_Status{
         case b_Static
-        case b_Cast
+        case b_Throw
         case b_Return
         case b_ReturnAgain
     }
