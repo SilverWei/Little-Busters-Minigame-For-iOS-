@@ -96,27 +96,6 @@ class GameObject{
     
     //MARK: 按钮
     class MovingButton: NSObject {
-        var View:SKSpriteNode!
-        var Up:SKShapeNode!
-        var Down:SKShapeNode!
-        var Left:SKShapeNode!
-        var Right:SKShapeNode!
-        var Status:TouchStatus!
-        
-        override init() {
-            super.init()
-            View = Main()
-            Up = UP_View()
-            Down = Down_View()
-            Left = Left_View()
-            Right = Right_View()
-            Status = .stop
-            View.zPosition = KittyBaseballGame.Layers.button.rawValue
-            View.addChild(UP_View())
-            View.addChild(Down_View())
-            View.addChild(Left_View())
-            View.addChild(Right_View())
-        }
 
         func Main() -> SKSpriteNode{
             let View_Width:CGFloat = 120
