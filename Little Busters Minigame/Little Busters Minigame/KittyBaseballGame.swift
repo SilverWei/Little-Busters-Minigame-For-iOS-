@@ -685,8 +685,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Baseball.PeopleBehindCatchPoint = Baseball.set[0].Unit.position
         BallPath.move(to: Baseball.PeopleBehindCatchPoint)
         Baseball.PeopleFrontCatchPoint = Naoe_Riki.Unit.attribute.point
-        Baseball.PeopleFrontCatchPoint.y -= 10
-        Baseball.PeopleFrontCatchPoint.x -= 10
+        Baseball.PeopleFrontCatchPoint.y -= 20
+        Baseball.PeopleFrontCatchPoint.x += 5
         var PathAngle = GetAngle(Baseball.PeopleBehindCatchPoint, b: Naoe_Riki.Unit.attribute.point)
         PathAngle = PathAngle + 90
         let mainPath = UIBezierPath(arcCenter: Baseball.PeopleBehindCatchPoint, radius: 2000, startAngle: 0, endAngle: CGFloat(M_PI) * (PathAngle / 180), clockwise: true)
