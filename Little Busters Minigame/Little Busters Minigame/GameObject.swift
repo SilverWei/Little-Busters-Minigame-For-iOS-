@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameObject{
+class GameObject: SKScene{
     //MARK: 棒球场背景
     internal func Baseballfield() -> SKSpriteNode{
         let image = SKSpriteNode(imageNamed: "Baseballfield-day")
@@ -36,7 +36,6 @@ class GameObject{
         var set:[Attribute] = [Attribute]()
         var Jumps: CGFloat = 2 //次数
         var Angle: CGFloat = 0.0 //角度
-        var JumpsHeight: CGFloat = 0.0 //高度
         var Speed: CGFloat = 0 //速度
         var PeopleFrontCatchPoint: CGPoint = CGPoint.zero // 前面人物发球点
         var PeopleBehindCatchPoint:CGPoint = CGPoint.zero // 后面人物发球点
@@ -180,6 +179,15 @@ class GameObject{
         }
     }
     
+    //MARK: 菜单按钮
+    internal func MenuButton() -> SKSpriteNode{
+        let View_width:CGFloat = 30
+        let View = SKSpriteNode(color: SKColor.green, size: CGSize(width: View_width, height: View_width))
+        View.alpha = 0.5
+        View.anchorPoint = CGPoint(x: 1, y: 1)
+        View.position = CGPoint(x: UIScreen.main.bounds.width - 20, y: UIScreen.main.bounds.height - 20)
+        return View
+    }
     
     //MARK: 测试按钮
     internal func TestButton() -> SKSpriteNode{

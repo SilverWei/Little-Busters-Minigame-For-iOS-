@@ -14,6 +14,17 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     var TouchAmount = 0 //监测触摸数量
     var DateTime: TimeInterval = 0
     var LastDateTime: TimeInterval = 0
+    var GameStatus: Status = .Play{
+        didSet {
+            if GameStatus == .Menu{
+                MenuButton.color = SKColor.red
+            }
+            else{
+                MenuButton.color = SKColor.green
+            }
+            GameStatusrRun()
+        }
+    }
     
     //MARK: 初始化物体
     let Baseballfield = GameObject().Baseballfield()
@@ -37,6 +48,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     var MovingButton_Right = GameObject.MovingButton().Right_View()
     var MovingButton_Status = GameObject.MovingButton.TouchStatus.stop
     let TestButton = GameObject().TestButton()
+    var MenuButton = GameObject().MenuButton()
     
     //MARK: 图层
     /// 图层
@@ -58,6 +70,20 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         case baseball
         case peopleFront
         case button
+    }
+    
+    
+    /// 游戏状态
+    ///
+    /// - Play:   游戏中
+    /// - Menu:   菜单
+    /// - Dialog: 对话
+    /// - Other:  其他
+    enum Status {
+        case Play
+        case Menu
+        case Dialog
+        case Other
     }
     
     //MARK: 物理层
@@ -150,7 +176,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     
     func Show_Button(){
         
-        MovingButton_View.zPosition = KittyBaseballGame.Layers.button.rawValue
+        MovingButton_View.zPosition = Layers.button.rawValue
         MovingButton_View.addChild(MovingButton_Up)
         MovingButton_View.addChild(MovingButton_Down)
         MovingButton_View.addChild(MovingButton_Left)
@@ -159,6 +185,9 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         
         TestButton.zPosition = Layers.button.rawValue
         GameView.addChild(TestButton)
+        MenuButton.zPosition = Layers.button.rawValue
+        GameView.addChild(MenuButton)
+        
     }
 
     
@@ -178,9 +207,19 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                     self.Natsume_Rin.Unit.attribute.status = GamePeople.Natsume_Rin.Status.nr_Swing.hashValue
                 }
             }
+            else if MenuButton.contains(location){
+                if GameStatus == .Play{
+                    GameStatus = .Menu
+                }
+                else{
+                    GameStatus = .Play
+                }
+            }
             else{
-                if Naoe_Riki.Unit.attribute.status != GamePeople.Naoe_Riki.Status.nr_FallDown.hashValue{
-                    Naoe_Riki.Unit.attribute.status = GamePeople.Naoe_Riki.Status.nr_Swing.hashValue
+                if(GameStatus == .Play){
+                    if Naoe_Riki.Unit.attribute.status != GamePeople.Naoe_Riki.Status.nr_FallDown.hashValue{
+                        Naoe_Riki.Unit.attribute.status = GamePeople.Naoe_Riki.Status.nr_Swing.hashValue
+                    }
                 }
             }
         }
@@ -208,7 +247,10 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         }
     }
     func touchesButton(_ location: CGPoint) -> Bool {
-        if MovingButton_Up.contains(location) {
+        if GameStatus != .Play{
+            return false
+        }
+        else if MovingButton_Up.contains(location) {
             MovingButton_Status = .up
             MovingButton_Up.fillColor = SKColor.white
             return true
@@ -255,30 +297,51 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             DateTime = 0
         }
         LastDateTime = currentTime
-        //棒球位置
-        Baseball.set[0].Power.ball_x = Baseball.set[0].Power.ball_x + CGFloat(DateTime) * 50
-        
-        //更新人物状态
-        Status_Naoe_Riki() //理 树
-        Status_Natsume_Rin() //棗 鈴
-        Status_Natsume_Kyousuke() //棗 恭介
-        Baseball_Status(0) //棒 球
-        
-        //棒球状态
-        switch Baseball.set[0].Status{
-        case .b_Static:
-            break
-        case .b_Throw:
-            break
-        case .b_Return:
-            Status_View(Baseball.set[0].Unit.position)
-            break
-        case .b_ReturnAgain:
-            Status_View(Baseball.set[0].Unit.position)
-            break
+        if (GameStatus == .Play){
+            //棒球位置
+            Baseball.set[0].Power.ball_x = Baseball.set[0].Power.ball_x + CGFloat(DateTime) * 50
             
+            //更新人物状态
+            Status_Naoe_Riki() //理 树
+            Status_Natsume_Rin() //棗 鈴
+            Status_Natsume_Kyousuke() //棗 恭介
+            Baseball_Status(0) //棒 球
+            
+            //棒球状态
+            switch Baseball.set[0].Status{
+            case .b_Static:
+                break
+            case .b_Throw:
+                break
+            case .b_Return:
+                Status_View(Baseball.set[0].Unit.position)
+                break
+            case .b_ReturnAgain:
+                Status_View(Baseball.set[0].Unit.position)
+                break
+                
+            }
         }
 
+
+    }
+    
+    //MARK: 游戏状态
+    func GameStatusrRun(){
+        switch GameStatus {
+        case .Play:
+            GameView.isPaused = false
+            break
+        case .Menu:
+            GameView.isPaused = true
+            break
+        case .Dialog:
+            break
+        case .Other:
+            break
+        default:
+            break
+        }
     }
     
     //MARK: 动作更新
@@ -690,11 +753,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         var PathAngle = GetAngle(Baseball.PeopleBehindCatchPoint, b: Naoe_Riki.Unit.attribute.point)
         PathAngle = PathAngle + 90
         let mainPath = UIBezierPath(arcCenter: Baseball.PeopleBehindCatchPoint, radius: 2000, startAngle: 0, endAngle: CGFloat(M_PI) * (PathAngle / 180), clockwise: true)
-        print("角度:",PathAngle)
-        print("角度2：",GetAngle(mainPath.currentPoint, b: Baseball.PeopleBehindCatchPoint))
-        print("位置:",mainPath.currentPoint)
         BallPath.addLine(to: mainPath.currentPoint)
-        
         Baseball_ThrowPath(Number: 0,BallPath: BallPath)
         Baseball.set[Number].Unit.run(SKAction.speed(to: 0, duration: 5), completion: { () -> Void in
             self.Baseball_Static(0)
@@ -709,7 +768,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Baseball.set[Number].Unit.speed = 1
         Baseball.set[Number].Unit.run(SKAction.follow(BallPath.cgPath, asOffset: false, orientToPath: false, speed: Baseball.Speed), completion: {
             self.Baseball_Static(Number)
-        }) 
+        })
+        
         Baseball.set[Number].Image.isHidden = false
         Baseball.set[Number].Shadow.isHidden = false
     }
