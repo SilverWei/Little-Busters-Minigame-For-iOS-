@@ -20,6 +20,7 @@
 		07F57DC71CBB4077000CC1CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07F57DC61CBB4077000CC1CD /* Assets.xcassets */; };
 		07F57DCA1CBB4077000CC1CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07F57DC81CBB4077000CC1CD /* LaunchScreen.storyboard */; };
 		07F57DD51CBB4077000CC1CD /* Little_Busters_MinigameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F57DD41CBB4077000CC1CD /* Little_Busters_MinigameTests.swift */; };
+		47638BC81E66A51A00911CBD /* kenpixel.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47638BC71E66A29200911CBD /* kenpixel.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		07F57DD01CBB4077000CC1CD /* Little Busters MinigameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Little Busters MinigameTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		07F57DD41CBB4077000CC1CD /* Little_Busters_MinigameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Little_Busters_MinigameTests.swift; sourceTree = "<group>"; };
 		07F57DD61CBB4077000CC1CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		47638BC71E66A29200911CBD /* kenpixel.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kenpixel.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 		07F57DBA1CBB4077000CC1CD /* Little Busters Minigame */ = {
 			isa = PBXGroup;
 			children = (
+				47638BC61E66A28300911CBD /* Font */,
 				07913F081CBB51B1005ED5D4 /* Art */,
 				07F57DBB1CBB4077000CC1CD /* AppDelegate.swift */,
 				07F57DBF1CBB4077000CC1CD /* GameScene.swift */,
@@ -123,6 +126,14 @@
 				07F57DD61CBB4077000CC1CD /* Info.plist */,
 			);
 			path = "Little Busters MinigameTests";
+			sourceTree = "<group>";
+		};
+		47638BC61E66A28300911CBD /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				47638BC71E66A29200911CBD /* kenpixel.ttf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,6 +224,7 @@
 				07F57DC71CBB4077000CC1CD /* Assets.xcassets in Resources */,
 				07913F1C1CBB95F1005ED5D4 /* KittyBaseballGame.atlas in Resources */,
 				07913F121CBB54A4005ED5D4 /* Menu.atlas in Resources */,
+				47638BC81E66A51A00911CBD /* kenpixel.ttf in Resources */,
 				07F57DC51CBB4077000CC1CD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

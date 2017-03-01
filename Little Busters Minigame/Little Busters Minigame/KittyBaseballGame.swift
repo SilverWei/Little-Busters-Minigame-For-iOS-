@@ -244,7 +244,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 if(location.y > self.frame.height * 0.25){
                     Baseballfield.position = CGPoint(x: Baseballfield.frame.width * -(location.x / self.frame.width) + Baseballfield.frame.width * 0.55, y: Baseballfield.frame.height * -(location.y / self.frame.height) + Baseballfield.frame.height / 2)
                 }
-                //print("Baseballfield:",Baseballfield.position)
+                print("Baseballfield:",Baseballfield.position)
             }
         }
     }
@@ -568,6 +568,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 Natsume_Kyousuke.Unit.attribute.Unit.removeAllActions()
                 let RunPath = UIBezierPath()
                 RunPath.move(to: Natsume_Kyousuke.Unit.attribute.Unit.position)
+                print("PathAngle:\(PathAngle) Baseball:\(Baseball.Angle)")
                 if(PathAngle > Baseball.Angle){
                     RunPath.addLine(to: CGPoint(x: Natsume_Kyousuke.Range.position.x + Natsume_Kyousuke.Range.frame.width, y: Natsume_Kyousuke.Range.position.y + Natsume_Kyousuke.Range.frame.height))
                 }
@@ -608,7 +609,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         case GamePeople.Natsume_Kyousuke.Status.nk_Static.hashValue:
             Natsume_Kyousuke.View.physicsBody = nil
             break
-        //返回
+        //跑回
         case GamePeople.Natsume_Kyousuke.Status.nk_Return.hashValue:
             if(Natsume_Kyousuke.Unit.attribute.Unit.speed == 0){
                 Natsume_Kyousuke.Unit.attribute.Unit.removeAllActions()
@@ -819,9 +820,10 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         
         //各角色运动
         //棗 恭介
-        if Baseball.Angle < GetAngle(contact, b: GamePeople.Natsume_Kyousuke().Range().position) && Baseball.Angle > GetAngle(contact, b: CGPoint(x: Natsume_Kyousuke.Range.position.x + Natsume_Kyousuke.Range.frame.width, y: Natsume_Kyousuke.Range.position.y + Natsume_Kyousuke.Range.frame.height)){
+       /* if Baseball.Angle < GetAngle(contact, b: GamePeople.Natsume_Kyousuke().Range().position) && Baseball.Angle > GetAngle(contact, b: CGPoint(x: Natsume_Kyousuke.Range.position.x + Natsume_Kyousuke.Range.frame.width, y: Natsume_Kyousuke.Range.position.y + Natsume_Kyousuke.Range.frame.height)){
             Natsume_Kyousuke.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_Run.hashValue
-        }
+        }*/
+        Natsume_Kyousuke.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_Run.hashValue
     }
     /// 静止
     ///

@@ -419,10 +419,12 @@ class GamePeople{
         /// - returns: SKShapeNode
         func Range() -> SKShapeNode{
             let RangePath = UIBezierPath()
+            let x = 410
+            let y = 240
             RangePath.move(to: CGPoint(x: 0, y: 0))
-            RangePath.addLine(to: CGPoint(x: 0, y: 320))
-            RangePath.addLine(to: CGPoint(x: 500, y: 320))
-            RangePath.addLine(to: CGPoint(x: 500, y: 0))
+            RangePath.addLine(to: CGPoint(x: 0, y: y))
+            RangePath.addLine(to: CGPoint(x: x, y: y))
+            RangePath.addLine(to: CGPoint(x: x, y: 0))
             RangePath.addLine(to: CGPoint(x: 0, y: 0))
             let Range = SKShapeNode(path: RangePath.cgPath)
             Range.lineWidth = 1.0
