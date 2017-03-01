@@ -198,8 +198,10 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             let location = touch.location(in: self)
             // Check if the location of the touch is within the button's bounds
             
-            if touchesButton(location) {
-                
+            if MovingButton_View.contains(location) {
+                if touchesButton(location){
+                    
+                }
             }
             else if TestButton.contains(location){
                 if(Baseball.set[0].Status != GameObject.Baseball.All_Status.b_Throw && Baseball.set[0].Status != GameObject.Baseball.All_Status.b_Return && Baseball.set[0].Status != GameObject.Baseball.All_Status.b_ReturnAgain && Natsume_Rin.Unit.attribute.status == GamePeople.Natsume_Rin.Status.nr_Static.hashValue){
@@ -247,27 +249,28 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         }
     }
     func touchesButton(_ location: CGPoint) -> Bool {
+        let location = CGPoint(x: location.x - MovingButton_View.position.x, y: location.y - MovingButton_View.position.y)
         if GameStatus != .Play{
             return false
         }
         else if MovingButton_Up.contains(location) {
             MovingButton_Status = .up
-            MovingButton_Up.fillColor = SKColor.white
+            MovingButton_Up.childNode(withName: "shadedDarkUp-touch")?.isHidden = false
             return true
         }
         else if MovingButton_Down.contains(location) {
             MovingButton_Status = .down
-            MovingButton_Down.fillColor = SKColor.white
+            MovingButton_Down.childNode(withName: "shadedDarkDown-touch")?.isHidden = false
             return true
         }
         else if MovingButton_Left.contains(location) {
             MovingButton_Status = .left
-            MovingButton_Left.fillColor = SKColor.white
+            MovingButton_Left.childNode(withName: "shadedDarkLeft-touch")?.isHidden = false
             return true
         }
         else if MovingButton_Right.contains(location) {
             MovingButton_Status = .right
-            MovingButton_Right.fillColor = SKColor.white
+            MovingButton_Right.childNode(withName: "shadedDarkRight-touch")?.isHidden = false
             return true
         }
         return false
@@ -280,10 +283,10 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         }
     }
     func AllButtonColorClear(){
-        MovingButton_Up.fillColor = SKColor.clear
-        MovingButton_Down.fillColor = SKColor.clear
-        MovingButton_Left.fillColor = SKColor.clear
-        MovingButton_Right.fillColor = SKColor.clear
+        MovingButton_Up.childNode(withName: "shadedDarkUp-touch")?.isHidden = true
+        MovingButton_Down.childNode(withName: "shadedDarkDown-touch")?.isHidden = true
+        MovingButton_Left.childNode(withName: "shadedDarkLeft-touch")?.isHidden = true
+        MovingButton_Right.childNode(withName: "shadedDarkRight-touch")?.isHidden = true
     }
     
     
@@ -338,8 +341,6 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         case .Dialog:
             break
         case .Other:
-            break
-        default:
             break
         }
     }

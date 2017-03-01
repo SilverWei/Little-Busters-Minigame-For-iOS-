@@ -98,14 +98,15 @@ class GameObject: SKScene{
 
         func Main() -> SKSpriteNode{
             let View_Width:CGFloat = 120
-            let View = SKSpriteNode(color: SKColor.black, size: CGSize(width: View_Width, height: View_Width * 0.75))
-            View.alpha = 0.5
+            let View = SKSpriteNode(color: SKColor.clear, size: CGSize(width: View_Width, height: View_Width))
             View.anchorPoint = CGPoint(x: 0, y: 0)
             View.position = CGPoint(x: 10, y: 10)
             return View
         }
         
         func UP_View() -> SKShapeNode{
+            let image = SKSpriteNode(imageNamed: "shadedDarkUp")
+            let image_touch = SKSpriteNode(imageNamed: "shadedDarkUp-touch")
             let TrianglePath = UIBezierPath()
             let MovingButtonFrame = Main().frame
             TrianglePath.move(to: CGPoint(x: 0, y: MovingButtonFrame.height))
@@ -113,15 +114,25 @@ class GameObject: SKScene{
             TrianglePath.addLine(to: CGPoint(x: MovingButtonFrame.width, y: MovingButtonFrame.height))
             TrianglePath.addLine(to: CGPoint(x: 0, y: MovingButtonFrame.height))
             let Triangle = SKShapeNode(path: TrianglePath.cgPath)
-            Triangle.lineWidth = 1.0
-            Triangle.fillColor = SKColor.clear
-            Triangle.strokeColor = SKColor.white
+            Triangle.strokeColor = SKColor.clear
             Triangle.position = CGPoint(x: 0, y: 0)
-            
+            let Ratio = (MovingButtonFrame.height / 2) / image.size.height //按钮比例
+            image.size = CGSize(width: Ratio * image.size.width, height: Ratio * image.size.height)
+            image.anchorPoint = CGPoint(x: 0.5, y: 0)
+            image.position = CGPoint(x: MovingButtonFrame.width / 2, y: MovingButtonFrame.height / 2)
+            image_touch.size = image.size
+            image_touch.anchorPoint = image.anchorPoint
+            image_touch.position = image.position
+            image_touch.name = "shadedDarkUp-touch"
+            image_touch.isHidden = true
+            Triangle.addChild(image)
+            Triangle.addChild(image_touch)
             return Triangle
         }
         
         func Down_View() -> SKShapeNode{
+            let image = SKSpriteNode(imageNamed: "shadedDarkDown")
+            let image_touch = SKSpriteNode(imageNamed: "shadedDarkDown-touch")
             let TrianglePath = UIBezierPath()
             let MovingButtonFrame = Main().frame
             TrianglePath.move(to: CGPoint(x: 0, y: 0))
@@ -129,15 +140,25 @@ class GameObject: SKScene{
             TrianglePath.addLine(to: CGPoint(x: MovingButtonFrame.width, y: 0))
             TrianglePath.addLine(to: CGPoint(x: 0, y: 0))
             let Triangle = SKShapeNode(path: TrianglePath.cgPath)
-            Triangle.lineWidth = 1.0
-            Triangle.fillColor = SKColor.clear
-            Triangle.strokeColor = SKColor.white
+            Triangle.strokeColor = SKColor.clear
             Triangle.position = CGPoint(x: 0, y: 0)
-            
+            let Ratio = (MovingButtonFrame.height / 2) / image.size.height //按钮比例
+            image.size = CGSize(width: Ratio * image.size.width, height: Ratio * image.size.height)
+            image.anchorPoint = CGPoint(x: 0.5, y: 1)
+            image.position = CGPoint(x: MovingButtonFrame.width / 2, y: MovingButtonFrame.height / 2)
+            image_touch.size = image.size
+            image_touch.anchorPoint = image.anchorPoint
+            image_touch.position = image.position
+            image_touch.name = "shadedDarkDown-touch"
+            image_touch.isHidden = true
+            Triangle.addChild(image)
+            Triangle.addChild(image_touch)
             return Triangle
         }
         
         func Left_View() -> SKShapeNode{
+            let image = SKSpriteNode(imageNamed: "shadedDarkLeft")
+            let image_touch = SKSpriteNode(imageNamed: "shadedDarkLeft-touch")
             let TrianglePath = UIBezierPath()
             let MovingButtonFrame = Main().frame
             TrianglePath.move(to: CGPoint(x: 0, y: MovingButtonFrame.height))
@@ -145,15 +166,26 @@ class GameObject: SKScene{
             TrianglePath.addLine(to: CGPoint(x: 0, y: 0))
             TrianglePath.addLine(to: CGPoint(x: 0, y: MovingButtonFrame.height))
             let Triangle = SKShapeNode(path: TrianglePath.cgPath)
-            Triangle.lineWidth = 1.0
-            Triangle.fillColor = SKColor.clear
-            Triangle.strokeColor = SKColor.white
+            Triangle.strokeColor = SKColor.clear
             Triangle.position = CGPoint(x: 0, y: 0)
+            let Ratio = (MovingButtonFrame.width / 2) / image.size.width //按钮比例
+            image.size = CGSize(width: Ratio * image.size.width, height: Ratio * image.size.height)
+            image.anchorPoint = CGPoint(x: 1, y: 0.5)
+            image.position = CGPoint(x: MovingButtonFrame.width / 2, y: MovingButtonFrame.height / 2)
+            image_touch.size = image.size
+            image_touch.anchorPoint = image.anchorPoint
+            image_touch.position = image.position
+            image_touch.name = "shadedDarkLeft-touch"
+            image_touch.isHidden = true
+            Triangle.addChild(image)
+            Triangle.addChild(image_touch)
             
             return Triangle
         }
         
         func Right_View() -> SKShapeNode{
+            let image = SKSpriteNode(imageNamed: "shadedDarkRight")
+            let image_touch = SKSpriteNode(imageNamed: "shadedDarkRight-touch")
             let TrianglePath = UIBezierPath()
             let MovingButtonFrame = Main().frame
             TrianglePath.move(to: CGPoint(x: MovingButtonFrame.width, y: MovingButtonFrame.height))
@@ -161,10 +193,19 @@ class GameObject: SKScene{
             TrianglePath.addLine(to: CGPoint(x: MovingButtonFrame.width, y: 0))
             TrianglePath.addLine(to: CGPoint(x: MovingButtonFrame.width, y: MovingButtonFrame.height))
             let Triangle = SKShapeNode(path: TrianglePath.cgPath)
-            Triangle.lineWidth = 1.0
-            Triangle.fillColor = SKColor.clear
-            Triangle.strokeColor = SKColor.white
+            Triangle.strokeColor = SKColor.clear
             Triangle.position = CGPoint(x: 0, y: 0)
+            let Ratio = (MovingButtonFrame.width / 2) / image.size.width //按钮比例
+            image.size = CGSize(width: Ratio * image.size.width, height: Ratio * image.size.height)
+            image.anchorPoint = CGPoint(x: 0, y: 0.5)
+            image.position = CGPoint(x: MovingButtonFrame.width / 2, y: MovingButtonFrame.height / 2)
+            image_touch.size = image.size
+            image_touch.anchorPoint = image.anchorPoint
+            image_touch.position = image.position
+            image_touch.name = "shadedDarkRight-touch"
+            image_touch.isHidden = true
+            Triangle.addChild(image)
+            Triangle.addChild(image_touch)
             
             return Triangle
         }
@@ -181,18 +222,22 @@ class GameObject: SKScene{
     
     //MARK: 菜单按钮
     internal func MenuButton() -> SKSpriteNode{
+        let image = SKSpriteNode(imageNamed: "shadedDarkPause")
+        
         let View_width:CGFloat = 30
-        let View = SKSpriteNode(color: SKColor.green, size: CGSize(width: View_width, height: View_width))
-        View.alpha = 0.5
+        let View = SKSpriteNode(color: SKColor.clear, size: CGSize(width: View_width, height: View_width))
         View.anchorPoint = CGPoint(x: 1, y: 1)
         View.position = CGPoint(x: UIScreen.main.bounds.width - 20, y: UIScreen.main.bounds.height - 20)
+        image.size = View.size
+        image.anchorPoint = View.anchorPoint
+        View.addChild(image)
         return View
     }
     
     //MARK: 测试按钮
     internal func TestButton() -> SKSpriteNode{
         let View_Width:CGFloat = 120
-        let View = SKSpriteNode(color: SKColor.black, size: CGSize(width: View_Width, height: View_Width * 0.75))
+        let View = SKSpriteNode(color: SKColor.black, size: CGSize(width: View_Width, height: View_Width ))
         View.alpha = 0.5
         View.anchorPoint = CGPoint(x: 0, y: 0)
         View.position = CGPoint(x: 20, y: 200)
