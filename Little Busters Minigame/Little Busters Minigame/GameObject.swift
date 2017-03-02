@@ -234,6 +234,146 @@ class GameObject: SKScene{
         return View
     }
     
+    //MARK: 声音开关
+    internal class SoundButton : SKNode {
+        var isOn:Bool = true{
+            didSet {
+                if isOn == true {
+                    view.childNode(withName: "shadedDarkSound_Off")?.isHidden = true
+                }
+                else{
+                    
+                    view.childNode(withName: "shadedDarkSound_Off")?.isHidden = false
+                }
+            }
+        }
+        var view = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 160, height: 44))
+        var label = SKLabelNode(text: "")
+        
+        override init() {
+            super.init()
+            view.anchorPoint = CGPoint(x: 0.5, y: 0)
+            let image = SKSpriteNode(imageNamed: "shadedDarkSound_On")
+            let Ratio = (view.size.height / image.size.height)
+            image.size = CGSize(width: image.size.width * Ratio * 0.8, height: view.size.height * 0.8)
+            image.anchorPoint = CGPoint(x: 0.5, y: 0)
+            image.position = CGPoint(x: (view.size.width * -0.5) + (image.size.width / 2), y: 0)
+            view.addChild(image)
+            label.fontColor = SKColor.gray
+            label.fontSize = 20
+            label.verticalAlignmentMode = .center
+            label.horizontalAlignmentMode = .left
+            label.fontName = "kenpixel"
+            label.position = CGPoint(x: 0, y: 22)
+            view.addChild(label)
+            do {
+                let image = SKSpriteNode(imageNamed: "shadedDarkSound_Off")
+                let Ratio = view.size.height / image.size.height
+                image.size = CGSize(width: image.size.width * Ratio * 0.8, height: view.size.height * 0.8)
+                image.anchorPoint = CGPoint(x: 0.5, y: 0)
+                image.position = CGPoint(x: (view.size.width * -0.5) + (image.size.width / 2), y: 0)
+                image.name = "shadedDarkSound_Off"
+                view.addChild(image)
+            }
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
+
+    //MARK: 页面背景
+    internal class Window : SKNode{
+        var view = SKSpriteNode(color: SKColor.clear, size: CGSize(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.5))
+        var label = SKLabelNode(text: "")
+        override init(){
+            super.init()
+            view.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            do {
+                let image = SKSpriteNode(imageNamed: "dropdownTop")
+                let Ratio = view.size.width / image.size.width
+                image.size = CGSize(width: view.size.width, height: image.size.height * Ratio)
+                image.position = CGPoint(x: 0, y: view.size.height * 0.5)
+                image.anchorPoint = CGPoint(x: 0.5, y: 0)
+                view.addChild(image)
+            }
+            do {
+                let image = SKSpriteNode(imageNamed: "dropdownBottom")
+                let Ratio = view.size.width / image.size.width
+                image.size = CGSize(width: view.size.width, height: image.size.height * Ratio)
+                image.position = CGPoint(x: 0, y: view.size.height * -0.5)
+                image.anchorPoint = CGPoint(x: 0.5, y: 1)
+                view.addChild(image)
+            }
+            do {
+                let image = SKSpriteNode(imageNamed: "dropdownMid")
+                image.size = CGSize(width: view.size.width, height: view.size.height)
+                image.position = CGPoint(x: 0, y: 0)
+                view.addChild(image)
+            }
+            do {
+                label.fontColor = SKColor.gray
+                label.position = CGPoint(x: 0, y: view.size.height * 0.4)
+                label.fontSize = 20
+                label.verticalAlignmentMode = .center
+                label.fontName = "kenpixel"
+                view.addChild(label)
+            }
+
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
+    
+    
+    //MARK: 恢复按钮
+    internal func ResumeButton() -> SKSpriteNode{
+        let view = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 140, height: 44))
+        view.anchorPoint = CGPoint(x: 0.5, y: 0)
+        do  {
+            let image = SKSpriteNode(imageNamed: "green_button02")
+            image.size = view.frame.size
+            view.addChild(image)
+            let label = SKLabelNode(text: "Resume")
+            label.fontColor = SKColor.white
+            label.position = CGPoint(x: 0, y: 0)
+            label.fontSize = 20
+            label.verticalAlignmentMode = .center
+            label.fontName = "kenpixel"
+            image.addChild(label)
+        }
+        return view
+    }
+    
+    internal func WindowBackground() -> SKSpriteNode{
+        let view = SKSpriteNode(color: SKColor.init(red: 0, green: 0, blue: 0, alpha: 0.6), size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        view.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        view.position = CGPoint(x: UIScreen.main.bounds.size.width / 2, y: UIScreen.main.bounds.size.height / 2)
+        return view
+    }
+    
+    //MARK: 返回按钮
+    internal func BackButton() -> SKSpriteNode{
+        let view = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 140, height: 44))
+        view.anchorPoint = CGPoint(x: 0.5, y: 0)
+        do  {
+            let image = SKSpriteNode(imageNamed: "red_button13")
+            image.size = view.frame.size
+            view.addChild(image)
+            let label = SKLabelNode(text: "Back")
+            label.fontColor = SKColor.white
+            label.position = CGPoint(x: 0, y: 0)
+            label.fontSize = 20
+            label.verticalAlignmentMode = .center
+            label.fontName = "kenpixel"
+            image.addChild(label)
+        }
+        return view
+    }
+    
+    
     //MARK: 测试按钮
     internal func TestButton() -> SKSpriteNode{
         let View_Width:CGFloat = 120

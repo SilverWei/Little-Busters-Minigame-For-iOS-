@@ -49,6 +49,15 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     var MovingButton_Status = GameObject.MovingButton.TouchStatus.stop
     let TestButton = GameObject().TestButton()
     var MenuButton = GameObject().MenuButton()
+    var PauseView = GameObject.Window()
+    var PauseBackground = GameObject().WindowBackground()
+    let OptionsBGM = GameObject.SoundButton()
+    let OptionsSound = GameObject.SoundButton()
+    var BackButton = GameObject().BackButton()
+    var ResumeButton = GameObject().ResumeButton()
+    
+    //MARK: 音效
+    let Sound_Dang = SKAction.playSoundFileNamed("dang.mp3", waitForCompletion: false)
     
     //MARK: 图层
     /// 图层
@@ -61,6 +70,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     /// - baseball:         棒球
     /// - peopleFront:  在前面的人物
     /// - button:           按钮
+    /// - PauseView:       暂停窗口
     enum Layers: CGFloat{
         case baseballfield
         case shadow
@@ -70,6 +80,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         case baseball
         case peopleFront
         case button
+        case PauseView
     }
     
     
@@ -112,6 +123,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Show_Baseball()//显示棒球
         Show_Button()//显示按钮
         Show_Shadow()//显示阴影
+        Show_PauseView()//显示暂停页面
     }
     
     //MARK: 显示元素
@@ -189,45 +201,111 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         GameView.addChild(MenuButton)
         
     }
+    
+    func Show_PauseView(){
+        PauseView.view.zPosition = Layers.PauseView.rawValue
+        PauseView.label.text = "Pause"
+        OptionsBGM.view.position = CGPoint(x: 0, y: PauseView.view.size.height * 0.15)
+        OptionsBGM.label.text = "BGM"
+        OptionsBGM.name = "OptionsBGM"
+        PauseView.view.addChild(OptionsBGM.view)
+        
+        OptionsSound.view.position = CGPoint(x: 0, y: PauseView.view.size.height * -0.05)
+        OptionsSound.label.text = "Sound"
+        OptionsSound.name = "OptionsBGM"
+        PauseView.view.addChild(OptionsSound.view)
+        
+        ResumeButton.position = CGPoint(x: 0, y: PauseView.view.size.height * -0.4)
+        PauseView.view.addChild(ResumeButton)
+        
+        
+        BackButton.position = CGPoint(x: 0, y: PauseView.view.size.height * -0.2)
+        PauseView.view.addChild(BackButton)
+        
+        OptionsBGM.isOn = UserDefaults.standard.value(forKey: "Options_BGM")! as! Bool
+        OptionsSound.isOn = UserDefaults.standard.value(forKey: "Options_Sound")! as! Bool
+        PauseView.view.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
+        PauseView.view.alpha = 0
+        PauseBackground.alpha = 0
+        PauseBackground.zPosition = Layers.PauseView.rawValue
+        GameView.addChild(PauseBackground)
+        GameView.addChild(PauseView.view)
+
+    }
+    
+    func PauseViewAnimate(isShow: Bool){
+        if(isShow == true){
+            GameStatus = .Menu
+            let fadeAway = SKAction.fadeIn(withDuration: 0.5)
+            PauseView.view.run(fadeAway)
+            PauseBackground.run(fadeAway)
+        }
+        else{
+            GameStatus = .Play
+            let fadeAway = SKAction.fadeOut(withDuration: 0.5)
+            PauseView.view.run(fadeAway)
+            PauseBackground.run(fadeAway)
+        }
+    }
 
     
     //MARK: 点击事件
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        TouchAmount += 1
+        if(TouchAmount > 2){
+            TouchAmount = 2
+        }
         for touch: AnyObject in touches {
             // Get the location of the touch in this scene
             let location = touch.location(in: self)
             // Check if the location of the touch is within the button's bounds
-            
-            if MovingButton_View.contains(location) {
-                if touchesButton(location){
-                    
-                }
-            }
-            else if TestButton.contains(location){
-                if(Baseball.set[0].Status != GameObject.Baseball.All_Status.b_Throw && Baseball.set[0].Status != GameObject.Baseball.All_Status.b_Return && Baseball.set[0].Status != GameObject.Baseball.All_Status.b_ReturnAgain && Natsume_Rin.Unit.attribute.status == GamePeople.Natsume_Rin.Status.nr_Static.hashValue){
-                    self.Natsume_Rin.Unit.attribute.imageNumber = 0
-                    self.Natsume_Rin.Unit.attribute.status = GamePeople.Natsume_Rin.Status.nr_Swing.hashValue
-                }
-            }
-            else if MenuButton.contains(location){
-                if GameStatus == .Play{
-                    GameStatus = .Menu
-                }
-                else{
-                    GameStatus = .Play
-                }
-            }
-            else{
-                if(GameStatus == .Play){
-                    if Naoe_Riki.Unit.attribute.status != GamePeople.Naoe_Riki.Status.nr_FallDown.hashValue{
-                        Naoe_Riki.Unit.attribute.status = GamePeople.Naoe_Riki.Status.nr_Swing.hashValue
+            print("Baseballfield:",touch.location(in: Baseballfield))
+            switch GameStatus {
+            case .Play:
+                if MovingButton_View.contains(location) {
+                    if touchesButton(touches){
+                        
                     }
                 }
+                else if TestButton.contains(location){
+                    if(Baseball.set[0].Status != GameObject.Baseball.All_Status.b_Throw && Baseball.set[0].Status != GameObject.Baseball.All_Status.b_Return && Baseball.set[0].Status != GameObject.Baseball.All_Status.b_ReturnAgain && Natsume_Rin.Unit.attribute.status == GamePeople.Natsume_Rin.Status.nr_Static.hashValue){
+                        self.Natsume_Rin.Unit.attribute.imageNumber = 0
+                        self.Natsume_Rin.Unit.attribute.status = GamePeople.Natsume_Rin.Status.nr_Swing.hashValue
+                    }
+                }
+                else if MenuButton.contains(location){
+                    PauseViewAnimate(isShow: true)
+                }
+                else{
+                    if(GameStatus == .Play){
+                        if Naoe_Riki.Unit.attribute.status != GamePeople.Naoe_Riki.Status.nr_FallDown.hashValue{
+                            Naoe_Riki.Unit.attribute.status = GamePeople.Naoe_Riki.Status.nr_Swing.hashValue
+                        }
+                    }
+                }
+                break
+            case .Menu:
+                let location = touch.location(in:PauseView.view)
+                if (OptionsBGM.view.contains(location)){
+                    OptionsBGM.isOn = !OptionsBGM.isOn
+                    UserDefaults.standard.setValue(OptionsBGM.isOn, forKey: "Options_BGM")
+                }
+                else if(OptionsSound.view.contains(location)){
+                    OptionsSound.isOn = !OptionsSound.isOn
+                    UserDefaults.standard.setValue(OptionsSound.isOn, forKey: "Options_Sound")
+                }
+                else if(ResumeButton.contains(location)){
+                    PauseViewAnimate(isShow: false)
+                }
+                else if(BackButton.contains(location)){
+                    let nextScene = GameMenu(size: self.size)
+                    self.view?.presentScene(nextScene)
+                }
+                break
+            default:
+                break
             }
-        }
-        TouchAmount += 1
-        if(TouchAmount > 2){
-            TouchAmount = 2
+            
         }
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -236,42 +314,50 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             let location = touch.location(in: self)
             // Check if the location of the touch is within the button's bounds
             AllButtonColorClear()
-            
-            if !touchesButton(location){
-                MovingButton_Status = .stop
-                
-                //移动整个Map
-                if(location.y > self.frame.height * 0.25){
-                    Baseballfield.position = CGPoint(x: Baseballfield.frame.width * -(location.x / self.frame.width) + Baseballfield.frame.width * 0.55, y: Baseballfield.frame.height * -(location.y / self.frame.height) + Baseballfield.frame.height / 2)
+            switch GameStatus {
+            case .Play:
+                if !touchesButton(touches){
+                    MovingButton_Status = .stop
+                    
+                    //移动整个Map
+                    if(location.y > self.frame.height * 0.25){
+                        Baseballfield.position = CGPoint(x: Baseballfield.frame.width * -(location.x / self.frame.width) + Baseballfield.frame.width * 0.55, y: Baseballfield.frame.height * -(location.y / self.frame.height) + Baseballfield.frame.height / 2)
+                    }
+                    
                 }
-                print("Baseballfield:",Baseballfield.position)
+                break
+            default:
+                break
             }
         }
     }
-    func touchesButton(_ location: CGPoint) -> Bool {
-        let location = CGPoint(x: location.x - MovingButton_View.position.x, y: location.y - MovingButton_View.position.y)
-        if GameStatus != .Play{
-            return false
-        }
-        else if MovingButton_Up.contains(location) {
-            MovingButton_Status = .up
-            MovingButton_Up.childNode(withName: "shadedDarkUp-touch")?.isHidden = false
-            return true
-        }
-        else if MovingButton_Down.contains(location) {
-            MovingButton_Status = .down
-            MovingButton_Down.childNode(withName: "shadedDarkDown-touch")?.isHidden = false
-            return true
-        }
-        else if MovingButton_Left.contains(location) {
-            MovingButton_Status = .left
-            MovingButton_Left.childNode(withName: "shadedDarkLeft-touch")?.isHidden = false
-            return true
-        }
-        else if MovingButton_Right.contains(location) {
-            MovingButton_Status = .right
-            MovingButton_Right.childNode(withName: "shadedDarkRight-touch")?.isHidden = false
-            return true
+    func touchesButton(_ touches: Set<UITouch>) -> Bool {
+        for touch: AnyObject in touches {
+            let location = touch.location(in: MovingButton_View)
+            if GameStatus != .Play{
+                return false
+            }
+            else if MovingButton_Up.contains(location) {
+                MovingButton_Status = .up
+                MovingButton_Up.childNode(withName: "shadedDarkUp-touch")?.isHidden = false
+                return true
+            }
+            else if MovingButton_Down.contains(location) {
+                MovingButton_Status = .down
+                MovingButton_Down.childNode(withName: "shadedDarkDown-touch")?.isHidden = false
+                return true
+            }
+            else if MovingButton_Left.contains(location) {
+                MovingButton_Status = .left
+                MovingButton_Left.childNode(withName: "shadedDarkLeft-touch")?.isHidden = false
+                return true
+            }
+            else if MovingButton_Right.contains(location) {
+                MovingButton_Status = .right
+                MovingButton_Right.childNode(withName: "shadedDarkRight-touch")?.isHidden = false
+                return true
+            }
+
         }
         return false
     }
@@ -318,6 +404,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 break
             case .b_Return:
                 Status_View(Baseball.set[0].Unit.position)
+                
+                //Status_View(Natsume_Kyousuke.Unit.attribute.point)
                 break
             case .b_ReturnAgain:
                 Status_View(Baseball.set[0].Unit.position)
@@ -333,10 +421,10 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     func GameStatusrRun(){
         switch GameStatus {
         case .Play:
-            GameView.isPaused = false
+            Baseballfield.isPaused = false
             break
         case .Menu:
-            GameView.isPaused = true
+            Baseballfield.isPaused = true
             break
         case .Dialog:
             break
@@ -581,7 +669,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 Natsume_Kyousuke.View.physicsBody?.collisionBitMask = 0
                 Natsume_Kyousuke.View.physicsBody?.contactTestBitMask = KittyBaseballGame.Collision.BallTrackPath
                 Natsume_Kyousuke.Unit.attribute.Unit.speed = 1
-                Natsume_Kyousuke.Unit.attribute.Unit.run(SKAction.follow(RunPath.cgPath, asOffset: false, orientToPath: false, speed: 200), completion: { () -> Void in
+                Natsume_Kyousuke.Unit.attribute.Unit.run(SKAction.follow(RunPath.cgPath, asOffset: false, orientToPath: false, speed: 150), completion: { () -> Void in
                     self.Natsume_Kyousuke_Static()
                     self.Natsume_Kyousuke.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_Return.hashValue
                 })
@@ -617,7 +705,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 RunPath.move(to: Natsume_Kyousuke.Unit.attribute.Unit.position)
                 RunPath.addLine(to: GamePeople.Natsume_Kyousuke().Attribute.point)
                 Natsume_Kyousuke.Unit.attribute.Unit.speed = 1
-                Natsume_Kyousuke.Unit.attribute.Unit.run(SKAction.follow(RunPath.cgPath, asOffset: false, orientToPath: false, speed: 200), completion: { () -> Void in
+                Natsume_Kyousuke.Unit.attribute.Unit.run(SKAction.follow(RunPath.cgPath, asOffset: false, orientToPath: false, speed: 150), completion: { () -> Void in
                     self.Natsume_Kyousuke_Static()
                 })
             }
@@ -782,6 +870,11 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     func Baseball_Return(_ Number: Int,contact: CGPoint){
         Baseball.set[Number].Unit.removeAllActions()
         Baseball.set[Number].Power = GameObject.Baseball.Power(ball_x: 2,ball_y: 0,height: 2, length: 35)
+        
+        if OptionsSound.isOn{
+            run(Sound_Dang)
+        }
+        
         let BallPath = UIBezierPath()
         BallPath.move(to: Baseball.set[Number].Unit.position)
         switch Naoe_Riki.Unit.attribute.imageNumber.hashValue{

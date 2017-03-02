@@ -21,6 +21,11 @@
 		07F57DCA1CBB4077000CC1CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07F57DC81CBB4077000CC1CD /* LaunchScreen.storyboard */; };
 		07F57DD51CBB4077000CC1CD /* Little_Busters_MinigameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F57DD41CBB4077000CC1CD /* Little_Busters_MinigameTests.swift */; };
 		47638BC81E66A51A00911CBD /* kenpixel.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47638BC71E66A29200911CBD /* kenpixel.ttf */; };
+		47638BCF1E68168100911CBD /* BGM.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47638BCA1E68168100911CBD /* BGM.mp3 */; };
+		47638BD81E68193B00911CBD /* wind.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47638BD41E68193B00911CBD /* wind.mp3 */; };
+		47638BD91E68193B00911CBD /* over.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47638BD51E68193B00911CBD /* over.mp3 */; };
+		47638BDA1E68193B00911CBD /* ding.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47638BD61E68193B00911CBD /* ding.mp3 */; };
+		47638BDB1E68193B00911CBD /* dang.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47638BD71E68193B00911CBD /* dang.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +57,11 @@
 		07F57DD41CBB4077000CC1CD /* Little_Busters_MinigameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Little_Busters_MinigameTests.swift; sourceTree = "<group>"; };
 		07F57DD61CBB4077000CC1CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47638BC71E66A29200911CBD /* kenpixel.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kenpixel.ttf; sourceTree = "<group>"; };
+		47638BCA1E68168100911CBD /* BGM.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BGM.mp3; sourceTree = "<group>"; };
+		47638BD41E68193B00911CBD /* wind.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = wind.mp3; sourceTree = "<group>"; };
+		47638BD51E68193B00911CBD /* over.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = over.mp3; sourceTree = "<group>"; };
+		47638BD61E68193B00911CBD /* ding.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ding.mp3; sourceTree = "<group>"; };
+		47638BD71E68193B00911CBD /* dang.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dang.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +112,7 @@
 		07F57DBA1CBB4077000CC1CD /* Little Busters Minigame */ = {
 			isa = PBXGroup;
 			children = (
+				47638BC91E68168100911CBD /* Sound */,
 				47638BC61E66A28300911CBD /* Font */,
 				07913F081CBB51B1005ED5D4 /* Art */,
 				07F57DBB1CBB4077000CC1CD /* AppDelegate.swift */,
@@ -134,6 +145,18 @@
 				47638BC71E66A29200911CBD /* kenpixel.ttf */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		47638BC91E68168100911CBD /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				47638BCA1E68168100911CBD /* BGM.mp3 */,
+				47638BD41E68193B00911CBD /* wind.mp3 */,
+				47638BD51E68193B00911CBD /* over.mp3 */,
+				47638BD61E68193B00911CBD /* ding.mp3 */,
+				47638BD71E68193B00911CBD /* dang.mp3 */,
+			);
+			path = Sound;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,9 +245,14 @@
 			files = (
 				07F57DCA1CBB4077000CC1CD /* LaunchScreen.storyboard in Resources */,
 				07F57DC71CBB4077000CC1CD /* Assets.xcassets in Resources */,
+				47638BDA1E68193B00911CBD /* ding.mp3 in Resources */,
+				47638BD91E68193B00911CBD /* over.mp3 in Resources */,
 				07913F1C1CBB95F1005ED5D4 /* KittyBaseballGame.atlas in Resources */,
 				07913F121CBB54A4005ED5D4 /* Menu.atlas in Resources */,
+				47638BCF1E68168100911CBD /* BGM.mp3 in Resources */,
 				47638BC81E66A51A00911CBD /* kenpixel.ttf in Resources */,
+				47638BD81E68193B00911CBD /* wind.mp3 in Resources */,
+				47638BDB1E68193B00911CBD /* dang.mp3 in Resources */,
 				07F57DC51CBB4077000CC1CD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
