@@ -20,6 +20,8 @@ class GameMenu: SKScene {
     
     var MenuStatus:Status = .Menu
     
+    let Sound_Ding = SKAction.playSoundFileNamed("ding.mp3", waitForCompletion: false)
+    
     
     /// 图层
     enum Layers: CGFloat{
@@ -103,25 +105,47 @@ class GameMenu: SKScene {
             case .Menu:
                 if KittyBaseballGame_Button.contains(location) {
                     print("进入棒球小游戏!")
-                    let nextScene = KittyBaseballGame(size: self.size)
-                    self.view?.presentScene(nextScene)
+                    if OptionsSound.isOn {
+                        run(Sound_Ding, completion: {
+                            
+                            let nextScene = KittyBaseballGame(size: self.size)
+                            self.view?.presentScene(nextScene)
+                            return
+                        })
+                    }
+                    else{
+                        let nextScene = KittyBaseballGame(size: self.size)
+                        self.view?.presentScene(nextScene)
+                    }
                 }
                 else if Options_Button.contains(location){
                     print("进入选项！")
+                    if OptionsSound.isOn {
+                        run(Sound_Ding)
+                    }
                     OptionsViewAnimate(isShow: true)
                 }
                 break
             default:
                 let location = touch.location(in:OptionsView.view)
                 if (OptionsBGM.view.contains(location)){
+                    if OptionsSound.isOn {
+                        run(Sound_Ding)
+                    }
                     OptionsBGM.isOn = !OptionsBGM.isOn
                     UserDefaults.standard.setValue(OptionsBGM.isOn, forKey: "Options_BGM")
                 }
                 else if(OptionsSound.view.contains(location)){
                     OptionsSound.isOn = !OptionsSound.isOn
+                    if OptionsSound.isOn {
+                        run(Sound_Ding)
+                    }
                     UserDefaults.standard.setValue(OptionsSound.isOn, forKey: "Options_Sound")
                 }
                 else if(OptionsBack_Button.contains(location)){
+                    if OptionsSound.isOn {
+                        run(Sound_Ding)
+                    }
                     OptionsViewAnimate(isShow: false)
                 }
             }
@@ -137,7 +161,9 @@ class GameMenu: SKScene {
         else{
             MenuStatus = .Menu
             let MoveView = SKAction.moveBy(x: size.width * -1, y: 0, duration: 0.5)
-            OptionsView.view.run(MoveView)
+            OptionsView.view.run(MoveView, completion: {
+                self.OptionsView.view.position = CGPoint(x: self.size.width * 1.5, y: self.size.height / 2)
+            })
         }
     }
     

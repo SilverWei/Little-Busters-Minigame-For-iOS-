@@ -58,6 +58,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     
     //MARK: 音效
     let Sound_Dang = SKAction.playSoundFileNamed("dang.mp3", waitForCompletion: false)
+    let Sound_Ding = SKAction.playSoundFileNamed("ding.mp3", waitForCompletion: false)
+    
     
     //MARK: 图层
     /// 图层
@@ -277,6 +279,9 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                     }
                 }
                 else if MenuButton.contains(location){
+                    if OptionsSound.isOn{
+                        run(Sound_Ding)
+                    }
                     PauseViewAnimate(isShow: true)
                 }
                 else{
@@ -291,16 +296,28 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 let location = touch.location(in:PauseView.view)
                 if (OptionsBGM.view.contains(location)){
                     OptionsBGM.isOn = !OptionsBGM.isOn
+                    if OptionsSound.isOn {
+                        run(Sound_Ding)
+                    }
                     UserDefaults.standard.setValue(OptionsBGM.isOn, forKey: "Options_BGM")
                 }
                 else if(OptionsSound.view.contains(location)){
                     OptionsSound.isOn = !OptionsSound.isOn
+                    if OptionsSound.isOn {
+                        run(Sound_Ding)
+                    }
                     UserDefaults.standard.setValue(OptionsSound.isOn, forKey: "Options_Sound")
                 }
                 else if(ResumeButton.contains(location)){
+                    if OptionsSound.isOn{
+                        run(Sound_Ding)
+                    }
                     PauseViewAnimate(isShow: false)
                 }
                 else if(BackButton.contains(location)){
+                    if OptionsSound.isOn{
+                        run(Sound_Ding)
+                    }
                     let nextScene = GameMenu(size: self.size)
                     self.view?.presentScene(nextScene)
                 }
@@ -727,6 +744,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 if(Natsume_Kyousuke.Unit.attribute.imageNumber.hashValue < 24 || Natsume_Kyousuke.Unit.attribute.imageNumber.hashValue > 27){
                     Natsume_Kyousuke.Unit.attribute.imageNumber = 24
                 }
+                
             }
             
             Natsume_Kyousuke_StatusAction(TimeInterval)
