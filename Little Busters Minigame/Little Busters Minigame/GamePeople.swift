@@ -390,7 +390,7 @@ class GamePeople{
             case nk_Wave
             case nk_PickUp
         }
-        /// 身体接触点
+        /// 棒球接触点
         ///
         /// - returns: CGMutablePath
         func BodyContact() -> CGMutablePath{
@@ -433,6 +433,201 @@ class GamePeople{
             Range.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x - 810, y: GameObject().Baseballfield().anchorPoint.y + 70)
             return Range
         }
+    }
+    
+    //MARK: 来ヶ谷 唯湖
+    class Kurugaya_Yuiko: NSObject {
+        class Main: NSObject {
+            var Unit = GamePeople.Unit(attribute: Kurugaya_Yuiko().Attribute, image: Natsume_Kyousuke().Array())
+            var View = SKSpriteNode(texture: SKTexture(image: Natsume_Kyousuke().Array()[0]))
+            var Range = Kurugaya_Yuiko().Range()
+        }
+        var Attribute = GamePeople.Attribute(image: UIImage(named: "NatsumeKyousuke")!,
+                                             point: CGPoint(x:  GameObject().Baseballfield().anchorPoint.x - 180, y: GameObject().Baseballfield().anchorPoint.y + 450),
+                                             status: 0,
+                                             imageNumber: 0,
+                                             Shadow_x: 0,
+                                             Shadow_y: -30,
+                                             Shadow_w: 35,
+                                             Shadow_h: 15,
+                                             Unit: SKShapeNode(),
+                                             Shadow: SKShapeNode()
+        )
+        
+        /// 棒球接触点
+        ///
+        /// - returns: CGMutablePath
+        func BodyContact() -> CGMutablePath{
+            let path = CGMutablePath()
+            path.move(to: CGPoint(x: 20,y: 30))
+            path.addLine(to: CGPoint(x: 20, y: -40))
+            path.addLine(to: CGPoint(x: -10, y: -40))
+            path.addLine(to: CGPoint(x: -10, y: 30))
+            path.closeSubpath()
+            return path
+        }
+        /// 跑步接触点
+        ///
+        /// - returns: CGMutablePath
+        func RunContact() -> CGMutablePath{
+            let path = CGMutablePath()
+            path.move(to: CGPoint(x: 15,y:0))
+            path.addLine(to: CGPoint(x: 15, y: -30))
+            path.addLine(to: CGPoint(x: -15, y: -30))
+            path.addLine(to: CGPoint(x: -15, y: 0))
+            path.closeSubpath()
+            return path
+        }
+        /// 移动范围
+        ///
+        /// - returns: SKShapeNode
+        func Range() -> SKShapeNode{
+            let RangePath = UIBezierPath()
+            let x = 410
+            let y = 240
+            RangePath.move(to: CGPoint(x: 0, y: 0))
+            RangePath.addLine(to: CGPoint(x: 0, y: y))
+            RangePath.addLine(to: CGPoint(x: x, y: y))
+            RangePath.addLine(to: CGPoint(x: x, y: 0))
+            RangePath.addLine(to: CGPoint(x: 0, y: 0))
+            let Range = SKShapeNode(path: RangePath.cgPath)
+            Range.lineWidth = 1.0
+            Range.fillColor = SKColor.clear
+            Range.strokeColor = SKColor.blue
+            Range.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x - 400, y: GameObject().Baseballfield().anchorPoint.y + 310)
+            return Range
+        }
+        
+    }
+    
+    //MARK: 三枝 葉留佳
+    class Saigusa_Haruka: NSObject {
+        class Main: NSObject {
+            var Unit = GamePeople.Unit(attribute: Saigusa_Haruka().Attribute, image: Natsume_Kyousuke().Array())
+            var View = SKSpriteNode(texture: SKTexture(image: Natsume_Kyousuke().Array()[0]))
+            var Range = Saigusa_Haruka().Range()
+        }
+        var Attribute = GamePeople.Attribute(image: UIImage(named: "NatsumeKyousuke")!,
+                                             point: CGPoint(x:  GameObject().Baseballfield().anchorPoint.x + 180, y: GameObject().Baseballfield().anchorPoint.y + 450),
+                                             status: 0,
+                                             imageNumber: 0,
+                                             Shadow_x: 0,
+                                             Shadow_y: -30,
+                                             Shadow_w: 35,
+                                             Shadow_h: 15,
+                                             Unit: SKShapeNode(),
+                                             Shadow: SKShapeNode()
+        )
+        
+        /// 棒球接触点
+        ///
+        /// - returns: CGMutablePath
+        func BodyContact() -> CGMutablePath{
+            let path = CGMutablePath()
+            path.move(to: CGPoint(x: -10,y: 30))
+            path.addLine(to: CGPoint(x: -10, y: -40))
+            path.addLine(to: CGPoint(x: 20, y: -40))
+            path.addLine(to: CGPoint(x: 20, y: 30))
+            path.closeSubpath()
+            return path
+        }
+        /// 跑步接触点
+        ///
+        /// - returns: CGMutablePath
+        func RunContact() -> CGMutablePath{
+            let path = CGMutablePath()
+            path.move(to: CGPoint(x: 15,y:0))
+            path.addLine(to: CGPoint(x: 15, y: -30))
+            path.addLine(to: CGPoint(x: -15, y: -30))
+            path.addLine(to: CGPoint(x: -15, y: 0))
+            path.closeSubpath()
+            return path
+        }
+        /// 移动范围
+        ///
+        /// - returns: SKShapeNode
+        func Range() -> SKShapeNode{
+            let RangePath = UIBezierPath()
+            let x = -410
+            let y = 240
+            RangePath.move(to: CGPoint(x: 0, y: 0))
+            RangePath.addLine(to: CGPoint(x: 0, y: y))
+            RangePath.addLine(to: CGPoint(x: x, y: y))
+            RangePath.addLine(to: CGPoint(x: x, y: 0))
+            RangePath.addLine(to: CGPoint(x: 0, y: 0))
+            let Range = SKShapeNode(path: RangePath.cgPath)
+            Range.lineWidth = 1.0
+            Range.fillColor = SKColor.clear
+            Range.strokeColor = SKColor.blue
+            Range.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x + 400, y: GameObject().Baseballfield().anchorPoint.y + 310)
+            return Range
+        }
+        
+    }
+    
+    //MARK: 井ノ原 真人
+    class Inohara_Masato: NSObject {
+        class Main: NSObject {
+            var Unit = GamePeople.Unit(attribute: Inohara_Masato().Attribute, image: Natsume_Kyousuke().Array())
+            var View = SKSpriteNode(texture: SKTexture(image: Natsume_Kyousuke().Array()[0]))
+            var Range = Inohara_Masato().Range()
+        }
+        var Attribute = GamePeople.Attribute(image: UIImage(named: "NatsumeKyousuke")!,
+                                             point: CGPoint(x:  GameObject().Baseballfield().anchorPoint.x + 630, y: GameObject().Baseballfield().anchorPoint.y + 220),
+                                             status: 0,
+                                             imageNumber: 0,
+                                             Shadow_x: 0,
+                                             Shadow_y: -30,
+                                             Shadow_w: 35,
+                                             Shadow_h: 15,
+                                             Unit: SKShapeNode(),
+                                             Shadow: SKShapeNode()
+        )
+        
+        /// 棒球接触点
+        ///
+        /// - returns: CGMutablePath
+        func BodyContact() -> CGMutablePath{
+            let path = CGMutablePath()
+            path.move(to: CGPoint(x: -10,y: 30))
+            path.addLine(to: CGPoint(x: -10, y: -40))
+            path.addLine(to: CGPoint(x: 20, y: -40))
+            path.addLine(to: CGPoint(x: 20, y: 30))
+            path.closeSubpath()
+            return path
+        }
+        /// 跑步接触点
+        ///
+        /// - returns: CGMutablePath
+        func RunContact() -> CGMutablePath{
+            let path = CGMutablePath()
+            path.move(to: CGPoint(x: 15,y:0))
+            path.addLine(to: CGPoint(x: 15, y: -30))
+            path.addLine(to: CGPoint(x: -15, y: -30))
+            path.addLine(to: CGPoint(x: -15, y: 0))
+            path.closeSubpath()
+            return path
+        }
+        /// 移动范围
+        ///
+        /// - returns: SKShapeNode
+        func Range() -> SKShapeNode{
+            let RangePath = UIBezierPath()
+            let x = -410
+            let y = 240
+            RangePath.move(to: CGPoint(x: 0, y: 0))
+            RangePath.addLine(to: CGPoint(x: 0, y: y))
+            RangePath.addLine(to: CGPoint(x: x, y: y))
+            RangePath.addLine(to: CGPoint(x: x, y: 0))
+            RangePath.addLine(to: CGPoint(x: 0, y: 0))
+            let Range = SKShapeNode(path: RangePath.cgPath)
+            Range.lineWidth = 1.0
+            Range.fillColor = SKColor.clear
+            Range.strokeColor = SKColor.blue
+            Range.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x + 810, y: GameObject().Baseballfield().anchorPoint.y + 70)
+            return Range
+        }
+        
     }
 }
 
