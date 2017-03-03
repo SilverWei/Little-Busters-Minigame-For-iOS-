@@ -69,6 +69,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     /// - peopleBehind: 在后面的人物
     /// - baseball:         棒球
     /// - peopleFront:  在前面的人物
+    /// - message:      信息
     /// - button:           按钮
     /// - PauseView:       暂停窗口
     enum Layers: CGFloat{
@@ -79,6 +80,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         case peopleBehind
         case baseball
         case peopleFront
+        case message
         case button
         case PauseView
     }
@@ -124,6 +126,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Show_Button()//显示按钮
         Show_Shadow()//显示阴影
         Show_PauseView()//显示暂停页面
+        
     }
     
     //MARK: 显示元素
@@ -224,7 +227,6 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         
         OptionsBGM.isOn = UserDefaults.standard.value(forKey: "Options_BGM")! as! Bool
         OptionsSound.isOn = UserDefaults.standard.value(forKey: "Options_Sound")! as! Bool
-        PauseView.view.position = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
         PauseView.view.alpha = 0
         PauseBackground.alpha = 0
         PauseBackground.zPosition = Layers.PauseView.rawValue
@@ -233,6 +235,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
 
     }
     
+    //MARK: 弹窗动画
     func PauseViewAnimate(isShow: Bool){
         if(isShow == true){
             GameStatus = .Menu
@@ -773,6 +776,9 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             }
             if(Natsume_Kyousuke.Unit.attribute.imageNumber.hashValue < 48){
                 Natsume_Kyousuke.Unit.attribute.imageNumber = 48
+                let Plus_1 = GameObject().Plus_1S_Label(text: "+1S")
+                Natsume_Kyousuke.View.addChild(Plus_1)
+                Plus_1.run(GameObject().Plus_1S_Animate())
             }
             if(Natsume_Kyousuke.Unit.attribute.imageNumber.hashValue > 51){
                 self.Natsume_Kyousuke_Static()
@@ -874,6 +880,10 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         if OptionsSound.isOn{
             run(Sound_Dang)
         }
+        
+        let Plus_1 = GameObject().Plus_1S_Label(text: "+1S")
+        Naoe_Riki.View.addChild(Plus_1)
+        Plus_1.run(GameObject().Plus_1S_Animate())
         
         let BallPath = UIBezierPath()
         BallPath.move(to: Baseball.set[Number].Unit.position)

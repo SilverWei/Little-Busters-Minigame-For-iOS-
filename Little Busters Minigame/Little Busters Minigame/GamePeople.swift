@@ -395,8 +395,8 @@ class GamePeople{
         /// - returns: CGMutablePath
         func BodyContact() -> CGMutablePath{
             let path = CGMutablePath()
-            path.move(to: CGPoint(x: 0,y: 30))
-            path.addLine(to: CGPoint(x: 0, y: -40))
+            path.move(to: CGPoint(x: 20,y: 30))
+            path.addLine(to: CGPoint(x: 20, y: -40))
             path.addLine(to: CGPoint(x: -10, y: -40))
             path.addLine(to: CGPoint(x: -10, y: 30))
             path.closeSubpath()
@@ -407,10 +407,10 @@ class GamePeople{
         /// - returns: CGMutablePath
         func RunContact() -> CGMutablePath{
             let path = CGMutablePath()
-            path.move(to: CGPoint(x: 5,y: -20))
+            path.move(to: CGPoint(x: 5,y: -10))
             path.addLine(to: CGPoint(x: 5, y: -30))
             path.addLine(to: CGPoint(x: -5, y: -30))
-            path.addLine(to: CGPoint(x: -5, y: -20))
+            path.addLine(to: CGPoint(x: -5, y: -10))
             path.closeSubpath()
             return path
         }

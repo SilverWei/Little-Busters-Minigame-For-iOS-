@@ -9,6 +9,8 @@
 import SpriteKit
 
 class GameObject: SKScene{
+    var GameViewSize:CGSize = CGSize(width: 320, height: 320 * (UIScreen.main.bounds.size.height / UIScreen.main.bounds.size.width))
+    
     //MARK: 棒球场背景
     internal func Baseballfield() -> SKSpriteNode{
         let image = SKSpriteNode(imageNamed: "Baseballfield-day")
@@ -227,7 +229,8 @@ class GameObject: SKScene{
         let View_width:CGFloat = 30
         let View = SKSpriteNode(color: SKColor.clear, size: CGSize(width: View_width, height: View_width))
         View.anchorPoint = CGPoint(x: 1, y: 1)
-        View.position = CGPoint(x: UIScreen.main.bounds.width - 20, y: UIScreen.main.bounds.height - 20)
+        View.position = CGPoint(x: GameViewSize.width - 20, y: GameViewSize.height - 20)
+        print(GameViewSize)
         image.size = View.size
         image.anchorPoint = View.anchorPoint
         View.addChild(image)
@@ -284,11 +287,12 @@ class GameObject: SKScene{
 
     //MARK: 页面背景
     internal class Window : SKNode{
-        var view = SKSpriteNode(color: SKColor.clear, size: CGSize(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.5))
+        var view = SKSpriteNode(color: SKColor.clear, size: CGSize(width: GameObject().GameViewSize.width * 0.8, height: GameObject().GameViewSize.height * 0.5))
         var label = SKLabelNode(text: "")
         override init(){
             super.init()
             view.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            view.position = CGPoint(x: GameObject().GameViewSize.width / 2, y: GameObject().GameViewSize.height / 2)
             do {
                 let image = SKSpriteNode(imageNamed: "dropdownTop")
                 let Ratio = view.size.width / image.size.width
@@ -327,6 +331,11 @@ class GameObject: SKScene{
         }
     }
     
+    internal func WindowBackground() -> SKSpriteNode{
+        let view = SKSpriteNode(color: SKColor.init(red: 0, green: 0, blue: 0, alpha: 0.6), size: CGSize(width: GameViewSize.width, height: GameViewSize.height))
+        view.position = CGPoint(x: GameViewSize.width / 2, y: GameViewSize.height / 2)
+        return view
+    }
     
     //MARK: 恢复按钮
     internal func ResumeButton() -> SKSpriteNode{
@@ -347,12 +356,6 @@ class GameObject: SKScene{
         return view
     }
     
-    internal func WindowBackground() -> SKSpriteNode{
-        let view = SKSpriteNode(color: SKColor.init(red: 0, green: 0, blue: 0, alpha: 0.6), size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-        view.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        view.position = CGPoint(x: UIScreen.main.bounds.size.width / 2, y: UIScreen.main.bounds.size.height / 2)
-        return view
-    }
     
     //MARK: 返回按钮
     internal func BackButton() -> SKSpriteNode{
@@ -373,6 +376,23 @@ class GameObject: SKScene{
         return view
     }
     
+    //MARK: +1S
+    internal func Plus_1S_Label(text: String) -> SKLabelNode{
+        let label = SKLabelNode(text: text)
+        label.fontName = "kenpixel"
+        label.verticalAlignmentMode = .center
+        label.fontSize = 20
+        label.fontColor = SKColor(red: 0.96, green: 0.26, blue: 0.21, alpha: 1)
+        label.position = CGPoint(x: 0, y: 60)
+        label.zPosition = KittyBaseballGame.Layers.message.rawValue
+        return label
+    }
+    internal func Plus_1S_Animate() -> SKAction{
+        let moveView = SKAction.moveBy(x: 0, y: 20, duration: 1)
+        let fadeAway = SKAction.fadeOut(withDuration: 1)
+        let action = SKAction.group([moveView,fadeAway])
+        return action
+    }
     
     //MARK: 测试按钮
     internal func TestButton() -> SKSpriteNode{

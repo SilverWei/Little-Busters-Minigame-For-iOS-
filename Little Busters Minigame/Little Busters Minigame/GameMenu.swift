@@ -132,16 +132,12 @@ class GameMenu: SKScene {
         if(isShow == true){
             MenuStatus = .OptionsShow
             let MoveView = SKAction.moveBy(x: size.width * -1, y: 0, duration: 0.5)
-            OptionsView.view.run(MoveView, completion: {
-                
-            })
+            OptionsView.view.run(MoveView)
         }
         else{
             MenuStatus = .Menu
             let MoveView = SKAction.moveBy(x: size.width * -1, y: 0, duration: 0.5)
-            OptionsView.view.run(MoveView, completion: {
-                self.OptionsView.view.position = CGPoint(x: self.size.width * 1.5, y: self.size.height / 2)
-            })
+            OptionsView.view.run(MoveView)
         }
     }
     

@@ -19,7 +19,6 @@ class GameViewController: UIViewController {
                 //创建选项页面
                 let MainViewAspectRatio = MainView.bounds.size.height / MainView.bounds.size.width
                 let GameMenuView = GameMenu(size: CGSize(width: 320, height: 320 * MainViewAspectRatio))
-                
                 MainView.showsFPS = true
                 MainView.showsNodeCount = true
                 MainView.showsDrawCount = true
