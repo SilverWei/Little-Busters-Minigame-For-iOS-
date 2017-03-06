@@ -26,6 +26,9 @@
 		47638BD91E68193B00911CBD /* over.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47638BD51E68193B00911CBD /* over.mp3 */; };
 		47638BDA1E68193B00911CBD /* ding.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47638BD61E68193B00911CBD /* ding.mp3 */; };
 		47638BDB1E68193B00911CBD /* dang.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47638BD71E68193B00911CBD /* dang.mp3 */; };
+		47D5CE1A1E6CE95300E10577 /* BGM2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47D5CE171E6CE95300E10577 /* BGM2.mp3 */; };
+		47D5CE1B1E6CE95300E10577 /* BGM3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47D5CE181E6CE95300E10577 /* BGM3.mp3 */; };
+		47D5CE1C1E6CE95300E10577 /* dong.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47D5CE191E6CE95300E10577 /* dong.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +65,9 @@
 		47638BD51E68193B00911CBD /* over.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = over.mp3; sourceTree = "<group>"; };
 		47638BD61E68193B00911CBD /* ding.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ding.mp3; sourceTree = "<group>"; };
 		47638BD71E68193B00911CBD /* dang.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dang.mp3; sourceTree = "<group>"; };
+		47D5CE171E6CE95300E10577 /* BGM2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BGM2.mp3; sourceTree = "<group>"; };
+		47D5CE181E6CE95300E10577 /* BGM3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BGM3.mp3; sourceTree = "<group>"; };
+		47D5CE191E6CE95300E10577 /* dong.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dong.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +161,9 @@
 				47638BD51E68193B00911CBD /* over.mp3 */,
 				47638BD61E68193B00911CBD /* ding.mp3 */,
 				47638BD71E68193B00911CBD /* dang.mp3 */,
+				47D5CE171E6CE95300E10577 /* BGM2.mp3 */,
+				47D5CE181E6CE95300E10577 /* BGM3.mp3 */,
+				47D5CE191E6CE95300E10577 /* dong.mp3 */,
 			);
 			path = Sound;
 			sourceTree = "<group>";
@@ -243,12 +252,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47D5CE1C1E6CE95300E10577 /* dong.mp3 in Resources */,
 				07F57DCA1CBB4077000CC1CD /* LaunchScreen.storyboard in Resources */,
 				07F57DC71CBB4077000CC1CD /* Assets.xcassets in Resources */,
 				47638BDA1E68193B00911CBD /* ding.mp3 in Resources */,
 				47638BD91E68193B00911CBD /* over.mp3 in Resources */,
 				07913F1C1CBB95F1005ED5D4 /* KittyBaseballGame.atlas in Resources */,
 				07913F121CBB54A4005ED5D4 /* Menu.atlas in Resources */,
+				47D5CE1B1E6CE95300E10577 /* BGM3.mp3 in Resources */,
+				47D5CE1A1E6CE95300E10577 /* BGM2.mp3 in Resources */,
 				47638BCF1E68168100911CBD /* BGM.mp3 in Resources */,
 				47638BC81E66A51A00911CBD /* kenpixel.ttf in Resources */,
 				47638BD81E68193B00911CBD /* wind.mp3 in Resources */,

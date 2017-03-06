@@ -120,7 +120,7 @@ class GamePeople{
             let Range = SKShapeNode(path: RangePath.cgPath)
             Range.lineWidth = 1.0
             Range.fillColor = SKColor.clear
-            Range.strokeColor = SKColor.blue
+            Range.strokeColor = SKColor.clear
             Range.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x - 60, y: GameObject().Baseballfield().anchorPoint.y - 150)
             return Range
         }
@@ -407,10 +407,10 @@ class GamePeople{
         /// - returns: CGMutablePath
         func RunContact() -> CGMutablePath{
             let path = CGMutablePath()
-            path.move(to: CGPoint(x: 5,y: -10))
-            path.addLine(to: CGPoint(x: 5, y: -30))
-            path.addLine(to: CGPoint(x: -5, y: -30))
-            path.addLine(to: CGPoint(x: -5, y: -10))
+            path.move(to: CGPoint(x: 15,y:0))
+            path.addLine(to: CGPoint(x: 15, y: -30))
+            path.addLine(to: CGPoint(x: -15, y: -30))
+            path.addLine(to: CGPoint(x: -15, y: 0))
             path.closeSubpath()
             return path
         }
@@ -429,7 +429,7 @@ class GamePeople{
             let Range = SKShapeNode(path: RangePath.cgPath)
             Range.lineWidth = 1.0
             Range.fillColor = SKColor.clear
-            Range.strokeColor = SKColor.blue
+            Range.strokeColor = SKColor.clear
             Range.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x - 810, y: GameObject().Baseballfield().anchorPoint.y + 70)
             return Range
         }
@@ -493,7 +493,7 @@ class GamePeople{
             let Range = SKShapeNode(path: RangePath.cgPath)
             Range.lineWidth = 1.0
             Range.fillColor = SKColor.clear
-            Range.strokeColor = SKColor.blue
+            Range.strokeColor = SKColor.clear
             Range.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x - 400, y: GameObject().Baseballfield().anchorPoint.y + 310)
             return Range
         }
@@ -558,7 +558,7 @@ class GamePeople{
             let Range = SKShapeNode(path: RangePath.cgPath)
             Range.lineWidth = 1.0
             Range.fillColor = SKColor.clear
-            Range.strokeColor = SKColor.blue
+            Range.strokeColor = SKColor.clear
             Range.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x + 400, y: GameObject().Baseballfield().anchorPoint.y + 310)
             return Range
         }
@@ -623,11 +623,10 @@ class GamePeople{
             let Range = SKShapeNode(path: RangePath.cgPath)
             Range.lineWidth = 1.0
             Range.fillColor = SKColor.clear
-            Range.strokeColor = SKColor.blue
+            Range.strokeColor = SKColor.clear
             Range.position = CGPoint(x: GameObject().Baseballfield().anchorPoint.x + 810, y: GameObject().Baseballfield().anchorPoint.y + 70)
             return Range
         }
-        
     }
 }
 

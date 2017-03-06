@@ -183,7 +183,6 @@ class GameMenu: SKScene {
         
         OptionsBack_Button = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 140, height: 44))
         OptionsBack_Button.position = CGPoint(x: 0, y: OptionsView.view.size.height * -0.4)
-        OptionsBack_Button.anchorPoint = CGPoint(x: 0.5, y: 0)
         do  {
             let image = SKSpriteNode(imageNamed: "blue_button02")
             image.size = OptionsBack_Button.frame.size

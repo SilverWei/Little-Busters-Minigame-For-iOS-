@@ -76,7 +76,7 @@ class GameObject: SKScene{
         /// 动作状态
         ///
         /// - b_Static:      静止
-        /// - b_Cast:        投出
+        /// - b_Throw:        投出
         /// - b_Return:      击回
         /// - b_ReturnAgain: 扔回
         enum All_Status{
@@ -340,12 +340,31 @@ class GameObject: SKScene{
     //MARK: 恢复按钮
     internal func ResumeButton() -> SKSpriteNode{
         let view = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 140, height: 44))
-        view.anchorPoint = CGPoint(x: 0.5, y: 0)
         do  {
             let image = SKSpriteNode(imageNamed: "green_button02")
             image.size = view.frame.size
+            image.anchorPoint = view.anchorPoint
             view.addChild(image)
             let label = SKLabelNode(text: "Resume")
+            label.fontColor = SKColor.white
+            label.position = CGPoint(x: 0, y: 0)
+            label.fontSize = 20
+            label.verticalAlignmentMode = .center
+            label.fontName = "kenpixel"
+            image.addChild(label)
+        }
+        return view
+    }
+    
+    //MARK: 重玩按钮
+    internal func ReplayButton() -> SKSpriteNode{
+        let view = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 140, height: 44))
+        do  {
+            let image = SKSpriteNode(imageNamed: "green_button02")
+            image.size = view.frame.size
+            image.anchorPoint = view.anchorPoint
+            view.addChild(image)
+            let label = SKLabelNode(text: "Replay")
             label.fontColor = SKColor.white
             label.position = CGPoint(x: 0, y: 0)
             label.fontSize = 20
@@ -360,10 +379,11 @@ class GameObject: SKScene{
     //MARK: 返回按钮
     internal func BackButton() -> SKSpriteNode{
         let view = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 140, height: 44))
-        view.anchorPoint = CGPoint(x: 0.5, y: 0)
+        
         do  {
             let image = SKSpriteNode(imageNamed: "red_button13")
             image.size = view.frame.size
+            image.anchorPoint = view.anchorPoint
             view.addChild(image)
             let label = SKLabelNode(text: "Back")
             label.fontColor = SKColor.white
@@ -402,6 +422,94 @@ class GameObject: SKScene{
         View.anchorPoint = CGPoint(x: 0, y: 0)
         View.position = CGPoint(x: 20, y: 200)
         return View
+    }
+    
+    //MARK: 剩余球数板
+    internal class BaseballRemaning : SKNode {
+        var view = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 120, height: 44))
+        var label = SKLabelNode(text: "")
+        
+        override init() {
+            super.init()
+            
+            view.anchorPoint = CGPoint(x: 0, y: 1)
+            view.position = CGPoint(x: 20, y: GameObject().GameViewSize.height - 20)
+            let image = SKSpriteNode(imageNamed: "grey_button06")
+            image.size = view.size
+            image.anchorPoint = view.anchorPoint
+            view.addChild(image)
+            label.fontColor = SKColor.red
+            label.fontSize = 25
+            label.verticalAlignmentMode = .center
+            label.horizontalAlignmentMode = .left
+            label.fontName = "kenpixel"
+            label.position = CGPoint(x: view.frame.width * 0.65, y: view.frame.height * -0.55)
+            image.addChild(label)
+            do{
+                let label = SKLabelNode(text: "Remaning:")
+                label.fontColor = SKColor.gray
+                label.fontSize = 10
+                label.horizontalAlignmentMode = .left
+                label.fontName = "kenpixel"
+                label.position = CGPoint(x: view.frame.width * 0.05, y: view.frame.height * -0.8)
+                image.addChild(label)
+            }
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
+    
+    //MARK: 最终得分
+    internal class Score : SKNode {
+        var view = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 200, height: 100))
+        
+        var labelScore = SKLabelNode(text: "")
+        var labelCombo = SKLabelNode(text: "")
+        
+        override init(){
+            super.init()
+            view.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            view.position = CGPoint(x: 0, y: Window().view.frame.height * 0.1)
+            labelScore.fontColor = SKColor(red: 0.0, green: 0.59, blue: 0.53, alpha: 1.0)
+            labelScore.fontSize = 20
+            labelScore.verticalAlignmentMode = .center
+            labelScore.horizontalAlignmentMode = .right
+            labelScore.fontName = "kenpixel"
+            labelScore.position = CGPoint(x: view.frame.width * 0.5, y: 20)
+            view.addChild(labelScore)
+            do{
+                let label = SKLabelNode(text: "Final Score:")
+                label.fontColor = SKColor.gray
+                label.fontSize = 20
+                label.horizontalAlignmentMode = .left
+                label.fontName = "kenpixel"
+                label.position = CGPoint(x: view.frame.width * -0.5, y: 10)
+                view.addChild(label)
+            }
+            labelCombo.fontColor = SKColor(red: 0.0, green: 0.59, blue: 0.53, alpha: 1.0)
+            labelCombo.fontSize = 20
+            labelCombo.verticalAlignmentMode = .center
+            labelCombo.horizontalAlignmentMode = .right
+            labelCombo.fontName = "kenpixel"
+            labelCombo.position = CGPoint(x: view.frame.width * 0.5, y: -20)
+            view.addChild(labelCombo)
+            do{
+                let label = SKLabelNode(text: "Hight Combo:")
+                label.fontColor = SKColor.gray
+                label.fontSize = 20
+                label.horizontalAlignmentMode = .left
+                label.fontName = "kenpixel"
+                label.position = CGPoint(x: view.frame.width * -0.5, y: -30)
+                view.addChild(label)
+            }
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
     }
 
 }

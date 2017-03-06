@@ -22,7 +22,7 @@ class GameViewController: UIViewController {
                 MainView.showsFPS = true
                 MainView.showsNodeCount = true
                 MainView.showsDrawCount = true
-                MainView.showsPhysics = true //
+                MainView.showsPhysics = false //
                 MainView.ignoresSiblingOrder = false
                 GameMenuView.scaleMode = .aspectFill
                 

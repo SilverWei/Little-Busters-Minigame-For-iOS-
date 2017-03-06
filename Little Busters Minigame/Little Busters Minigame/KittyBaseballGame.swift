@@ -16,12 +16,6 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     var LastDateTime: TimeInterval = 0
     var GameStatus: Status = .Play{
         didSet {
-            if GameStatus == .Menu{
-                MenuButton.color = SKColor.red
-            }
-            else{
-                MenuButton.color = SKColor.green
-            }
             GameStatusrRun()
         }
     }
@@ -53,8 +47,18 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     var MovingButton_Left = GameObject.MovingButton().Left_View()
     var MovingButton_Right = GameObject.MovingButton().Right_View()
     var MovingButton_Status = GameObject.MovingButton.TouchStatus.stop
-    let TestButton = GameObject().TestButton()
+    //let TestButton = GameObject().TestButton()
     var MenuButton = GameObject().MenuButton()
+    var BaseballRemaning = GameObject.BaseballRemaning()
+    
+    //结束菜单
+    let OverView = GameObject.Window()
+    let ReplayButton = GameObject().ReplayButton()
+    var OverBackButton = GameObject().BackButton()
+    var OverScore = GameObject.Score()
+    
+    
+    //暂停菜单
     var PauseView = GameObject.Window()
     var PauseBackground = GameObject().WindowBackground()
     let OptionsBGM = GameObject.SoundButton()
@@ -62,10 +66,23 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     var BackButton = GameObject().BackButton()
     var ResumeButton = GameObject().ResumeButton()
     
+    //剩余球数
+    var BaseballRemaningNumber:Int = 20
+    //最高击回数
+    var MostCombo:Int = 0
+    //本次击回数
+    var NowCombo:Int = 0
+    //总分数
+    var Score:Int = 0
+    
     //MARK: 音效
     let Sound_Dang = SKAction.playSoundFileNamed("dang.mp3", waitForCompletion: false)
     let Sound_Ding = SKAction.playSoundFileNamed("ding.mp3", waitForCompletion: false)
-    
+    let Sound_Dong = SKAction.playSoundFileNamed("dong.mp3", waitForCompletion: false)
+    let Sound_Over = SKAction.playSoundFileNamed("over.mp3", waitForCompletion: false)
+    let Sound_BGM1 = SKAudioNode(fileNamed: "BGM.mp3")
+    let Sound_BGM2 = SKAudioNode(fileNamed: "BGM2.mp3")
+    let Sound_BGM3 = SKAudioNode(fileNamed: "BGM3.mp3")
     
     //MARK: 图层
     /// 图层
@@ -100,11 +117,15 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     /// - Menu:   菜单
     /// - Dialog: 对话
     /// - Other:  其他
+    /// - Over:   结束
+    /// - Wait:   等待
     enum Status {
         case Play
         case Menu
         case Dialog
         case Other
+        case Over
+        case Wait
     }
     
     //MARK: 物理层
@@ -135,7 +156,18 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Show_Shadow()//显示阴影
         Show_PauseView()//显示暂停页面
         
+        let TimeInterval = SKAction.wait(forDuration: Foundation.TimeInterval(3))
+        run(TimeInterval) {
+            self.GameWait()
+        }
+        do{
+            let TimeInterval = SKAction.wait(forDuration: Foundation.TimeInterval(0.5))
+            run(TimeInterval) {
+                self.addChild(self.Sound_BGM2)
+            }
+        }
     }
+    
     
     //MARK: 显示元素
     func Show_Baseballfield(){
@@ -246,10 +278,13 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         MovingButton_View.addChild(MovingButton_Right)
         GameView.addChild(MovingButton_View)
         
-        TestButton.zPosition = Layers.button.rawValue
-        GameView.addChild(TestButton)
+        //TestButton.zPosition = Layers.button.rawValue
+        //GameView.addChild(TestButton)
         MenuButton.zPosition = Layers.button.rawValue
         GameView.addChild(MenuButton)
+        BaseballRemaning.view.zPosition = Layers.button.rawValue
+        GameView.addChild(BaseballRemaning.view)
+        BaseballRemaning_Status()
         
     }
     
@@ -269,7 +304,6 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         ResumeButton.position = CGPoint(x: 0, y: PauseView.view.size.height * -0.4)
         PauseView.view.addChild(ResumeButton)
         
-        
         BackButton.position = CGPoint(x: 0, y: PauseView.view.size.height * -0.2)
         PauseView.view.addChild(BackButton)
         
@@ -280,7 +314,11 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         PauseBackground.zPosition = Layers.PauseView.rawValue
         GameView.addChild(PauseBackground)
         GameView.addChild(PauseView.view)
-
+        
+        if !OptionsBGM.isOn {
+            Sound_BGM2.run(SKAction.stop())
+        }
+        Sound_BGM2.autoplayLooped = true
     }
     
     //MARK: 弹窗动画
@@ -298,6 +336,74 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             PauseBackground.run(fadeAway)
         }
     }
+    
+    //MARK: 剩余球数状态
+    func BaseballRemaning_Status() {
+        BaseballRemaning.label.text = "\(BaseballRemaningNumber)"
+    }
+    
+    //MARK: 游戏结束
+    func GameOver() {
+        OverView.view.zPosition = Layers.PauseView.rawValue
+        OverView.label.text = "Game Over"
+        if OptionsSound.isOn {
+            run(Sound_Over)
+        }
+        
+        OverScore.labelScore.text = "\(Score)"
+        OverScore.labelCombo.text = "\(MostCombo)"
+        OverView.view.addChild(OverScore.view)
+        
+        ReplayButton.position = CGPoint(x: 0, y: PauseView.view.size.height * -0.4)
+        OverView.view.addChild(ReplayButton)
+        
+        OverBackButton.position = CGPoint(x: 0, y: PauseView.view.size.height * -0.2)
+        OverView.view.addChild(OverBackButton)
+        OverView.view.alpha = 0
+        GameView.addChild(OverView.view)
+        
+        
+        let fadeAway = SKAction.fadeIn(withDuration: 0.5)
+        OverView.view.run(fadeAway)
+        PauseBackground.run(fadeAway)
+    }
+    
+    //MARK: 游戏等待
+    func GameWait() {
+        if MostCombo < NowCombo{
+            MostCombo = NowCombo
+        }
+        if BaseballRemaningNumber < 1 {
+            GameStatus = .Over
+            return
+        }
+        
+        NowCombo = 0
+        
+        //角色归位
+        self.Natsume_Kyousuke_Static()
+        self.Natsume_Kyousuke.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_Return.hashValue
+        
+        self.Kurugaya_Yuiko_Static()
+        self.Kurugaya_Yuiko.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_Return.hashValue
+        
+        self.Saigusa_Haruka_Static()
+        self.Saigusa_Haruka.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_Return.hashValue
+        
+        self.Inohara_Masato_Static()
+        self.Inohara_Masato.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_Return.hashValue
+        
+        BaseballRemaningNumber -= 1
+        BaseballRemaning_Status()
+        let TimeInterval = SKAction.wait(forDuration: Foundation.TimeInterval(2))
+        run(TimeInterval) {
+            self.Baseball_Static(0)
+            if(self.Baseball.set[0].Status != GameObject.Baseball.All_Status.b_Throw && self.Baseball.set[0].Status != GameObject.Baseball.All_Status.b_Return && self.Baseball.set[0].Status != GameObject.Baseball.All_Status.b_ReturnAgain && self.Natsume_Rin.Unit.attribute.status == GamePeople.Natsume_Rin.Status.nr_Static.hashValue){
+                self.Natsume_Rin.Unit.attribute.imageNumber = 0
+                self.Natsume_Rin.Unit.attribute.status = GamePeople.Natsume_Rin.Status.nr_Swing.hashValue
+            }
+        }
+    }
 
     
     //MARK: 点击事件
@@ -310,7 +416,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             // Get the location of the touch in this scene
             let location = touch.location(in: self)
             // Check if the location of the touch is within the button's bounds
-            print("Baseballfield:",touch.location(in: Baseballfield))
+            //print("Baseballfield:",touch.location(in: Baseballfield))
             switch GameStatus {
             case .Play:
                 if MovingButton_View.contains(location) {
@@ -318,12 +424,12 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                         
                     }
                 }
-                else if TestButton.contains(location){
+               /* else if TestButton.contains(location){
                     if(Baseball.set[0].Status != GameObject.Baseball.All_Status.b_Throw && Baseball.set[0].Status != GameObject.Baseball.All_Status.b_Return && Baseball.set[0].Status != GameObject.Baseball.All_Status.b_ReturnAgain && Natsume_Rin.Unit.attribute.status == GamePeople.Natsume_Rin.Status.nr_Static.hashValue){
                         self.Natsume_Rin.Unit.attribute.imageNumber = 0
                         self.Natsume_Rin.Unit.attribute.status = GamePeople.Natsume_Rin.Status.nr_Swing.hashValue
                     }
-                }
+                }*/
                 else if MenuButton.contains(location){
                     if OptionsSound.isOn{
                         run(Sound_Ding)
@@ -341,6 +447,13 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             case .Menu:
                 let location = touch.location(in:PauseView.view)
                 if (OptionsBGM.view.contains(location)){
+                    if !OptionsBGM.isOn {
+                        Sound_BGM2.run(SKAction.play())
+                    }
+                    else{
+                        Sound_BGM2.run(SKAction.stop())
+                    }
+                    
                     OptionsBGM.isOn = !OptionsBGM.isOn
                     if OptionsSound.isOn {
                         run(Sound_Ding)
@@ -368,6 +481,23 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                     self.view?.presentScene(nextScene)
                 }
                 break
+            case .Over:
+                let location = touch.location(in:OverView.view)
+                if(ReplayButton.contains(location)){
+                    if OptionsSound.isOn{
+                        run(Sound_Ding)
+                    }
+                    let nextScene = KittyBaseballGame(size: self.size)
+                    self.view?.presentScene(nextScene)
+                }
+                else if(OverBackButton.contains(location)){
+                    if OptionsSound.isOn{
+                        run(Sound_Ding)
+                    }
+                    let nextScene = GameMenu(size: self.size)
+                    self.view?.presentScene(nextScene)
+                }
+                break
             default:
                 break
             }
@@ -375,9 +505,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         }
     }
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch: AnyObject in touches {
+        for _: AnyObject in touches {
             // Get the location of the touch in this scene
-            let location = touch.location(in: self)
             // Check if the location of the touch is within the button's bounds
             AllButtonColorClear()
             switch GameStatus {
@@ -386,9 +515,9 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                     MovingButton_Status = .stop
                     
                     //移动整个Map
-                    if(location.y > self.frame.height * 0.25){
+                    /*if(location.y > self.frame.height * 0.25){
                         Baseballfield.position = CGPoint(x: Baseballfield.frame.width * -(location.x / self.frame.width) + Baseballfield.frame.width * 0.55, y: Baseballfield.frame.height * -(location.y / self.frame.height) + Baseballfield.frame.height / 2)
-                    }
+                    }*/
                     
                 }
                 break
@@ -457,13 +586,13 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             Baseball.set[0].Power.ball_x = Baseball.set[0].Power.ball_x + CGFloat(DateTime) * 50
             
             //更新人物状态
+            Baseball_Status(0) //棒 球
             Status_Naoe_Riki() //理 树
             Status_Natsume_Rin() //棗 鈴
             Status_Natsume_Kyousuke() //棗 恭介
             Status_Kurugaya_Yuiko() //来ヶ谷 唯湖
             Status_Saigusa_Haruka() //三枝 葉留佳
             Status_Inohara_Masato() //井ノ原 真人
-            Baseball_Status(0) //棒 球
             
             //棒球状态
             switch Baseball.set[0].Status{
@@ -474,7 +603,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             case .b_Return:
                 Status_View(Baseball.set[0].Unit.position)
                 
-                //Status_View(Inohara_Masato.View.position)
+                //Status_View(Natsume_Kyousuke.View.position)
                 break
             case .b_ReturnAgain:
                 Status_View(Baseball.set[0].Unit.position)
@@ -498,6 +627,12 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         case .Dialog:
             break
         case .Other:
+            break
+        case .Over:
+            GameOver()
+            break
+        case .Wait:
+            GameWait()
             break
         }
     }
@@ -591,13 +726,17 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 Naoe_Riki.View.run(SKAction.setTexture(SKTexture(image: Naoe_Riki.Unit.image[Naoe_Riki.Unit.attribute.imageNumber])))
                 Naoe_Riki.View.size = Naoe_Riki.Unit.image[Naoe_Riki.Unit.attribute.imageNumber].size
                 Naoe_Riki.Unit.attribute.status = GamePeople.Naoe_Riki.Status.nr_Static.hashValue
+                GameWait()
                 return
             }
             if(Naoe_Riki.Unit.attribute.imageNumber.hashValue < 10){
                 Naoe_Riki.Unit.attribute.imageNumber = 10
+                if OptionsSound.isOn {
+                    run(Sound_Dong)
+                }
             }
             if(Naoe_Riki.Unit.attribute.imageNumber.hashValue > 16){
-                TimeInterval = SKAction.wait(forDuration: Foundation.TimeInterval(0.1))
+                TimeInterval = SKAction.wait(forDuration: Foundation.TimeInterval(0.3))
             }
             if(Naoe_Riki.Unit.attribute.imageNumber.hashValue == 18){
                 TimeInterval = SKAction.wait(forDuration: Foundation.TimeInterval(2))
@@ -632,19 +771,6 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             if(Natsume_Rin.Unit.attribute.imageNumber.hashValue < 9){
                 Natsume_Rin.Unit.attribute.imageNumber = 9
                 self.Baseball.set[0].Status = .b_Throw
-                //角色归位
-                self.Natsume_Kyousuke_Static()
-                self.Natsume_Kyousuke.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_Return.hashValue
-                
-                self.Kurugaya_Yuiko_Static()
-                self.Kurugaya_Yuiko.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_Return.hashValue
-                
-                self.Saigusa_Haruka_Static()
-                self.Saigusa_Haruka.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_Return.hashValue
-                
-                self.Inohara_Masato_Static()
-                self.Inohara_Masato.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_Return.hashValue
-                
             }
             if(Natsume_Rin.Unit.attribute.imageNumber.hashValue > 15){
                 Natsume_Rin_Static()
@@ -883,6 +1009,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Natsume_Kyousuke.Unit.attribute.imageNumber += 1
     }
     func Natsume_Kyousuke_Static(){
+        Natsume_Kyousuke.Unit.attribute.Unit.removeAllActions()
         Natsume_Kyousuke.Unit.attribute.imageNumber = 0
         Natsume_Kyousuke.View.run(SKAction.setTexture(SKTexture(image: Natsume_Kyousuke.Unit.image[0])))
         Natsume_Kyousuke.View.size = Natsume_Kyousuke.Unit.image[Natsume_Kyousuke.Unit.attribute.imageNumber].size
@@ -902,7 +1029,6 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 Kurugaya_Yuiko.Unit.attribute.Unit.removeAllActions()
                 let RunPath = UIBezierPath()
                 RunPath.move(to: Kurugaya_Yuiko.Unit.attribute.Unit.position)
-                print("PathAngle:\(PathAngle) Baseball:\(Baseball.Angle)")
                 if(PathAngle > Baseball.Angle){
                     RunPath.addLine(to: CGPoint(x: Kurugaya_Yuiko.Range.position.x + Kurugaya_Yuiko.Range.frame.width, y: Kurugaya_Yuiko.Range.position.y + Kurugaya_Yuiko.Range.frame.height))
                 }
@@ -1050,6 +1176,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Kurugaya_Yuiko.Unit.attribute.imageNumber += 1
     }
     func Kurugaya_Yuiko_Static(){
+        Kurugaya_Yuiko.Unit.attribute.Unit.removeAllActions()
         Kurugaya_Yuiko.Unit.attribute.imageNumber = 0
         Kurugaya_Yuiko.View.run(SKAction.setTexture(SKTexture(image: Kurugaya_Yuiko.Unit.image[0])))
         Kurugaya_Yuiko.View.size = Kurugaya_Yuiko.Unit.image[Kurugaya_Yuiko.Unit.attribute.imageNumber].size
@@ -1069,7 +1196,6 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 Saigusa_Haruka.Unit.attribute.Unit.removeAllActions()
                 let RunPath = UIBezierPath()
                 RunPath.move(to: Saigusa_Haruka.Unit.attribute.Unit.position)
-                print("PathAngle:\(PathAngle) Baseball:\(Baseball.Angle)")
                 if(PathAngle < Baseball.Angle){
                     RunPath.addLine(to: CGPoint(x: Saigusa_Haruka.Range.position.x - Saigusa_Haruka.Range.frame.width, y: Saigusa_Haruka.Range.position.y + Saigusa_Haruka.Range.frame.height))
                 }
@@ -1217,6 +1343,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Saigusa_Haruka.Unit.attribute.imageNumber += 1
     }
     func Saigusa_Haruka_Static(){
+        Saigusa_Haruka.Unit.attribute.Unit.removeAllActions()
         Saigusa_Haruka.Unit.attribute.imageNumber = 0
         Saigusa_Haruka.View.run(SKAction.setTexture(SKTexture(image: Saigusa_Haruka.Unit.image[0])))
         Saigusa_Haruka.View.size = Saigusa_Haruka.Unit.image[Saigusa_Haruka.Unit.attribute.imageNumber].size
@@ -1236,7 +1363,6 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 Inohara_Masato.Unit.attribute.Unit.removeAllActions()
                 let RunPath = UIBezierPath()
                 RunPath.move(to: Inohara_Masato.Unit.attribute.Unit.position)
-                print("PathAngle:\(PathAngle) Baseball:\(Baseball.Angle)")
                 if(PathAngle < Baseball.Angle){
                     RunPath.addLine(to: CGPoint(x: Inohara_Masato.Range.position.x - Inohara_Masato.Range.frame.width, y: Inohara_Masato.Range.position.y + Inohara_Masato.Range.frame.height))
                 }
@@ -1384,6 +1510,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Inohara_Masato.Unit.attribute.imageNumber += 1
     }
     func Inohara_Masato_Static(){
+        Inohara_Masato.Unit.attribute.Unit.removeAllActions()
         Inohara_Masato.Unit.attribute.imageNumber = 0
         Inohara_Masato.View.run(SKAction.setTexture(SKTexture(image: Inohara_Masato.Unit.image[0])))
         Inohara_Masato.View.size = Inohara_Masato.Unit.image[Inohara_Masato.Unit.attribute.imageNumber].size
@@ -1415,6 +1542,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     /// - parameter Speed:  速度
     /// - parameter Number: 棒球目标
     func Baseball_Throw(Power: GameObject.Baseball.Power, Speed: Int, Number: Int){
+        Score += 5
+        
         Baseball.set[Number].Unit.removeAllActions()
         Baseball.set[Number].Power = Power
         Baseball.Jumps = 2
@@ -1422,18 +1551,17 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         let BallPath = UIBezierPath()
         Baseball.PeopleBehindCatchPoint = Baseball.set[0].Unit.position
         BallPath.move(to: Baseball.PeopleBehindCatchPoint)
-        Baseball.PeopleFrontCatchPoint = Naoe_Riki.Unit.attribute.point
-        Baseball.PeopleFrontCatchPoint.y -= 20
-        Baseball.PeopleFrontCatchPoint.x += 5
-        var PathAngle = GetAngle(Baseball.PeopleBehindCatchPoint, b: Naoe_Riki.Unit.attribute.point)
+        var PathAngle = GetAngle(Baseball.PeopleBehindCatchPoint, b: Baseball.PeopleFrontCatchPoint)
         PathAngle = PathAngle + 90
         let mainPath = UIBezierPath(arcCenter: Baseball.PeopleBehindCatchPoint, radius: 2000, startAngle: 0, endAngle: CGFloat(M_PI) * (PathAngle / 180), clockwise: true)
         BallPath.addLine(to: mainPath.currentPoint)
         Baseball_ThrowPath(Number: 0,BallPath: BallPath)
-        Baseball.set[Number].Unit.run(SKAction.speed(to: 0, duration: 5), completion: { () -> Void in
-            self.Baseball_Static(0)
-        })
         Baseball.set[Number].Status = GameObject.Baseball.All_Status.b_ReturnAgain
+        Baseball.set[Number].Unit.run(SKAction.speed(to: 0, duration: 5), completion: { () -> Void in
+            self.GameWait()
+        })
+        
+        
     }
     /// 扔出路径
     ///
@@ -1442,7 +1570,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     func Baseball_ThrowPath(Number:Int,BallPath: UIBezierPath){
         Baseball.set[Number].Unit.speed = 1
         Baseball.set[Number].Unit.run(SKAction.follow(BallPath.cgPath, asOffset: false, orientToPath: false, speed: Baseball.Speed), completion: {
-            self.Baseball_Static(Number)
+            self.GameWait()
         })
         
         Baseball.set[Number].Image.isHidden = false
@@ -1463,6 +1591,13 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         let Plus_1 = GameObject().Plus_1S_Label(text: "+1S")
         Naoe_Riki.View.addChild(Plus_1)
         Plus_1.run(GameObject().Plus_1S_Animate())
+        
+        NowCombo += 1
+        Score += 10
+        
+        Baseball.PeopleFrontCatchPoint = Naoe_Riki.Unit.attribute.Unit.position
+        Baseball.PeopleFrontCatchPoint.y -= 15
+        Baseball.PeopleFrontCatchPoint.x += 16
         
         let BallPath = UIBezierPath()
         BallPath.move(to: Baseball.set[Number].Unit.position)
@@ -1493,17 +1628,13 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Baseball.set[Number].Status = .b_Return
         Baseball.set[Number].Unit.speed = 1
         Baseball.set[Number].Unit.run(SKAction.follow(BallPath.cgPath, asOffset: false, orientToPath: false, speed: 500), completion: {
-            self.Baseball_Static(Number)
+            self.GameWait()
         }) 
         Baseball.set[Number].Unit.run(SKAction.speed(to: 0, duration: 5), completion: { () -> Void in
-            self.Baseball_Static(Number)
+            self.GameWait()
         })
         
         //各角色运动
-        //棗 恭介
-       /* if Baseball.Angle < GetAngle(contact, b: GamePeople.Natsume_Kyousuke().Range().position) && Baseball.Angle > GetAngle(contact, b: CGPoint(x: Natsume_Kyousuke.Range.position.x + Natsume_Kyousuke.Range.frame.width, y: Natsume_Kyousuke.Range.position.y + Natsume_Kyousuke.Range.frame.height)){
-            Natsume_Kyousuke.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_Run.hashValue
-         }*/
         Natsume_Kyousuke.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_Run.hashValue
         Kurugaya_Yuiko.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_Run.hashValue
         Saigusa_Haruka.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_Run.hashValue
@@ -1540,8 +1671,22 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     ///
     /// - parameter Object_Point: 移动点至
     func Status_View(_ Object_Point: CGPoint){
-        
         Baseballfield.position = CGPoint(x: -Object_Point.x + (size.width / 2), y: -Object_Point.y + (size.height / 2))
+        //地图显示防出界
+        let lengthX = (GameObject().Baseballfield().frame.size.width * GameObject().Baseballfield().anchorPoint.x) - (GameView.frame.width / 2)
+        let lengthY = (GameObject().Baseballfield().frame.size.height * GameObject().Baseballfield().anchorPoint.y) - (GameView.frame.height / 2)
+        if Baseballfield.position.x < lengthX * -1 {
+            Baseballfield.position.x = lengthX * -1
+        }
+        if Baseballfield.position.x > lengthX {
+            Baseballfield.position.x = lengthX
+        }
+        if Baseballfield.position.y < lengthY * -1 {
+            Baseballfield.position.y = lengthY * -1
+        }
+        if Baseballfield.position.y > lengthY {
+            Baseballfield.position.y = lengthY
+        }
     }
     
     
@@ -1577,8 +1722,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             case Collision.PeopleBehind[0]:
                 switch Natsume_Kyousuke.Unit.attribute.status{
                 case GamePeople.Natsume_Kyousuke.Status.nk_Catch.hashValue:
-                    Baseball_Static(0)
                     Natsume_Kyousuke.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_PickUp.hashValue
+                    Baseball_Static(0)
                     break
                 default:
                     break
@@ -1587,8 +1732,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             case Collision.PeopleBehind[1]:
                 switch Kurugaya_Yuiko.Unit.attribute.status{
                 case GamePeople.Natsume_Kyousuke.Status.nk_Catch.hashValue:
-                    Baseball_Static(0)
                     Kurugaya_Yuiko.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_PickUp.hashValue
+                    Baseball_Static(0)
                     break
                 default:
                     break
@@ -1597,8 +1742,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             case Collision.PeopleBehind[2]:
                 switch Saigusa_Haruka.Unit.attribute.status{
                 case GamePeople.Natsume_Kyousuke.Status.nk_Catch.hashValue:
-                    Baseball_Static(0)
                     Saigusa_Haruka.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_PickUp.hashValue
+                    Baseball_Static(0)
                     break
                 default:
                     break
@@ -1607,8 +1752,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             case Collision.PeopleBehind[3]:
                 switch Inohara_Masato.Unit.attribute.status{
                 case GamePeople.Natsume_Kyousuke.Status.nk_Catch.hashValue:
-                    Baseball_Static(0)
                     Inohara_Masato.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_PickUp.hashValue
+                    Baseball_Static(0)
                     break
                 default:
                     break
