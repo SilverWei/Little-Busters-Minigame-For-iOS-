@@ -13,7 +13,8 @@ class GameObject: SKScene{
     
     //MARK: 棒球场背景
     internal func Baseballfield() -> SKSpriteNode{
-        let image = SKSpriteNode(imageNamed: "Baseballfield-day")
+        let Map_Day = "Baseballfield-day"
+        let image = SKSpriteNode(imageNamed: "\(Map_Day)")
         let BaseballfieldMagnification:CGFloat = 2
         image.size = CGSize(width: image.size.width * BaseballfieldMagnification, height: image.size.height * BaseballfieldMagnification)
         image.anchorPoint = CGPoint(x: 0.5, y: 0.25)
