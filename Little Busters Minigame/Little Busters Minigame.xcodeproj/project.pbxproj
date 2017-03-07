@@ -20,6 +20,18 @@
 		07F57DC71CBB4077000CC1CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07F57DC61CBB4077000CC1CD /* Assets.xcassets */; };
 		07F57DCA1CBB4077000CC1CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07F57DC81CBB4077000CC1CD /* LaunchScreen.storyboard */; };
 		07F57DD51CBB4077000CC1CD /* Little_Busters_MinigameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F57DD41CBB4077000CC1CD /* Little_Busters_MinigameTests.swift */; };
+		47638BC81E66A51A00911CBD /* kenpixel.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47638BC71E66A29200911CBD /* kenpixel.ttf */; };
+		47638BCF1E68168100911CBD /* BGM.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47638BCA1E68168100911CBD /* BGM.mp3 */; };
+		47638BD81E68193B00911CBD /* wind.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47638BD41E68193B00911CBD /* wind.mp3 */; };
+		47638BD91E68193B00911CBD /* over.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47638BD51E68193B00911CBD /* over.mp3 */; };
+		47638BDA1E68193B00911CBD /* ding.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47638BD61E68193B00911CBD /* ding.mp3 */; };
+		47638BDB1E68193B00911CBD /* dang.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47638BD71E68193B00911CBD /* dang.mp3 */; };
+		47D5CE1A1E6CE95300E10577 /* BGM2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47D5CE171E6CE95300E10577 /* BGM2.mp3 */; };
+		47D5CE1B1E6CE95300E10577 /* BGM3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47D5CE181E6CE95300E10577 /* BGM3.mp3 */; };
+		47D5CE1C1E6CE95300E10577 /* dong.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 47D5CE191E6CE95300E10577 /* dong.mp3 */; };
+		47FF38121E6E4225007F191D /* Map_day.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 47FF38111E6E4225007F191D /* Map_day.atlas */; };
+		47FF381A1E6E445E007F191D /* Map_night.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 47FF38191E6E445E007F191D /* Map_night.atlas */; };
+		47FF381C1E6E45E2007F191D /* Map_evening.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 47FF381B1E6E45E2007F191D /* Map_evening.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +62,18 @@
 		07F57DD01CBB4077000CC1CD /* Little Busters MinigameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Little Busters MinigameTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		07F57DD41CBB4077000CC1CD /* Little_Busters_MinigameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Little_Busters_MinigameTests.swift; sourceTree = "<group>"; };
 		07F57DD61CBB4077000CC1CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		47638BC71E66A29200911CBD /* kenpixel.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = kenpixel.ttf; sourceTree = "<group>"; };
+		47638BCA1E68168100911CBD /* BGM.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BGM.mp3; sourceTree = "<group>"; };
+		47638BD41E68193B00911CBD /* wind.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = wind.mp3; sourceTree = "<group>"; };
+		47638BD51E68193B00911CBD /* over.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = over.mp3; sourceTree = "<group>"; };
+		47638BD61E68193B00911CBD /* ding.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ding.mp3; sourceTree = "<group>"; };
+		47638BD71E68193B00911CBD /* dang.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dang.mp3; sourceTree = "<group>"; };
+		47D5CE171E6CE95300E10577 /* BGM2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BGM2.mp3; sourceTree = "<group>"; };
+		47D5CE181E6CE95300E10577 /* BGM3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BGM3.mp3; sourceTree = "<group>"; };
+		47D5CE191E6CE95300E10577 /* dong.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dong.mp3; sourceTree = "<group>"; };
+		47FF38111E6E4225007F191D /* Map_day.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Map_day.atlas; sourceTree = "<group>"; };
+		47FF38191E6E445E007F191D /* Map_night.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Map_night.atlas; sourceTree = "<group>"; };
+		47FF381B1E6E45E2007F191D /* Map_evening.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = Map_evening.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +98,9 @@
 			isa = PBXGroup;
 			children = (
 				07913F111CBB54A4005ED5D4 /* Menu.atlas */,
+				47FF38111E6E4225007F191D /* Map_day.atlas */,
+				47FF381B1E6E45E2007F191D /* Map_evening.atlas */,
+				47FF38191E6E445E007F191D /* Map_night.atlas */,
 				07913F1B1CBB95F1005ED5D4 /* KittyBaseballGame.atlas */,
 			);
 			name = Art;
@@ -100,6 +127,8 @@
 		07F57DBA1CBB4077000CC1CD /* Little Busters Minigame */ = {
 			isa = PBXGroup;
 			children = (
+				47638BC91E68168100911CBD /* Sound */,
+				47638BC61E66A28300911CBD /* Font */,
 				07913F081CBB51B1005ED5D4 /* Art */,
 				07F57DBB1CBB4077000CC1CD /* AppDelegate.swift */,
 				07F57DBF1CBB4077000CC1CD /* GameScene.swift */,
@@ -123,6 +152,29 @@
 				07F57DD61CBB4077000CC1CD /* Info.plist */,
 			);
 			path = "Little Busters MinigameTests";
+			sourceTree = "<group>";
+		};
+		47638BC61E66A28300911CBD /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				47638BC71E66A29200911CBD /* kenpixel.ttf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		47638BC91E68168100911CBD /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				47638BCA1E68168100911CBD /* BGM.mp3 */,
+				47638BD41E68193B00911CBD /* wind.mp3 */,
+				47638BD51E68193B00911CBD /* over.mp3 */,
+				47638BD61E68193B00911CBD /* ding.mp3 */,
+				47638BD71E68193B00911CBD /* dang.mp3 */,
+				47D5CE171E6CE95300E10577 /* BGM2.mp3 */,
+				47D5CE181E6CE95300E10577 /* BGM3.mp3 */,
+				47D5CE191E6CE95300E10577 /* dong.mp3 */,
+			);
+			path = Sound;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,11 +261,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47D5CE1C1E6CE95300E10577 /* dong.mp3 in Resources */,
+				47FF381A1E6E445E007F191D /* Map_night.atlas in Resources */,
 				07F57DCA1CBB4077000CC1CD /* LaunchScreen.storyboard in Resources */,
 				07F57DC71CBB4077000CC1CD /* Assets.xcassets in Resources */,
+				47638BDA1E68193B00911CBD /* ding.mp3 in Resources */,
+				47638BD91E68193B00911CBD /* over.mp3 in Resources */,
 				07913F1C1CBB95F1005ED5D4 /* KittyBaseballGame.atlas in Resources */,
 				07913F121CBB54A4005ED5D4 /* Menu.atlas in Resources */,
+				47D5CE1B1E6CE95300E10577 /* BGM3.mp3 in Resources */,
+				47D5CE1A1E6CE95300E10577 /* BGM2.mp3 in Resources */,
+				47638BCF1E68168100911CBD /* BGM.mp3 in Resources */,
+				47638BC81E66A51A00911CBD /* kenpixel.ttf in Resources */,
+				47638BD81E68193B00911CBD /* wind.mp3 in Resources */,
+				47FF381C1E6E45E2007F191D /* Map_evening.atlas in Resources */,
+				47638BDB1E68193B00911CBD /* dang.mp3 in Resources */,
 				07F57DC51CBB4077000CC1CD /* Main.storyboard in Resources */,
+				47FF38121E6E4225007F191D /* Map_day.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

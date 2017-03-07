@@ -22,9 +22,18 @@ class GameViewController: UIViewController {
                 MainView.showsFPS = true
                 MainView.showsNodeCount = true
                 MainView.showsDrawCount = true
-                MainView.showsPhysics = true //
+                MainView.showsPhysics = false //
                 MainView.ignoresSiblingOrder = false
                 GameMenuView.scaleMode = .aspectFill
+                
+                
+                if((UserDefaults.standard.value(forKey: "Options_BGM")) == nil){
+                    UserDefaults.standard.setValue(true, forKey: "Options_BGM")
+                }
+                if((UserDefaults.standard.value(forKey: "Options_Sound")) == nil){
+                    UserDefaults.standard.setValue(true, forKey: "Options_Sound")
+                }
+                
                 MainView.presentScene(GameMenuView)
             }
         }
