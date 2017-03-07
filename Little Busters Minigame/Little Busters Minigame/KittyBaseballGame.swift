@@ -14,6 +14,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     var TouchAmount = 0 //监测触摸数量
     var DateTime: TimeInterval = 0
     var LastDateTime: TimeInterval = 0
+    var Map = UserDefaults.standard.value(forKey: "Map")! as! Int
+    
     var GameStatus: Status = .Play{
         didSet {
             GameStatusrRun()
@@ -21,7 +23,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     }
     
     //MARK: 初始化物体
-    let Baseballfield = GameObject().Baseballfield()
+    var Baseballfield = GameObject().Baseballfield()
+    var Fence = GameObject().Fence()
     
     //棒球
     var Baseball = GameObject.Baseball()
@@ -92,7 +95,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     /// - peopleBehind: 在后面的人物
     /// - baseball:         棒球
     /// - peopleFront:  在前面的人物
-    /// - message:      信息
+    /// - fontBody:     在前面的物件
+    /// - message:          信息
     /// - button:           按钮
     /// - PauseView:       暂停窗口
     enum Layers: CGFloat{
@@ -103,6 +107,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         case peopleBehind
         case baseball
         case peopleFront
+        case fontBody
         case message
         case button
         case PauseView
@@ -148,8 +153,6 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         addChild(GameView)
         
         
-        Sound_BGM = SKAudioNode(fileNamed: "BGM2.mp3")
-        
         Show_Baseballfield()//显示棒球场背景
         Show_PeopleFront()//显示在前面的人物
         Show_PeopleBehind()//显示在后面的人物
@@ -157,24 +160,33 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Show_Button()//显示按钮
         Show_Shadow()//显示阴影
         Show_PauseView()//显示暂停页面
+        Show_BGM()
         
         let TimeInterval = SKAction.wait(forDuration: Foundation.TimeInterval(3))
         run(TimeInterval) {
             self.GameWait()
         }
         
-        do{
-            let TimeInterval = SKAction.wait(forDuration: Foundation.TimeInterval(0.5))
-            run(TimeInterval) {
-                self.addChild(self.Sound_BGM)
-            }
-        }
     }
     
     
     //MARK: 显示元素
     func Show_Baseballfield(){
+        switch Map {
+        case GameObject.Map.evening.hashValue:
+            Baseballfield = GameObject().Baseballfield_evening()
+            break
+        case GameObject.Map.night.hashValue:
+            Baseballfield = GameObject().Baseballfield_night()
+            break
+        default:
+            break
+        }
+ 
+        
         GameView.addChild(Baseballfield)
+        
+        Baseballfield.addChild(Fence)
     }
     
     func Show_PeopleFront(){
@@ -322,6 +334,32 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
             Sound_BGM.run(SKAction.stop())
         }
         Sound_BGM.autoplayLooped = true
+    }
+    
+    func Show_BGM() {
+        
+        switch Map {
+        case GameObject.Map.day.hashValue:
+            Sound_BGM = SKAudioNode(fileNamed: "BGM.mp3")
+            break
+        case GameObject.Map.evening.hashValue:
+            Sound_BGM = SKAudioNode(fileNamed: "BGM2.mp3")
+            break
+        case GameObject.Map.night.hashValue:
+            Sound_BGM = SKAudioNode(fileNamed: "BGM3.mp3")
+            break
+        default:
+            break
+        }
+        if !OptionsBGM.isOn {
+            Sound_BGM.run(SKAction.stop())
+        }
+        do{
+            let TimeInterval = SKAction.wait(forDuration: Foundation.TimeInterval(0.5))
+            run(TimeInterval) {
+                self.addChild(self.Sound_BGM)
+            }
+        }
     }
     
     //MARK: 弹窗动画
@@ -586,7 +624,6 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         LastDateTime = currentTime
         if (GameStatus == .Play){
             //棒球位置
-            Baseball.set[0].Power.ball_x = Baseball.set[0].Power.ball_x + CGFloat(DateTime) * 50
             
             //更新人物状态
             Baseball_Status(0) //棒 球
@@ -739,7 +776,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
                 }
             }
             if(Naoe_Riki.Unit.attribute.imageNumber.hashValue > 16){
-                TimeInterval = SKAction.wait(forDuration: Foundation.TimeInterval(0.3))
+                TimeInterval = SKAction.wait(forDuration: Foundation.TimeInterval(0.06))
             }
             if(Naoe_Riki.Unit.attribute.imageNumber.hashValue == 18){
                 TimeInterval = SKAction.wait(forDuration: Foundation.TimeInterval(2))
@@ -1534,6 +1571,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     
     //MARK: 棒球
     func Baseball_Status(_ Number: Int){
+        Baseball.set[Number].Power.ball_x = Baseball.set[Number].Power.ball_x + CGFloat(DateTime) * 50
+        
         Baseball.set[Number].Power.ball_y = (-(Baseball.set[Number].Power.ball_x * Baseball.set[Number].Power.ball_x) + Baseball.set[Number].Power.length * Baseball.set[Number].Power.ball_x) / Baseball.set[Number].Power.height
         if(Baseball.set[Number].Power.ball_y < 0){
             if Baseball.set[Number].Power.height < 12 {
@@ -1548,6 +1587,13 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         
         Baseball.set[Number].Image.position = CGPoint(x: Baseball.set[Number].Unit.position.x, y: Baseball.set[Number].Unit.position.y + Baseball.set[Number].Power.ball_y)
         Baseball.set[Number].Shadow.position = CGPoint(x: Baseball.set[0].Unit.position.x, y: Baseball.set[0].Unit.position.y)
+        switch Map {
+        case GameObject.Map.evening.hashValue:
+            Baseball.set[Number].Shadow.position.x = Baseball.set[Number].Unit.position.x - (Baseball.set[Number].Power.ball_y * 1.2)
+            break
+        default:
+            break
+        }
         
     }
     /// 棒球仍回

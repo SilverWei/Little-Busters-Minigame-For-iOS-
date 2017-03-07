@@ -13,14 +13,44 @@ class GameObject: SKScene{
     
     //MARK: 棒球场背景
     internal func Baseballfield() -> SKSpriteNode{
-        let Map_Day = "Baseballfield-day"
-        let image = SKSpriteNode(imageNamed: "\(Map_Day)")
+        let image = SKSpriteNode(imageNamed: "Map_day")
         let BaseballfieldMagnification:CGFloat = 2
         image.size = CGSize(width: image.size.width * BaseballfieldMagnification, height: image.size.height * BaseballfieldMagnification)
         image.anchorPoint = CGPoint(x: 0.5, y: 0.25)
         image.position = CGPoint(x: 230, y: 200)
         image.zPosition = KittyBaseballGame.Layers.baseballfield.rawValue
         return image
+    }
+    internal func Baseballfield_evening() -> SKSpriteNode{
+        let image = SKSpriteNode(imageNamed: "Map_evening")
+        let BaseballfieldMagnification:CGFloat = 2
+        image.size = CGSize(width: image.size.width * BaseballfieldMagnification, height: image.size.height * BaseballfieldMagnification)
+        image.anchorPoint = CGPoint(x: 0.5, y: 0.25)
+        image.position = CGPoint(x: 230, y: 200)
+        image.zPosition = KittyBaseballGame.Layers.baseballfield.rawValue
+        return image
+    }
+    internal func Baseballfield_night() -> SKSpriteNode{
+        let image = SKSpriteNode(imageNamed: "Map_night")
+        let BaseballfieldMagnification:CGFloat = 2
+        image.size = CGSize(width: image.size.width * BaseballfieldMagnification, height: image.size.height * BaseballfieldMagnification)
+        image.anchorPoint = CGPoint(x: 0.5, y: 0.25)
+        image.position = CGPoint(x: 230, y: 200)
+        image.zPosition = KittyBaseballGame.Layers.baseballfield.rawValue
+        return image
+    }
+    internal func Fence() -> SKSpriteNode{
+        let image = SKSpriteNode(imageNamed: "Fence")
+        let BaseballfieldMagnification:CGFloat = 2
+        image.size = CGSize(width: image.size.width * BaseballfieldMagnification, height: image.size.height * BaseballfieldMagnification)
+        image.anchorPoint = CGPoint(x: 0.5, y: 0.25)
+        image.zPosition = KittyBaseballGame.Layers.fontBody.rawValue
+        return image
+    }
+    internal enum Map {
+        case day
+        case evening
+        case night
     }
     
     //MARK: 阴影
