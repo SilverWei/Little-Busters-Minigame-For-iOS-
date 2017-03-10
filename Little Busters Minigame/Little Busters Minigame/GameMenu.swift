@@ -176,13 +176,13 @@ class GameMenu: SKScene {
                 }
                 else if PickMap_day.contains(location) || PickMap_evening.contains(location) || PickMap_night.contains(location){
                     if PickMap_day.contains(location){
-                        UserDefaults.standard.setValue(GameObject.Map.day.hashValue, forKey: "Map")
+                        UserDefaults.standard.setValue(GameObject.Map.day.rawValue, forKey: "Map")
                     }
                     else if PickMap_evening.contains(location){
-                        UserDefaults.standard.setValue(GameObject.Map.evening.hashValue, forKey: "Map")
+                        UserDefaults.standard.setValue(GameObject.Map.evening.rawValue, forKey: "Map")
                     }
                     else if PickMap_night.contains(location){
-                        UserDefaults.standard.setValue(GameObject.Map.night.hashValue, forKey: "Map")
+                        UserDefaults.standard.setValue(GameObject.Map.night.rawValue, forKey: "Map")
                     }
                     
                     if OptionsSound.isOn {

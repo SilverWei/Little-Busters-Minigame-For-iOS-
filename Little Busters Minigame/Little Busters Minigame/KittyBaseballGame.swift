@@ -14,7 +14,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     var TouchAmount = 0 //监测触摸数量
     var DateTime: TimeInterval = 0
     var LastDateTime: TimeInterval = 0
-    var Map = UserDefaults.standard.value(forKey: "Map")! as! Int
+    var Map = UserDefaults.standard.value(forKey: "Map") as! String
     
     var GameStatus: Status = .Play{
         didSet {
@@ -172,17 +172,6 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     
     //MARK: 显示元素
     func Show_Baseballfield(){
-        switch Map {
-        case GameObject.Map.evening.hashValue:
-            Baseballfield = GameObject().Baseballfield_evening()
-            break
-        case GameObject.Map.night.hashValue:
-            Baseballfield = GameObject().Baseballfield_night()
-            break
-        default:
-            break
-        }
- 
         
         GameView.addChild(Baseballfield)
         
@@ -339,13 +328,13 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     func Show_BGM() {
         
         switch Map {
-        case GameObject.Map.day.hashValue:
+        case GameObject.Map.day.rawValue:
             Sound_BGM = SKAudioNode(fileNamed: "BGM.mp3")
             break
-        case GameObject.Map.evening.hashValue:
+        case GameObject.Map.evening.rawValue:
             Sound_BGM = SKAudioNode(fileNamed: "BGM2.mp3")
             break
-        case GameObject.Map.night.hashValue:
+        case GameObject.Map.night.rawValue:
             Sound_BGM = SKAudioNode(fileNamed: "BGM3.mp3")
             break
         default:
@@ -1588,7 +1577,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         Baseball.set[Number].Image.position = CGPoint(x: Baseball.set[Number].Unit.position.x, y: Baseball.set[Number].Unit.position.y + Baseball.set[Number].Power.ball_y)
         Baseball.set[Number].Shadow.position = CGPoint(x: Baseball.set[0].Unit.position.x, y: Baseball.set[0].Unit.position.y)
         switch Map {
-        case GameObject.Map.evening.hashValue:
+        case GameObject.Map.evening.rawValue:
             Baseball.set[Number].Shadow.position.x = Baseball.set[Number].Unit.position.x - (Baseball.set[Number].Power.ball_y * 1.2)
             break
         default:
