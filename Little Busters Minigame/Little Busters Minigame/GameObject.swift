@@ -510,7 +510,7 @@ class GameObject: SKScene{
             labelCombo.position = CGPoint(x: view.frame.width * 0.5, y: -20)
             view.addChild(labelCombo)
             do{
-                let label = SKLabelNode(text: "Hight Combo:")
+                let label = SKLabelNode(text: "Combo:")
                 label.fontColor = SKColor.gray
                 label.fontSize = 20
                 label.horizontalAlignmentMode = .left
