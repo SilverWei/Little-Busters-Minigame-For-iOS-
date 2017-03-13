@@ -34,7 +34,7 @@ class GameMenu: SKScene {
     enum Layers: CGFloat{
         case background
         case button
-        case View
+        case view
     }
     
     /// 游戏状态
@@ -232,7 +232,7 @@ class GameMenu: SKScene {
     }
     
     func ShowOptions(){
-        OptionsView.view.zPosition = Layers.View.rawValue
+        OptionsView.view.zPosition = Layers.view.rawValue
         OptionsView.label.text = "Options"
         MenuView.addChild(OptionsView.view)
         OptionsBGM.view.position = CGPoint(x: 0, y: OptionsView.view.size.height * 0.1)
@@ -264,7 +264,7 @@ class GameMenu: SKScene {
     }
     
     func ShowPickMap(){
-        PickMapView.view.zPosition = Layers.View.rawValue
+        PickMapView.view.zPosition = Layers.view.rawValue
         PickMapView.label.text = "Map"
         MenuView.addChild(PickMapView.view)
         
