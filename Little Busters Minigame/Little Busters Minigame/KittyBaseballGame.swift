@@ -52,7 +52,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     var MovingButton_Status = GameObject.MovingButton.TouchStatus.stop
     //let TestButton = GameObject().TestButton()
     var MenuButton = GameObject().MenuButton()
-    var BaseballRemaning = GameObject.BaseballRemaning()
+    var BaseballRemaining = GameObject.BaseballRemaining()
     
     //结束菜单
     let OverView = GameObject.Window()
@@ -70,7 +70,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     var ResumeButton = GameObject().ResumeButton()
     
     //剩余球数
-    var BaseballRemaningNumber:Int = 20
+    var BaseballRemainingNumber:Int = 20
     //最高击回数
     var MostCombo:Int = 0
     //本次击回数
@@ -286,9 +286,9 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         //GameView.addChild(TestButton)
         MenuButton.zPosition = Layers.button.rawValue
         GameView.addChild(MenuButton)
-        BaseballRemaning.view.zPosition = Layers.button.rawValue
-        GameView.addChild(BaseballRemaning.view)
-        BaseballRemaning_Status()
+        BaseballRemaining.view.zPosition = Layers.button.rawValue
+        GameView.addChild(BaseballRemaining.view)
+        BaseballRemaining_Status()
         
     }
     
@@ -368,8 +368,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     }
     
     //MARK: 剩余球数状态
-    func BaseballRemaning_Status() {
-        BaseballRemaning.label.text = "\(BaseballRemaningNumber)"
+    func BaseballRemaining_Status() {
+        BaseballRemaining.label.text = "\(BaseballRemainingNumber)"
     }
     
     //MARK: 游戏结束
@@ -403,7 +403,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         if MostCombo < NowCombo{
             MostCombo = NowCombo
         }
-        if BaseballRemaningNumber < 1 {
+        if BaseballRemainingNumber < 1 {
             GameStatus = .Over
             return
         }
@@ -423,8 +423,8 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         self.Inohara_Masato_Static()
         self.Inohara_Masato.Unit.attribute.status = GamePeople.Natsume_Kyousuke.Status.nk_Return.hashValue
         
-        BaseballRemaningNumber -= 1
-        BaseballRemaning_Status()
+        BaseballRemainingNumber -= 1
+        BaseballRemaining_Status()
         let TimeInterval = SKAction.wait(forDuration: Foundation.TimeInterval(2))
         run(TimeInterval) {
             self.Baseball_Static(0)
