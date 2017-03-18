@@ -460,7 +460,7 @@ class GameObject: SKScene{
             label.position = CGPoint(x: view.frame.width * 0.65, y: view.frame.height * -0.55)
             image.addChild(label)
             do{
-                let label = SKLabelNode(text: "Remaning:")
+                let label = SKLabelNode(text: "Remaining:")
                 label.fontColor = SKColor.gray
                 label.fontSize = 10
                 label.horizontalAlignmentMode = .left
