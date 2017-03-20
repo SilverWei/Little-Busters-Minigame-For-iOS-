@@ -227,6 +227,7 @@
 				TargetAttributes = {
 					07F57DB71CBB4077000CC1CD = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 533BE66A65;
 						LastSwiftMigration = 0800;
 					};
 					07F57DCF1CBB4077000CC1CD = {
@@ -435,7 +436,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 533BE66A65;
 				INFOPLIST_FILE = "Little Busters Minigame/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -456,7 +456,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 533BE66A65;
 				INFOPLIST_FILE = "Little Busters Minigame/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

@@ -70,7 +70,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     var ResumeButton = GameObject().ResumeButton()
     
     //剩余球数
-    var BaseballRemainingNumber:Int = 10
+    var BaseballRemainingNumber:Int = 20
     //最高击回数
     var MostCombo:Int = 0
     //本次击回数

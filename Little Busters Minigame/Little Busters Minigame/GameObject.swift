@@ -439,7 +439,7 @@ class GameObject: SKScene{
     }
     
     //MARK: 剩余球数板
-    internal class BaseballRemaining : SKNode {
+    internal class BaseballRemaning : SKNode {
         var view = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 120, height: 44))
         var label = SKLabelNode(text: "")
         
