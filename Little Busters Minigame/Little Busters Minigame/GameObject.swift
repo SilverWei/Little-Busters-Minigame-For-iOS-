@@ -11,27 +11,10 @@ import SpriteKit
 class GameObject: SKScene{
     var GameViewSize:CGSize = CGSize(width: 320, height: 320 * (UIScreen.main.bounds.size.height / UIScreen.main.bounds.size.width))
     
+    
     //MARK: 棒球场背景
     internal func Baseballfield() -> SKSpriteNode{
-        let image = SKSpriteNode(imageNamed: "Map_day")
-        let BaseballfieldMagnification:CGFloat = 2
-        image.size = CGSize(width: image.size.width * BaseballfieldMagnification, height: image.size.height * BaseballfieldMagnification)
-        image.anchorPoint = CGPoint(x: 0.5, y: 0.25)
-        image.position = CGPoint(x: 230, y: 200)
-        image.zPosition = KittyBaseballGame.Layers.baseballfield.rawValue
-        return image
-    }
-    internal func Baseballfield_evening() -> SKSpriteNode{
-        let image = SKSpriteNode(imageNamed: "Map_evening")
-        let BaseballfieldMagnification:CGFloat = 2
-        image.size = CGSize(width: image.size.width * BaseballfieldMagnification, height: image.size.height * BaseballfieldMagnification)
-        image.anchorPoint = CGPoint(x: 0.5, y: 0.25)
-        image.position = CGPoint(x: 230, y: 200)
-        image.zPosition = KittyBaseballGame.Layers.baseballfield.rawValue
-        return image
-    }
-    internal func Baseballfield_night() -> SKSpriteNode{
-        let image = SKSpriteNode(imageNamed: "Map_night")
+        let image = SKSpriteNode(imageNamed: UserDefaults.standard.value(forKey: "Map") as! String)
         let BaseballfieldMagnification:CGFloat = 2
         image.size = CGSize(width: image.size.width * BaseballfieldMagnification, height: image.size.height * BaseballfieldMagnification)
         image.anchorPoint = CGPoint(x: 0.5, y: 0.25)
@@ -47,10 +30,10 @@ class GameObject: SKScene{
         image.zPosition = KittyBaseballGame.Layers.fontBody.rawValue
         return image
     }
-    internal enum Map {
-        case day
-        case evening
-        case night
+    internal enum Map:String {
+        case day = "Map_day"
+        case evening = "Map_evening"
+        case night = "Map_night"
     }
     
     //MARK: 阴影
@@ -477,7 +460,7 @@ class GameObject: SKScene{
             label.position = CGPoint(x: view.frame.width * 0.65, y: view.frame.height * -0.55)
             image.addChild(label)
             do{
-                let label = SKLabelNode(text: "Remaning:")
+                let label = SKLabelNode(text: "Remaining:")
                 label.fontColor = SKColor.gray
                 label.fontSize = 10
                 label.horizontalAlignmentMode = .left
@@ -527,7 +510,7 @@ class GameObject: SKScene{
             labelCombo.position = CGPoint(x: view.frame.width * 0.5, y: -20)
             view.addChild(labelCombo)
             do{
-                let label = SKLabelNode(text: "Hight Combo:")
+                let label = SKLabelNode(text: "Combo:")
                 label.fontColor = SKColor.gray
                 label.fontSize = 20
                 label.horizontalAlignmentMode = .left
