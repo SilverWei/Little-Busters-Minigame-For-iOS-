@@ -52,7 +52,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
     var MovingButton_Status = GameObject.MovingButton.TouchStatus.stop
     //let TestButton = GameObject().TestButton()
     var MenuButton = GameObject().MenuButton()
-    var BaseballRemaining = GameObject.BaseballRemaining()
+    var BaseballRemaining = GameObject.BaseballRemaning()
     
     //结束菜单
     let OverView = GameObject.Window()
@@ -1602,7 +1602,7 @@ class KittyBaseballGame: SKScene, SKPhysicsContactDelegate {
         BallPath.move(to: Baseball.PeopleBehindCatchPoint)
         var PathAngle = GetAngle(Baseball.PeopleBehindCatchPoint, b: Baseball.PeopleFrontCatchPoint)
         PathAngle = PathAngle + 90
-        let mainPath = UIBezierPath(arcCenter: Baseball.PeopleBehindCatchPoint, radius: 2000, startAngle: 0, endAngle: CGFloat(M_PI) * (PathAngle / 180), clockwise: true)
+        let mainPath = UIBezierPath(arcCenter: Baseball.PeopleBehindCatchPoint, radius: 2000, startAngle: 0, endAngle: CGFloat(Double.pi) * (PathAngle / 180), clockwise: true)
         BallPath.addLine(to: mainPath.currentPoint)
         Baseball_ThrowPath(Number: 0,BallPath: BallPath)
         Baseball.set[Number].Status = GameObject.Baseball.All_Status.b_ReturnAgain
